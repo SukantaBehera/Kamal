@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp" >
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/quantity"
+        android:hint= "Enter Quantity"
+        android:textSize="20dp"
+        android:layout_margin="5dp"
+        android:inputType="number"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/price"
+        android:hint= "Enter Price"
+        android:textSize="20dp"
+        android:layout_margin="5dp"
+        android:inputType="number"
+        />
+
+
+
+</LinearLayout>

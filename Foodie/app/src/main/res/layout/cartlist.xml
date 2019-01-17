@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dimen_10"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:orientation="horizontal"
+    android:layout_gravity="center"
+    android:background="@drawable/custom_border"
+    >
+
+    <ImageView
+        android:id="@+id/promoter_photo"
+        android:layout_width="100dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:cropToPadding="true"
+        android:padding="2dp"
+        android:src="@drawable/kamal_png" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/itemname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:text="Item Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/logintextColor"/>
+
+        <TextView
+            android:id="@+id/itemprice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Price" />
+        <TextView
+            android:id="@+id/itemdescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Description" />
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+

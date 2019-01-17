@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="485dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="334dp"
+            android:layout_height="151dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+
+                android:layout_width="138dp"
+                android:layout_height="119dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/custom_border"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="116dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:src="@drawable/franchise" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="116dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Number of Franchise"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="138dp"
+                android:layout_height="119dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/custom_border"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="116dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/onlineshop" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="116dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:text="Total Orders"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="349dp"
+            android:layout_height="246dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:stretchColumns="3">
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/cell_shape"
+                        android:text="Sl No"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/cell_shape"
+                        android:text="Name"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:layout_width="70dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/cell_shape"
+                        android:text="Id"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/cell_shape"
+                        android:text="Action"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="340dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp">
+                    <Button
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="Pasta"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="KM1801"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <ImageButton
+                        android:id="@+id/deleteImageButton"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:src="@drawable/trash" />
+
+                </TableRow>
+                <TableRow
+                    android:layout_width="340dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    >
+
+                    <Button
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="2"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="French Fries"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="KM1802"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <ImageButton
+                        android:id="@+id/deleteImageButton2"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:src="@drawable/trash" />>
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="340dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    >
+
+                    <Button
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="3"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="Ice Cream"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="KM1803"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <ImageButton
+                        android:id="@+id/deleteImageButton3"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:src="@drawable/trash" />>
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="340dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    >
+
+                    <Button
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="4"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="Bread"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="KM1804"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <ImageButton
+                        android:id="@+id/deleteImageButton4"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:src="@drawable/trash" />>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="340dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    >
+
+                    <Button
+                        android:layout_width="40dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="5"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="Fried Rice"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:text="KM1805"
+                        android:textAlignment="center"
+                        android:textColor="@color/logintextColor"
+                        android:textSize="14dp" />
+
+                    <ImageButton
+                        android:id="@+id/deleteImageButton5"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/cell_shape"
+                        android:src="@drawable/trash" />>
+
+                </TableRow>
+
+
+
+            </TableLayout>
+        </ScrollView>
+    </LinearLayout>
+
+
+
+</LinearLayout>

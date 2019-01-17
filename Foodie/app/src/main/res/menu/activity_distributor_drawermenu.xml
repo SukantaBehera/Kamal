@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashboard"
+            android:icon="@drawable/dashboard"
+            android:title="@string/dashboard"
+            android:paddingLeft="10dp"
+            app:theme ="@style/Navigation"/>
+        <item
+            android:id="@+id/franchisorlist"
+            android:icon="@drawable/promoter_name"
+            android:title="@string/promoterlist"
+            app:theme ="@style/Navigation"
+            />
+        <item
+            android:id="@+id/neworder"
+            android:icon="@drawable/register"
+            android:title="@string/order"
+            app:theme ="@style/Navigation"
+            />
+        <item
+            android:id="@+id/myorder"
+            android:icon="@drawable/register"
+            android:title="My Orders"
+            app:theme ="@style/Navigation"
+            />
+
+
+        <item
+            android:id="@+id/orderstatus"
+            android:icon="@drawable/track_order"
+            android:title="@string/order_status"
+            app:theme ="@style/Navigation"
+            />
+
+        <item
+            android:id="@+id/reports"
+            android:icon="@drawable/orderdetails"
+            android:title="@string/reports"
+            app:theme ="@style/Navigation"
+            />
+
+        <item
+            android:id="@+id/feedback"
+            android:icon="@drawable/orderdetails"
+            android:title="@string/feedbackstr"
+            app:theme ="@style/Navigation"
+            />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/orderdetails"
+            android:title="@string/app_logout"
+            app:theme ="@style/Navigation"
+            />
+    </group>
+</menu>

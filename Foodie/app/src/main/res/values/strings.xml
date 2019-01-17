@@ -1,0 +1,94 @@
+<resources>
+    <!--Common Resourses-->
+    <string name="app_name">Kamal</string>
+    <string name="app_signin">Sign In</string>
+    <string name="app_logout">Logout</string>
+    <string name="user_name">User Name</string>
+
+    <string name="app_ext_user">(Existing User)</string>
+    <string name="app_forgot_password">Forgot Password?</string>
+    <string name="app_back_login">Back To Login</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="password">Password</string>
+    <string name="select_area">Select Your Area</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="spinner_title">Item Name</string>
+
+    <!--Item Resourses for Admin-->
+    <string name="dashboard">Dashboard</string>
+    <string name="app_registeration">Registration</string>
+    <string name="app_register">Register</string>
+    <string name="orders">Order History</string>
+    <string name="order">Place New Order</string>
+
+    <string name="promoterlist">Franchisor</string>
+    <string name="employeelist">Employee</string>
+    <string name="distributorlist">Distributor</string>
+    <string name="viewdetails">View More</string>
+    <string name="track_order">Track Order</string>
+    <string name="help">Help</string>
+    <string name="setting">Setting</string>
+
+    <!--Item Resourses for Fransisers-->
+    <string name="add_new_item">Items</string>
+    <string name="item_name">Item Name</string>
+    <string name="qom">Units of Management</string>
+    <string name="quant_available">Quantity Available</string>
+    <string name="rate">Rate</string>
+    <string name="reports">Reports</string>
+    <string name="quantity_management">Quantity Management</string>
+    <string name="order_status">Order Status</string>
+    <string name="allorders">All Orders</string>
+    <string name="searchitem">Search Item</string>
+
+    <!--REGISTRATION RESOURSES-->
+    <string name="unit_name">Unit Name</string>
+    <string name="promoter_name">Promoter Name</string>
+    <string name="promoter_address">Promoter Address</string>
+    <string name="unit_address">Address Of Unit</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="photo">Photo</string>
+    <string name="location">Location</string>
+    <string name="title_activity_place_order">PlaceOrder</string>
+
+
+    <!--Registration Validation-->
+    <string name="error_unit_name"> Unit Name Can not be Empty</string>
+    <string name="error_promoter_name"> Promoter Name Can not be Empty</string>
+    <string name="error_unitaddress_name"> Unit Address Can not be Empty</string>
+    <string name="error_promoteraddress_name"> Promoter Address Can not be Empty</string>
+    <string name="error_mobile_number"> Please Enter Mobile Number</string>
+    <string name="error_password"> Enter Password</string>
+    <string name="error_reenter_password"> Reenter Password Can not be empty</string>
+    <string name="error_location"> Please Choose Your Location</string>
+    <string name="error_password_match"> Passwords Does not Match</string>
+    <string name="success_register">Registration Successful</string>
+    <string name="error_valid_mobile_password">Wrong Mobile Number or Password</string>
+
+
+    <!--
+    A
+    -->
+    <string name="ok">OK</string>
+    <string name="loading_wait_msg">Loading Please Wait</string>
+    <string name="add_emplyoee">Add Emplyoee</string>
+    <string name="add_distributor">Add Distributor</string>
+    <string name="add_franchisor">Add Franchisor</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="feedbackstr">Feedback</string>
+
+
+    <!--All orders-->
+    <string name="orderid">Order Id   :</string>
+    <string name="total_price">Total Price :</string>
+    <string name="user_type">User Type :</string>
+    <string name="order_date">Order Date :</string>
+    <string name="status">Status   :</string>
+    <string name="username">User Name :</string>
+    <string name="details">View Details</string>
+</resources>

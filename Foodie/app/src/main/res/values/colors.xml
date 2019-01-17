@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#df0b0e</color>
+    <color name="colorPrimaryDark">#df0b0e</color>
+    <color name="colorAccent">#df0b0e</color>
+    <color name="colorSplashBack">#df0b0e</color>
+    <color name="colorAccentSecondary">#ad1a7f</color>
+    <color name="colorSplashAppTextColor">#f1eded</color>
+    <color name="white">#ffffffff</color>
+    <color name="grey">#e2e0e0</color>
+    <color name="titleBackColor">#FFFFFEE4</color>
+    <color name="titleTextColor">#000</color>
+    <color name="black">#000</color>
+    <color name="blackTextColor">#000</color>
+    <color name="blueTextColor">#ee405dff</color>
+    <color name="greyTextColor">#fc5c5148</color>
+    <color name="navBackColor">#df0b0e</color>
+    <color name="layoutBackColor">#990507
+    </color>
+    <color name="layoutColor">#ffffff</color>
+    <color name="logintextColor">#df0b0e</color>
+    <color name="buttoncolor">#df0b0e</color>
+    <color name="violetbaground">#2208a3</color>
+
+</resources>

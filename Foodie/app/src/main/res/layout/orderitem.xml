@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    android:layout_marginTop="@dimen/dimen_10"
+    android:background="@drawable/custom_border"
+   >
+
+    <ImageView
+        android:id="@+id/itemicon"
+        android:layout_width="107dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:cropToPadding="true"
+        android:padding="5dp"
+        android:src="@drawable/itemicon" />
+
+    <LinearLayout
+        android:layout_width="131dp"
+        android:layout_height="68dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/orderitemname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:text="Item Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/logintextColor"/>
+
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Description of Item" />
+
+        <TextView
+            android:id="@+id/item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/rupeeindian"
+            android:layout_marginLeft="10dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="82dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="92dp"
+            android:layout_height="32dp"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <!--<LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+
+            android:orientation="horizontal">
+
+            <LinearLayout
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="75dp"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/decrease"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="22dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="-5dp"
+                    android:padding="5dp"
+                    android:text="-"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/integer_number"
+                    android:layout_width="20dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="-5dp"
+                    android:layout_marginBottom="-5dp"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/increase"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="20dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="-5dp"
+                    android:layout_marginBottom="0dp"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="+"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+-->    </LinearLayout>
+
+</LinearLayout>
+
+

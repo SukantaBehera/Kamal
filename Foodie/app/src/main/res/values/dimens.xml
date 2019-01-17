@@ -1,0 +1,29 @@
+<resources>
+
+    <dimen name="activity_margin">16dp</dimen>
+    <dimen name="dot_margin_right">10dp</dimen>
+    <dimen name="msg_no_notes">26sp</dimen>
+    <dimen name="margin_top_no_notes">120dp</dimen>
+    <dimen name="lbl_new_note_title">20sp</dimen>
+    <dimen name="dimen_10">10dp</dimen>
+    <dimen name="input_new_note">20sp</dimen>
+    <dimen name="dot_height">30dp</dimen>
+    <dimen name="dot_text_size">40sp</dimen>
+    <dimen name="timestamp">14sp</dimen>
+    <dimen name="note_list_text">18sp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="cardCornerRadius">4dp</dimen>
+    <dimen name="cardElevation">4dp</dimen>
+    <dimen name="cardview_horizontal_padding">6dp</dimen>
+    <dimen name="cardview_vertical_padding">2dp</dimen>
+    <dimen name="adapter_cardview_margin">4dp</dimen>
+    <dimen name="cardview_margin">12dp</dimen>
+    <dimen name="cardview_elevation">16dp</dimen>
+    <dimen name="outer_layout_padding">10dp</dimen>
+    <dimen name="inner_layout_padding">3dp</dimen>
+    <dimen name="layout_inner_padding">3dp</dimen>
+    <dimen name="heading_lable_message">14dp</dimen>
+    <dimen name="text_lable_message">12dp</dimen>
+</resources>

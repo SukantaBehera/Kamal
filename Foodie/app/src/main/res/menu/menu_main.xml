@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.app.foodie.WelcomeActivity">
+
+ <!--  <item
+
+        android:orderInCategory="300"
+        android:title="User"
+        android:icon="@drawable/overflow"
+        app:showAsAction="always">
+
+        <menu xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:HTMLCode="http://schemas.android.com/apk/res-auto" >
+            <item android:id="@+id/user_name"
+                android:title="UserName"
+                app:showAsAction="ifRoom|withText"
+                />
+
+            <item android:id="@+id/logout"
+                android:title="Logout"
+                app:showAsAction="ifRoom|withText" />
+
+        </menu>
+
+   </item>-->
+
+
+
+
+</menu>

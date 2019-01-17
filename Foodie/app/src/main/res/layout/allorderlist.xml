@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_marginTop="@dimen/cardCornerRadius"
+    android:background="@drawable/home_bg">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/adapter_cardview_margin"
+        android:elevation="@dimen/cardview_vertical_padding">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_border"
+            android:padding="@dimen/outer_layout_padding"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="@string/orderid"
+                    android:textSize="@dimen/heading_lable_message"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/orderId"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal"
+                    android:textColor="@color/colorAccent"
+                    android:textAlignment="textStart"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="@string/total_price"
+                    android:textSize="@dimen/heading_lable_message"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tprice"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="@string/user_type"
+                    android:textSize="@dimen/heading_lable_message"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/userrole"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="@string/username"
+                    android:textSize="@dimen/heading_lable_message"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/username"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal"
+                    android:textColor="@color/colorAccent"
+                    android:textAlignment="textStart"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="@string/order_date"
+                    android:textSize="@dimen/heading_lable_message"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/odate"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="@string/status"
+                    android:textSize="@dimen/heading_lable_message"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+
+                <TextView
+                    android:id="@+id/statusallorder"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal" />
+
+<!--
+
+                <TextView
+                    android:id="@+id/more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="90dp"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="@string/details"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal" />
+-->
+
+            </LinearLayout>
+
+          <!--  <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/item_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="90dp"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="@string/details"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal" />
+
+            </LinearLayout>-->
+           <!-- <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="90dp"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="@string/details"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal" />
+
+            </LinearLayout>-->
+           <!-- <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="90dp"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="@string/details"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal" />
+
+            </LinearLayout>-->
+           <!-- <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/itemcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="90dp"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="@string/details"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal" />
+
+            </LinearLayout>-->
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

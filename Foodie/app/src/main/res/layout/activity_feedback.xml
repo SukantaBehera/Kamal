@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/home_bg"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="485dp"
+        android:layout_marginTop="@dimen/activity_margin"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="87dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="Send Feedback"
+                android:textColor="@color/logintextColor"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/feedbackdescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:text="Tell us what you like about tha app or what we could be doing better"
+                android:textColor="@color/blackTextColor"
+                android:textSize="14sp"
+
+                />
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/itemName"
+            android:gravity="fill_horizontal"
+            android:background="@drawable/custom_border"
+            android:hint="Item Name"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:gravity="center_horizontal"
+            android:paddingTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:id="@+id/writefeedback"
+                android:gravity="fill_horizontal"
+                android:background="@drawable/custom_border"
+                android:hint="Enter Feedback"
+                android:orientation="vertical" />
+
+
+
+            </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/feedbackmsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginTop="10dp"
+            android:text="If you have something to say that doesn't fit here please ping us an email abc@gmail.com"
+            android:textAlignment="center"
+            android:textColor="@color/blackTextColor"
+            android:textSize="14sp">
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+       android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/feedbacksubmit"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="90dp"
+            android:layout_height="36dp"
+            android:background="@drawable/buttons"
+            android:fontFamily="normal"
+            android:padding="5dp"
+            android:text="Submit"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/progressBarDil"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+</LinearLayout>

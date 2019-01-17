@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dimen_10"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="0dp"
+    android:orientation="horizontal"
+    android:background="@drawable/custom_border"
+    >
+
+    <ImageView
+        android:id="@+id/franchisor_photo"
+        android:layout_width="107dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:cropToPadding="true"
+        android:padding="5dp"
+        android:src="@drawable/man" />
+
+    <LinearLayout
+        android:layout_width="164dp"
+        android:layout_height="68dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/franchisornamelist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:padding="2dp"
+            android:text="Franchisor Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/logintextColor" />
+
+        <TextView
+            android:id="@+id/franchisor_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Jayadev Vihar" />
+
+        <TextView
+            android:id="@+id/franchisor_mobile_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="9040019803" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+
+<!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerifiedFragment">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <ImageView
+                            android:id="@+id/icon"
+                        android:layout_width="70dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginLeft="2dp"
+                        android:cropToPadding="true"
+                        android:padding="5dp"
+                        android:src="@drawable/user_icon" />
+
+                    <LinearLayout
+                            android:layout_width="235dp"
+                            android:layout_height="80dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginBottom="2dp"
+                            android:orientation="vertical">
+
+                           <TextView
+                                   android:id="@+id/item"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"
+                                android:padding="2dp"
+                                android:text="BISWAJIT PANI"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:textColor="@color/colorPrimaryDark" />
+
+                            <TextView
+                                    android:id="@+id/desc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="@string/addresed_name" />
+
+                            <TextView
+                                    android:id="@+id/price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="8984585359" />
+
+
+                        </LinearLayout>
+
+                    <ImageView
+                            android:id="@+id/icon1"
+                        android:layout_width="50dp"
+                       android:layout_height="40dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="2dp"
+                       android:layout_marginLeft="2dp"
+                        android:cropToPadding="true"
+                       android:padding="3dp"
+                        android:src="@drawable/verified" />
+
+                </LinearLayout>
+        >
+        ></LinearLayout>
+    ></FrameLayout>
+-->

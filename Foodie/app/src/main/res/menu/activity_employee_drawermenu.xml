@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/dashboard"
+            android:icon="@drawable/dashboard"
+            android:title="@string/dashboard"
+            android:paddingLeft="10dp"
+            app:theme ="@style/Navigation"          />
+
+        <!-- <item
+             android:id="@+id/register"
+             android:icon="@drawable/register"
+             android:title="@string/app_register"
+             app:theme ="@style/Navigation"
+             />-->
+
+        <!--   <item
+               android:id="@+id/addemp"
+               android:icon="@drawable/orderdetails"
+               android:title="@string/add_emplyoee"
+               app:theme ="@style/Navigation"
+               />-->
+        <!--  <item
+              android:id="@+id/adddistributor"
+              android:icon="@drawable/orderdetails"
+              android:title="@string/add_distributor"
+              app:theme ="@style/Navigation"
+              />-->
+
+        <!--  <item
+              android:id="@+id/addfranchisor"
+              android:icon="@drawable/orderdetails"
+              android:title="@string/add_emplyoee"
+              app:theme ="@style/Navigation"
+              />-->
+
+
+
+        <item
+            android:id="@+id/distbutorlist"
+            android:icon="@drawable/promoter_name"
+            android:title="@string/distributorlist"
+            app:theme ="@style/Navigation"
+            />
+
+        <item
+            android:id="@+id/franchisorlist"
+            android:icon="@drawable/promoter_name"
+            android:title="@string/promoterlist"
+            app:theme ="@style/Navigation"
+            />
+
+        <!--  <item
+              android:id="@+id/additems"
+              android:icon="@drawable/orderdetails"
+              android:title="@string/add_new_item"
+              app:theme ="@style/Navigation"
+              />-->
+
+        <item
+            android:id="@+id/viewitems"
+            android:icon="@drawable/orderdetails"
+            android:title="Items"
+            app:theme ="@style/Navigation"
+            />
+        <item
+            android:id="@+id/quantitymanagement"
+            android:icon="@drawable/orderdetails"
+            android:title="@string/quantity_management"
+            app:theme ="@style/Navigation"
+            />
+
+
+        <item
+            android:id="@+id/allorders"
+            android:icon="@drawable/track_order"
+            android:title="@string/allorders"
+            app:theme ="@style/Navigation"
+            />
+
+        <item
+            android:id="@+id/orderstatus"
+            android:icon="@drawable/track_order"
+            android:title="@string/order_status"
+            app:theme ="@style/Navigation"
+            />
+        <item
+            android:id="@+id/reports"
+            android:icon="@drawable/orderdetails"
+            android:title="@string/reports"
+            app:theme ="@style/Navigation"
+            />
+        <item
+            android:id="@+id/feedback"
+            android:icon="@drawable/orderdetails"
+            android:title="@string/feedbackstr"
+            app:theme ="@style/Navigation"
+            />
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/orderdetails"
+            android:title="@string/app_logout"
+            app:theme ="@style/Navigation"
+            />
+
+    </group>
+</menu>

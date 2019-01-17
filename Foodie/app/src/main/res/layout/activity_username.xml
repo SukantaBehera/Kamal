@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:gravity="center"
+android:background="@drawable/foodapp_login_back">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+  <LinearLayout
+      android:layout_width="155dp"
+      android:layout_height="156dp"
+      android:layout_gravity="center"
+      android:layout_marginTop="110dp"
+      android:layout_marginLeft="@dimen/dimen_10"
+      android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+      <ImageView
+          android:layout_width="150dp"
+          android:layout_height="200dp"
+          android:layout_gravity="center"
+          android:src="@drawable/kamal_png" />
+    </LinearLayout>
+
+  </LinearLayout>
+
+
+  <LinearLayout
+      android:layout_width="250dp"
+      android:layout_height="40dp"
+      android:layout_marginTop="20dp"
+      android:layout_gravity="center"
+      android:id="@+id/layoutuser_name"
+      android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/user_name"
+        android:hint="@string/user_name"
+        android:inputType="text"
+        android:padding="5dp"
+        android:imeOptions="actionNext"
+        android:drawablePadding="15dp"
+        android:background="@drawable/rect_text_edit"
+        android:drawableLeft="@drawable/username"
+        android:layout_marginLeft="@dimen/dimen_10"
+
+        android:textColor="@color/logintextColor"
+
+        />
+
+
+
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="250dp"
+      android:layout_height="40dp"
+      android:layout_marginTop="20dp"
+      android:layout_gravity="center"
+      android:id="@+id/layoutpassword"
+      android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/password"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:padding="5dp"
+        android:imeOptions="actionDone"
+        android:background="@drawable/rect_text_edit"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:drawablePadding="15dp"
+        android:drawableLeft="@drawable/password16"
+        android:textColor="@color/logintextColor"
+
+        />
+
+  </LinearLayout>
+
+
+  <LinearLayout
+      android:layout_width="120dp"
+      android:layout_height="60dp"
+      android:layout_marginTop="20dp"
+      android:layout_gravity="center"
+
+      android:layout_marginLeft="@dimen/dimen_10"
+      android:orientation="vertical">
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:id="@+id/btn_login"
+        android:layout_gravity="center"
+        android:background="@drawable/buttons"
+        android:padding="12dp"
+        android:text="@string/app_signin"
+        android:textColor="@color/white"
+        />
+
+  </LinearLayout>
+
+  <ProgressBar
+      android:visibility="gone"
+      android:id="@+id/progressBarDil"
+      android:layout_gravity="center"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:layout_centerVertical="true" />
+
+</LinearLayout>
+</LinearLayout>
