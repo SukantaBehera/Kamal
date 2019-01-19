@@ -1,4 +1,4 @@
-package com.example.app.MyOrders.Common;
+package com.example.app.Util.Common;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

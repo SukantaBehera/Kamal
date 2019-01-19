@@ -31,6 +31,7 @@ import com.example.app.FEEDBACK.UI.Feedback;
 import com.example.app.FEEDBACK.UI.ViewAllFeedBack;
 import com.example.app.MyOrders.AllItem.ui.ViewItems;
 import com.example.app.MyOrders.OrderListById.UI.ViewOrderItems;
+import com.example.app.Password.ChangePasswordFragment;
 import com.example.app.QOM.UI.QomList;
 import com.example.app.USERLIST.UI.ViewDistributor;
 import com.example.app.USERLIST.UI.ViewEmployee;
@@ -276,6 +277,17 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 setTextColorForMenuItem(item, R.color.logintextColor);
                 toolbar.setTitle(getResources().getString(R.string.app_display_name));
                 toolbar.setSubtitle(getResources().getString(R.string.allorders));
+                toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+                toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
+                viewIsAtHome = true;
+            }
+            else if(id == R.id.changepassword){
+                mFragmentManager = getSupportFragmentManager();
+                mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.containerView, new ChangePasswordFragment()).commit();
+                setTextColorForMenuItem(item, R.color.logintextColor);
+                toolbar.setTitle(getResources().getString(R.string.app_display_name));
+                toolbar.setSubtitle("Password");
                 toolbar.setTitleTextColor(getResources().getColor(R.color.white));
                 toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
                 viewIsAtHome = true;

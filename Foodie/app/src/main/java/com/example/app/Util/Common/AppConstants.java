@@ -1,4 +1,4 @@
-package com.example.app.MyOrders.Common;
+package com.example.app.Util.Common;
 
 public class AppConstants {
     public static  final String BASEURL = "http://209.97.136.18:8080/rest-svc/";
@@ -9,6 +9,7 @@ public class AppConstants {
     public static  final String TOKEN="oauth/token";
     public static  final String QOMLIST="api/itemsvc/getall_item_and_qom";
     public static  final String UPDATEQOM="api/itemsvc/update_item_and_qom";
+    public static  final String CHANGEPASSWORD="api/changepassword";
 
    // public static  final String takeOrder = "api/orderitem/executeorder";
     public static final String SUCCESS = "success" ;

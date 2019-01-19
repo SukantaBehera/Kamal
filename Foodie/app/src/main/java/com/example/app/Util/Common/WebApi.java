@@ -1,10 +1,11 @@
-package com.example.app.MyOrders.Common;
+package com.example.app.Util.Common;
 
 
 import com.example.app.MyOrders.AllItem.datamodels.OrderPlacedResponse;
 import com.example.app.MyOrders.AllItem.datamodels.OrderRequest;
 import com.example.app.Request.LoginRequest;
 import com.example.app.Request.UpdateQomRequest;
+import com.example.app.Response.ChangePasswordResponse;
 import com.example.app.Response.GetAllQomReponse;
 import com.example.app.Response.LoginResponse;
 import com.example.app.Response.TokenResponse;
@@ -39,7 +40,11 @@ public interface WebApi {
     @PUT(AppConstants.UPDATEQOM)
     Call<UpdateQomResponse> updateQom(@Query("access_token") String access_token, @Body UpdateQomRequest request);
 
-
+    @POST(AppConstants.CHANGEPASSWORD)
+    Call<ChangePasswordResponse> changePassword(@Query("access_token") String token,
+                                                @Query("userId") String userId,
+                                                @Query("oldPassword") String oldPassword,
+                                                @Query("newPassword") String newPassword);
 
 
 }

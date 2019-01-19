@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.app.MyOrders.Common.BaseActivity;
+import com.example.app.Util.Common.BaseActivity;
 import com.example.app.MyOrders.OrderListById.Adapter.ItemDetailAdapter;
 import com.example.app.MyOrders.AllItem.datamodels.OrderDetails;
 import com.example.app.MyOrders.AllItem.datamodels.OrderItem;

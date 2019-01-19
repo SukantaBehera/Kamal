@@ -4,13 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-import com.example.app.MyOrders.Common.BaseActivity;
+import com.example.app.Util.Common.BaseActivity;
 import com.example.app.Util.RegPrefManager;
 import com.example.app.foodie.ConnectionDetector;
 import com.example.app.foodie.DrawerActivity;
 import com.example.app.foodie.LoginActivity;
 import com.example.app.foodie.PermissionUtil;
-import com.example.app.foodie.SharedPreferenceClass;
 import com.example.sukanta.foodie.R;
 
 

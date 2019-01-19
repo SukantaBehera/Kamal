@@ -22,209 +22,240 @@
             layout="@layout/layout_action_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-    <LinearLayout
+        <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="5dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        card_view:cardCornerRadius="4dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-
-        <TextView
-            android:id="@+id/companynamelist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:padding="2dp"
-            android:text="CompanyName"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/logintextColor" />
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_10"
-            android:text="Distributor Id:"
-            android:textStyle="bold|normal"
-
-            android:textColor="@color/blackTextColor"
-            android:textAlignment="textStart"
-            />
-        <TextView
-            android:id="@+id/dist_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="15"
-            android:visibility="visible"/>
-    </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
             <TextView
+                android:id="@+id/companynamelist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:text="Unit Holder Name:"
-                android:textStyle="bold|normal"
-                android:textColor="@color/blackTextColor"
-                android:textAlignment="textStart"
-                />
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="2dp"
+                android:text="CompanyName"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/logintextColor"
+                android:layout_alignParentLeft="true"
+                android:lines="1"
+                android:ellipsize="end"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="5dp"
+                        android:padding="5dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/pencil"/>
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:text="Distributor Id:"
+                        android:textStyle="bold|normal"
 
-        <TextView
-            android:id="@+id/unitholder_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Jayadev Vihar" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:text="Unit Address:"
-                android:textStyle="bold|normal"
-                android:textColor="@color/blackTextColor"
-                android:textAlignment="textStart"
-                />
-        <TextView
-            android:id="@+id/unit_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Jayadev Vihar"
-            android:visibility="visible"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:text="Permanent Address:"
-                android:textStyle="bold|normal"
-                android:textColor="@color/blackTextColor"
-                android:textAlignment="textStart"
-                />
-        <TextView
-            android:id="@+id/permanent_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Jayadev Vihar"
-            android:visibility="visible"/>
-        </LinearLayout>
+                        android:textColor="@color/blackTextColor"
+                        android:textAlignment="textStart"
+                        />
+                    <TextView
+                        android:id="@+id/dist_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="15"
+                        android:visibility="visible"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:text="Unit Holder Name:"
+                        android:textStyle="bold|normal"
+                        android:textColor="@color/blackTextColor"
+                        android:textAlignment="textStart"
+                        />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:text="Mobile:"
-                android:textStyle="bold|normal"
-                android:textColor="@color/blackTextColor"
-                android:textAlignment="textStart"
-                />
-        <TextView
-            android:id="@+id/distributor_mobile_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="9040019803" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/unitholder_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Jayadev Vihar" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:text="Unit Address:"
+                        android:textStyle="bold|normal"
+                        android:textColor="@color/blackTextColor"
+                        android:textAlignment="textStart"
+                        />
+                    <TextView
+                        android:id="@+id/unit_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Jayadev Vihar"
+                        android:visibility="visible"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:text="Permanent Address:"
+                        android:textStyle="bold|normal"
+                        android:textColor="@color/blackTextColor"
+                        android:textAlignment="textStart"
+                        />
+                    <TextView
+                        android:id="@+id/permanent_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Jayadev Vihar"
+                        android:visibility="visible"/>
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:text="Email:"
-                android:textStyle="bold|normal"
-                android:textColor="@color/blackTextColor"
-                android:textAlignment="textStart"
-                />
-        <TextView
-            android:id="@+id/dist_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:inputType="textEmailAddress"
-            android:text="abc@com" />
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:text="Mobile:"
+                        android:textStyle="bold|normal"
+                        android:textColor="@color/blackTextColor"
+                        android:textAlignment="textStart"
+                        />
+                    <TextView
+                        android:id="@+id/distributor_mobile_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="9040019803" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:text="Status:"
-                android:textStyle="bold|normal"
-                android:textColor="@color/blackTextColor"
-                android:textAlignment="textStart"
-                />
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Active"
-            android:visibility="visible"/>
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="3dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:text="Email:"
+                        android:textStyle="bold|normal"
+                        android:textColor="@color/blackTextColor"
+                        android:textAlignment="textStart"
+                        />
+                    <TextView
+                        android:id="@+id/dist_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:inputType="textEmailAddress"
+                        android:text="abc@com" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:text="User Id:"
-                android:textStyle="bold|normal"
-                android:textColor="@color/blackTextColor"
-                android:textAlignment="textStart"
-                />
-        <TextView
-            android:id="@+id/user_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Active"
-            android:visibility="visible"/>
-        </LinearLayout>
-        <TextView
-            android:id="@+id/viewdetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/buttoncolor"
-            android:text="@string/viewdetails"
-            android:visibility="gone"/>
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="3dp"
+                    android:layout_marginBottom="15dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:text="Status:"
+                        android:textStyle="bold|normal"
+                        android:textColor="@color/blackTextColor"
+                        android:textAlignment="textStart"
+                        />
+                    <TextView
+                        android:id="@+id/status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Active"
+                        android:visibility="visible"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:text="User Id:"
+                        android:textStyle="bold|normal"
+                        android:textColor="@color/blackTextColor"
+                        android:textAlignment="textStart"
+                        />
+                    <TextView
+                        android:id="@+id/user_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Active"
+                        android:visibility="visible"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/viewdetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/buttoncolor"
+                    android:text="@string/viewdetails"
+                    android:visibility="gone"/>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 </LinearLayout>
 

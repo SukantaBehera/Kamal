@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.app.MyOrders.Common.BaseActivity;
+import com.example.app.Util.Common.BaseActivity;
 import com.example.sukanta.foodie.R;
 
 public class ViewDetailsOrders extends BaseActivity implements AdapterView.OnItemSelectedListener {

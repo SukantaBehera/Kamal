@@ -25,7 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.app.ITEM.UTIL.DilogueFRagment;
-import com.example.app.MyOrders.Common.RecyclerItemClickListener;
+import com.example.app.Util.Common.RecyclerItemClickListener;
 import com.example.app.MyOrders.OrderListById.Model.OrderItemDetail;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;

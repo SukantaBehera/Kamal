@@ -24,7 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.app.ITEM.ADAPTER.ItemListAdapter;
 import com.example.app.ITEM.MODEL.ItemDetail;
-import com.example.app.MyOrders.Common.BaseActivity;
+import com.example.app.Util.Common.BaseActivity;
 import com.example.app.foodie.InputValidation;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;

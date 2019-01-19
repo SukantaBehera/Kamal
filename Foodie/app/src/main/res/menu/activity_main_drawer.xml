@@ -90,7 +90,12 @@
                         android:title="@string/reports"
                         app:theme ="@style/Navigation"
                         />
-
+                    <item
+                        android:id="@+id/changepassword"
+                        android:icon="@drawable/orderdetails"
+                        android:title="@string/changepassword"
+                        app:theme ="@style/Navigation"
+                        />
                     <item
                         android:id="@+id/feedback"
                         android:icon="@drawable/orderdetails"
