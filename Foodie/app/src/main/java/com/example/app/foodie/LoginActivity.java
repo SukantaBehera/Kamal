@@ -123,29 +123,41 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     simpleProgressBar.setVisibility(View.INVISIBLE);
-                    String status=response.body().getStatus();
-                    if(status.equals("SUCCESS")){
-                        String role=response.body().getResult().getRole();
-                        int userId=response.body().getResult().getUserId();
-                        String name=response.body().getResult().getName();
-                        String email=response.body().getResult().getEmailid();
+                    int code=response.code();
+                    switch (code){
+                        case 417:
+                            Toast.makeText(LoginActivity.this,"Please Enter Correct Login Credential",Toast.LENGTH_LONG).show();
+                            break;
+                        case 200:
+                            String status=response.body().getStatus();
+                            if(status.equals("SUCCESS")){
+                                String role=response.body().getResult().getRole();
+                                int userId=response.body().getResult().getUserId();
+                                String name=response.body().getResult().getName();
+                                String email=response.body().getResult().getEmailid();
+                                RegPrefManager.getInstance(LoginActivity.this).setLoginDetails(role,String.valueOf(userId),name,email);
+                                SharedPreferenceClass.writeString(LoginActivity.this, "ROLEID", role);
+                                SharedPreferenceClass.writeString(LoginActivity.this, "USERID", String.valueOf(userId));
+                                SharedPreferenceClass.writeString(LoginActivity.this, "NAME", name);
+                                SharedPreferenceClass.writeString(LoginActivity.this, "EMAILID", email);
+                                startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
+                                finish();
+                            }
+                            else if(status.equals("ERROR")){
 
-                        RegPrefManager.getInstance(LoginActivity.this).setLoginDetails(role,String.valueOf(userId),name,email);
+                                String message = response.body().getMessage();
+                                password.requestFocus();
+                                password.setError(message);
 
 
+                            }
+                            else {
 
-                        SharedPreferenceClass.writeString(LoginActivity.this, "ROLEID", role);
-                        SharedPreferenceClass.writeString(LoginActivity.this, "USERID", String.valueOf(userId));
-                        SharedPreferenceClass.writeString(LoginActivity.this, "NAME", name);
-                        SharedPreferenceClass.writeString(LoginActivity.this, "EMAILID", email);
-
-                        startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
-                        finish();
+                                Toast.makeText(LoginActivity.this,"Failed",Toast.LENGTH_LONG).show();
+                            }
+                            break;
                     }
-                    else {
-                        simpleProgressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(LoginActivity.this,"Failed",Toast.LENGTH_LONG).show();
-                    }
+
                 }
 
                 @Override

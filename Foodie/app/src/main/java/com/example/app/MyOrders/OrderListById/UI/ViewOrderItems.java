@@ -203,10 +203,10 @@ public class ViewOrderItems extends DilogueFRagment {
         }else if(role.equals("ROLE_KML_EMP")){
             orderUrl = ServerLinks.allorders+acess_token;
         }else{
-           orderUrl = ServerLinks.allorders+acess_token;
-           // orderUrl  = ServerLinks.ordersById+userId+"?access_token="+acess_token;
+           //orderUrl = ServerLinks.allorders+acess_token;
+           //orderUrl  = ServerLinks.ordersById+userId+"?access_token="+acess_token;
             Log.e("URLALLORDERBYID",orderUrl);
-            //orderUrl  = ServerLinks.ordersById+"?access_token="+acess_token+"&cust_id"+userId;
+            orderUrl  = ServerLinks.ordersById+"?access_token="+acess_token+"&custId="+userId;
 
         }
         StringRequest stringRequest = new StringRequest(Request.Method.GET, orderUrl,

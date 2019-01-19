@@ -63,8 +63,9 @@ public class ServerLinks {
     public static String ALL_FEEDBACK_REPORT = BASE_URL_API+"itemsvc/getall_feedback?access_token=";
 
     public static String LOGIN_USER = "http://209.97.136.18:8080/rest-svc/userauth-svc/userlogin";
-    public static String ordersById = "http://209.97.136.18:8080/rest-svc/api/orderitem/get_order_details";
+    public static String ordersById = "http://209.97.136.18:8080/rest-svc/api/orderitem/get-order-details-by-custid";
     public static String allorders = "http://209.97.136.18:8080/rest-svc/api/orderitem/get_cons_order_details?access_token=";
+
 
 
     //GET ALL ITEM

@@ -12,10 +12,9 @@
     >
 
 
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="402dp"
+        android:layout_height="120dp"
         android:orientation="vertical">
 
         <TextView
@@ -27,7 +26,7 @@
             android:padding="2dp"
             android:text="Item Name"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/logintextColor"/>
+            android:textColor="@color/logintextColor" />
 
         <TextView
             android:id="@+id/itemprice"
@@ -35,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Price" />
+
         <TextView
             android:id="@+id/itemdescription"
             android:layout_width="wrap_content"
@@ -48,7 +48,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Quantity Available" />
-
 
 
     </LinearLayout>
