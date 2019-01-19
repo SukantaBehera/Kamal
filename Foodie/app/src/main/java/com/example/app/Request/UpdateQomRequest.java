@@ -1,6 +1,6 @@
 package com.example.app.Request;
 
-public class UpdateQom {
+public class UpdateQomRequest {
     Long id;
     double price;
     int quantity;

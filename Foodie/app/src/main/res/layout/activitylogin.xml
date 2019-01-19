@@ -9,7 +9,7 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="20dp"
-    tools:context="com.example.app.foodie.UsernameActivity">
+    tools:context="com.example.app.foodie.LoginActivity">
 
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"

@@ -2,8 +2,11 @@ package com.example.app.QOM.UI;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,15 +27,22 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.app.ITEM.UI.AddItemsActivity;
 import com.example.app.ITEM.UTIL.DilogueFRagment;
+import com.example.app.MyOrders.Common.ApiClient;
 import com.example.app.MyOrders.Common.RecyclerItemClickListener;
+import com.example.app.MyOrders.Common.WebApi;
 import com.example.app.QOM.Adapter.QomListAdapter;
 import com.example.app.QOM.Model.QomModel;
+import com.example.app.Request.UpdateQomRequest;
+import com.example.app.Response.GetAllQomReponse;
+import com.example.app.Response.ResultQOM;
+import com.example.app.Response.TokenResponse;
+import com.example.app.Response.UpdateQomResponse;
+import com.example.app.foodie.LoginActivity;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;
 import com.example.sukanta.foodie.R;
@@ -51,6 +61,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class QomList extends DilogueFRagment {
     ProgressDialog progressDialog;
     SharedPreferenceClass sharedPreferenceClass;
@@ -58,6 +73,9 @@ public class QomList extends DilogueFRagment {
     String acess_token = "";
 
     ArrayList<QomModel> itemList = new ArrayList<QomModel>();
+
+    ArrayList<ResultQOM> itemLists = new ArrayList<ResultQOM>();
+
     private QomListAdapter itemlistAdapter;
 
 
@@ -68,8 +86,9 @@ public class QomList extends DilogueFRagment {
     EditText search;
 
     String quantity;
-    String price;
-
+    String price,id;
+    private WebApi webApi;
+    Retrofit retrofit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,6 +102,9 @@ public class QomList extends DilogueFRagment {
         search = (EditText) rootView.findViewById(R.id.searchlist);
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add_white_24dp));
+        retrofit = ApiClient.getRetrofit();
+
+        webApi = retrofit.create(WebApi.class);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +116,11 @@ public class QomList extends DilogueFRagment {
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                fetchAcessToken(rootView);
+                if(isNetworkAvailable()) {
+                    fetchAcessToken(rootView);
+                }else {
+                    Toast.makeText(getContext(), "Please Check Network Connection", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -103,7 +129,8 @@ public class QomList extends DilogueFRagment {
                     @Override public void onItemClick(View view, int position) {
                         // do whatever
 
-                        final QomModel selectedObject = itemList.get(position);
+                         QomModel selectedObject = itemList.get(position);
+                         id = selectedObject.getId();
                         Toast.makeText(getActivity(), selectedObject.getId()+"----Name"+selectedObject.getName(), Toast.LENGTH_SHORT).show();
 
 
@@ -128,12 +155,12 @@ public class QomList extends DilogueFRagment {
                                     quantity = "0";
 
                                 }else{
-
+                                    //final QomModel selectedObject = itemList.get(position);
                                     quantity = quantityEdt.getText().toString();
                                     price = priceedt.getText().toString();
-
-
-                                   // new  UpdateQomAsyncTask().execute(ServerLinks.BASE_URL_NEW+"update_item_and_qom/+"+selectedObject.getId()+"?"+acess_token);
+                                    dialog.dismiss();
+                                    updateQom();
+                                 //   new  UpdateQomAsyncTask().execute(ServerLinks.BASE_URL_NEW+"update_item_and_qom/+"+selectedObject.getId()+"?"+acess_token);
 
 
                                 }
@@ -164,7 +191,14 @@ public class QomList extends DilogueFRagment {
 
 
 
-        fetchAcessToken(rootView);
+        if(isNetworkAvailable()) {
+            fetchAcessToken(rootView);
+        }else {
+            Toast.makeText(getContext(), "Please Check Network Connection", Toast.LENGTH_LONG).show();
+        }
+
+
+
 
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -199,16 +233,78 @@ public class QomList extends DilogueFRagment {
         itemlistAdapter.updateList(temp);
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
+
+    private void  updateQom(){
+
+        final ProgressBar pprogressBar = (ProgressBar)rootView.findViewById(R.id.progressBarDil);
+        //making the progressbar visible
+        pprogressBar.setVisibility(View.VISIBLE);
+
+        UpdateQomRequest updateQomRequest = new UpdateQomRequest();
+
+        updateQomRequest.setId(Long.valueOf(id));
+        updateQomRequest.setPrice(Double.valueOf(price));
+        updateQomRequest.setQuantity(Integer.valueOf(quantity));
+
+        Call<UpdateQomResponse> responseCall=webApi.updateQom(acess_token,updateQomRequest);
+
+        responseCall.enqueue(new Callback<UpdateQomResponse>() {
+            @Override
+            public void onResponse(Call<UpdateQomResponse> call, Response<UpdateQomResponse> response) {
+                pprogressBar.setVisibility(View.INVISIBLE);
+                String status=response.body().getStatus();
+                if(status.equals("SUCCESS")){
+                    Toast.makeText(getActivity(), "Item updated Sucessfully...", Toast.LENGTH_SHORT).show();
+                    getAllItemList();
+                }
+                else {
+                    Toast.makeText(getContext(), "Failed", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdateQomResponse> call, Throwable t) {
+                pprogressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(getContext(), "Failed", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
     private void fetchAcessToken(final View view) {
         //getting the progressbar
 
 
-        final ProgressBar pprogressBar = (ProgressBar) view.findViewById(R.id.progressBarDil);
-        //making the progressbar visible
-        pprogressBar.setVisibility(View.VISIBLE);
+        Call<TokenResponse> call=webApi.accessToken("password","fbApp","fbApp","admin","123");
 
-        //creating a string request to send request to the url
+        call.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, retrofit2.Response<TokenResponse> response) {
+              //  pprogressBar.setVisibility(View.INVISIBLE);
+                acess_token=response.body().getValue();
+                if (acess_token != null) {
+                    getAllItemList();
+                } else {
+                    Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+           //     pprogressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+      /*  //creating a string request to send request to the url
         StringRequest stringRequest = new StringRequest(Request.Method.GET, ServerLinks.getToken,
                 new Response.Listener<String>() {
                     @Override
@@ -244,18 +340,73 @@ public class QomList extends DilogueFRagment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
 
         //adding the string request to request queue
-        requestQueue.add(stringRequest);
+        requestQueue.add(stringRequest);*/
     }
 
-    private void getAllItemList(View view) {
+    private void getAllItemList() {
         //getting the progressbar
 
-
-        final ProgressBar pprogressBar = (ProgressBar) view.findViewById(R.id.progressBarDil);
+        itemLists.clear();
+        itemList.clear();
+        final ProgressBar pprogressBar = (ProgressBar) rootView.findViewById(R.id.progressBarDil);
         //making the progressbar visible
         pprogressBar.setVisibility(View.VISIBLE);
 
-        //creating a string request to send request to the url
+        Call<GetAllQomReponse> call=webApi.getAllQom(acess_token);
+        call.enqueue(new Callback<GetAllQomReponse>() {
+            @Override
+            public void onResponse(Call<GetAllQomReponse> call, Response<GetAllQomReponse> response) {
+                pprogressBar.setVisibility(View.INVISIBLE);
+
+                Log.d("Tag","value");
+                String status=response.body().getStatus();
+                if(status.equals("SUCCESS")){
+
+                    itemLists=response.body().getResult();
+                    for(int i=0;i<itemLists.size();i++){
+                        int id=response.body().getResult().get(i).getId();
+                        String name=response.body().getResult().get(i).getName();
+                        String description=response.body().getResult().get(i).getDescription();
+                        double price=response.body().getResult().get(i).getPrice();
+                        String status1=response.body().getResult().get(i).getStatus();
+                        int unit_id=response.body().getResult().get(i).getUnit_id();
+                        int entered_by=response.body().getResult().get(i).getEntered_by();
+                        int quantity=response.body().getResult().get(i).getQuantity();
+                        String  qom_status=response.body().getResult().get(i).getQom_status();
+
+
+                    QomModel qomModel=new QomModel(name,description,price,status1,unit_id,String.valueOf(entered_by),String.valueOf(id),qom_status,quantity);
+                        itemList.add(qomModel);
+
+
+                    }
+
+
+                    if (!itemList.isEmpty()){
+                        itemlistAdapter = new QomListAdapter(itemList);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                        recycleview.setLayoutManager(mLayoutManager);
+                        recycleview.setItemAnimator(new DefaultItemAnimator());
+                        recycleview.setAdapter(itemlistAdapter);
+                        itemlistAdapter.notifyDataSetChanged();
+                    }
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<GetAllQomReponse> call, Throwable t) {
+                pprogressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(getContext(),"Failed",Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+
+       /* //creating a string request to send request to the url
         StringRequest stringRequest = new StringRequest(Request.Method.GET, ServerLinks.getqomlist + acess_token,
                 new Response.Listener<String>() {
                     @Override
@@ -314,7 +465,7 @@ public class QomList extends DilogueFRagment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
 
         //adding the string request to request queue
-        requestQueue.add(stringRequest);
+        requestQueue.add(stringRequest);*/
     }
 
     public class UpdateQomAsyncTask extends AsyncTask<String, String, String> {

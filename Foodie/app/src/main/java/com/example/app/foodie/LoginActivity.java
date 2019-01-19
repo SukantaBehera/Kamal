@@ -1,7 +1,10 @@
 package com.example.app.foodie;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +17,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.app.MyOrders.Common.ApiClient;
+import com.example.app.MyOrders.Common.WebApi;
+import com.example.app.Request.LoginRequest;
+import com.example.app.Response.LoginResponse;
+import com.example.app.Util.RegPrefManager;
 import com.example.sukanta.foodie.R;
 
 import org.json.JSONException;
@@ -28,7 +36,12 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class UsernameActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+public class LoginActivity extends AppCompatActivity {
 
     LinearLayout layoutuser_name;
     LinearLayout layoutpassword;
@@ -40,6 +53,8 @@ public class UsernameActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     SharedPreferenceClass sharedPreferenceClass;
     private int i = 0;
+    private WebApi webApi;
+    Retrofit retrofit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,21 +64,30 @@ public class UsernameActivity extends AppCompatActivity {
         userName = (EditText) findViewById(R.id.user_name);
         password = (EditText) findViewById(R.id.password);
         login = findViewById(R.id.btn_login);
-        sharedPreferenceClass = new SharedPreferenceClass(UsernameActivity.this);
-        progressDialog = new ProgressDialog(UsernameActivity.this);
+        sharedPreferenceClass = new SharedPreferenceClass(LoginActivity.this);
+        progressDialog = new ProgressDialog(LoginActivity.this);
+         retrofit = ApiClient.getRetrofit();
+
+        webApi = retrofit.create(WebApi.class);
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (userName.getText().toString().equals("")){
                     userName.setError("Enter User name");
-                   // Toast.makeText(UsernameActivity.this, "Enter user name", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(LoginActivity.this, "Enter user name", Toast.LENGTH_SHORT).show();
                 } else if (password.getText().toString().equals("")){
                     password.setError("Enter password");
-                    //Toast.makeText(UsernameActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    new loginasynctask().execute(ServerLinks.LOGIN_USER);
+                 //   new loginasynctask().execute(ServerLinks.LOGIN_USER);
+                    if(isNetworkAvailable()) {
+                        loginResponse();
+                    }else {
+                        Toast.makeText(LoginActivity.this, "Please Check Network Connection", Toast.LENGTH_LONG).show();
+                    }
                 }
 
             }
@@ -79,9 +103,59 @@ public class UsernameActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.anim_in, R.anim.anim_out);
         }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
+        private void loginResponse(){
+            final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.progressBarDil);
+            simpleProgressBar .setVisibility(View.VISIBLE);
+            LoginRequest loginRequest=new LoginRequest();
+            loginRequest.setUser_id(userName.getText().toString().trim());
+            loginRequest.setPassword(password.getText().toString().trim());
+            Call<LoginResponse> call = webApi.loginAdmin(loginRequest);
+
+            call.enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    simpleProgressBar.setVisibility(View.INVISIBLE);
+                    String status=response.body().getStatus();
+                    if(status.equals("SUCCESS")){
+                        String role=response.body().getResult().getRole();
+                        int userId=response.body().getResult().getUserId();
+                        String name=response.body().getResult().getName();
+                        String email=response.body().getResult().getEmailid();
+
+                        RegPrefManager.getInstance(LoginActivity.this).setLoginDetails(role,String.valueOf(userId),name,email);
 
 
 
+                        SharedPreferenceClass.writeString(LoginActivity.this, "ROLEID", role);
+                        SharedPreferenceClass.writeString(LoginActivity.this, "USERID", String.valueOf(userId));
+                        SharedPreferenceClass.writeString(LoginActivity.this, "NAME", name);
+                        SharedPreferenceClass.writeString(LoginActivity.this, "EMAILID", email);
+
+                        startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
+                        finish();
+                    }
+                    else {
+                        simpleProgressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(LoginActivity.this,"Failed",Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    simpleProgressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(LoginActivity.this,"Try again",Toast.LENGTH_LONG).show();
+                }
+            });
+
+        }
 
     public class loginasynctask extends AsyncTask<String, String, String> {
         final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.progressBarDil);
@@ -124,12 +198,12 @@ public class UsernameActivity extends AppCompatActivity {
                     String userId = jobj2.getString("userId");
                     String name = jobj2.getString("name");
                     String email = jobj2.getString("emailid");
-                    SharedPreferenceClass.writeString(UsernameActivity.this, "ROLEID", role);
-                    SharedPreferenceClass.writeString(UsernameActivity.this, "USERID", userId);
-                    SharedPreferenceClass.writeString(UsernameActivity.this, "NAME", name);
-                    SharedPreferenceClass.writeString(UsernameActivity.this, "EMAILID", email);
+                    SharedPreferenceClass.writeString(LoginActivity.this, "ROLEID", role);
+                    SharedPreferenceClass.writeString(LoginActivity.this, "USERID", userId);
+                    SharedPreferenceClass.writeString(LoginActivity.this, "NAME", name);
+                    SharedPreferenceClass.writeString(LoginActivity.this, "EMAILID", email);
 
-                    startActivity(new Intent(UsernameActivity.this, WelcomeActivity.class));
+                    startActivity(new Intent(LoginActivity.this, DrawerActivity.class));
                     finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "Invalid Credential...", Toast.LENGTH_SHORT).show();

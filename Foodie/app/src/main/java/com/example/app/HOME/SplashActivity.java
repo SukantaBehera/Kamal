@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.view.WindowManager;
 
 import com.example.app.MyOrders.Common.BaseActivity;
+import com.example.app.Util.RegPrefManager;
 import com.example.app.foodie.ConnectionDetector;
+import com.example.app.foodie.DrawerActivity;
+import com.example.app.foodie.LoginActivity;
 import com.example.app.foodie.PermissionUtil;
 import com.example.app.foodie.SharedPreferenceClass;
-import com.example.app.foodie.UsernameActivity;
-import com.example.app.foodie.WelcomeActivity;
 import com.example.sukanta.foodie.R;
 
 
@@ -25,23 +26,26 @@ public class SplashActivity extends BaseActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         );
-        String userid =  SharedPreferenceClass.readString(getApplicationContext(), "USERID","");
+       // String userid =  SharedPreferenceClass.readString(getApplicationContext(), "USERID","");
+
+        String userid= RegPrefManager.getInstance(this).getLoginUserID();
+
 
         PermissionUtil.checkPermission(SplashActivity.this);
         cd = new ConnectionDetector(SplashActivity.this);
         isInternetPresent = cd.isConnectingToInternet();
-        if(!isInternetPresent)
+      /*  if(!isInternetPresent)
         {
             cd.displayAlert();
-        }
-        else if (userid.isEmpty())
+        }*/
+         if (userid==null)
         {
-            Login();
+            startActivity(new Intent(SplashActivity.this,LoginActivity.class));
+            finish();
         }
         else{
-
-
-            HomeRun();
+             startActivity(new Intent(SplashActivity.this,DrawerActivity.class));
+             finish();
         }
     }
 
@@ -57,7 +61,7 @@ public class SplashActivity extends BaseActivity {
                     sleep(1*3000);
 
                     // After 5 seconds redirect to another intent
-                    Intent i=new Intent(getBaseContext(), UsernameActivity.class);
+                    Intent i=new Intent(getBaseContext(), LoginActivity.class);
                     startActivity(i);
                     //Remove activity
                     finish();
@@ -91,7 +95,7 @@ public class SplashActivity extends BaseActivity {
                     {
                         cd.displayAlert();
                     }
-                    Intent i=new Intent(getBaseContext(), WelcomeActivity.class);
+                    Intent i=new Intent(getBaseContext(), DrawerActivity.class);
                     startActivity(i);
 
                     //Remove activity

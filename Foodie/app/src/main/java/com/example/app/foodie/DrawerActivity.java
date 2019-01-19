@@ -35,9 +35,10 @@ import com.example.app.QOM.UI.QomList;
 import com.example.app.USERLIST.UI.ViewDistributor;
 import com.example.app.USERLIST.UI.ViewEmployee;
 import com.example.app.USERLIST.UI.ViewFranchisor;
+import com.example.app.Util.RegPrefManager;
 import com.example.sukanta.foodie.R;
 
-public class WelcomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static Toolbar toolbar;
     FragmentManager mFragmentManager;
@@ -56,7 +57,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        sessionManager = new SessionManager(WelcomeActivity.this);
+        sessionManager = new SessionManager(DrawerActivity.this);
 
 
         rolename=  SharedPreferenceClass.readString(getApplicationContext(), "ROLEID","");
@@ -293,7 +294,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
                     public void onClick(DialogInterface dialog, int id) {
                        // sharedPreferenceClass.setValue_string("ROLEID", "");
 
-                        Intent intent1 = new Intent(WelcomeActivity.this, LoginActivity.class);
+                        Intent intent1 = new Intent(DrawerActivity.this, LoginActivity.class);
                         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         startActivity(intent1);
@@ -447,7 +448,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
             else if (id == R.id.logout) {
 
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(WelcomeActivity.this);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DrawerActivity.this);
 
                 // set title
                 alertDialogBuilder.setTitle("Logout!!");
@@ -460,8 +461,10 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
                             public void onClick(DialogInterface dialog, int id) {
                                 // if this button is clicked, close
                                 // current activity
+                                RegPrefManager.getInstance(DrawerActivity.this).Clear();
                                 sessionManager.logoutUser();
-                                SharedPreferenceClass.clearData(WelcomeActivity.this);
+                                SharedPreferenceClass.clearData(DrawerActivity.this);
+
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -488,7 +491,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
                     public void onClick(DialogInterface dialog, int id) {
                         // sharedPreferenceClass.setValue_string("ROLEID", "");
 
-                        Intent intent1 = new Intent(WelcomeActivity.this, LoginActivity.class);
+                        Intent intent1 = new Intent(DrawerActivity.this, LoginActivity.class);
                         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         startActivity(intent1);

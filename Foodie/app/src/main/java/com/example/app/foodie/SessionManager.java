@@ -61,7 +61,7 @@ public class SessionManager {
         // Check login status
         if(!this.isLoggedIn()){
             // user is not logged in redirect him to Login Activity
-            Intent i = new Intent(_context, UsernameActivity.class);
+            Intent i = new Intent(_context, LoginActivity.class);
             // Closing all the Activities
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
@@ -71,7 +71,7 @@ public class SessionManager {
             // Staring Login Activity
             _context.startActivity(i);
         }else{
-            Intent i = new Intent(_context, WelcomeActivity.class);
+            Intent i = new Intent(_context, DrawerActivity.class);
             // Closing all the Activities
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
@@ -104,7 +104,7 @@ public class SessionManager {
         editor.commit();
 
         // After logout redirect user to Loing Activity
-        Intent i = new Intent(_context, UsernameActivity.class);
+        Intent i = new Intent(_context, LoginActivity.class);
         // Closing all the Activities
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
 

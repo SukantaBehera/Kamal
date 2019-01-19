@@ -14,13 +14,13 @@ import retrofit2.Retrofit;
 
 public class ItemsInteracterImpl implements ItemsInteracter {
 
-
+    WebApi webApi;
 
 
     @Override
     public void placeOrder(OrderRequest request, String acess_token, final ItemListener listener) {
         Retrofit retrofit = ApiClient.getRetrofit();
-        WebApi webApi = retrofit.create(WebApi.class);
+         webApi = retrofit.create(WebApi.class);
         Call<OrderPlacedResponse> call = webApi.takeOrder(request,acess_token);
         call.enqueue(new Callback<OrderPlacedResponse>() {
             @Override

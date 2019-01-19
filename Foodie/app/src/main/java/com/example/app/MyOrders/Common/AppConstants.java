@@ -5,6 +5,11 @@ public class AppConstants {
 
     public static  final String takeOrder = "api/orderitem/execute-update-purchase";
 
+    public static  final String LOGIN = "userauth-svc/userlogin";
+    public static  final String TOKEN="oauth/token";
+    public static  final String QOMLIST="api/itemsvc/getall_item_and_qom";
+    public static  final String UPDATEQOM="api/itemsvc/update_item_and_qom";
+
    // public static  final String takeOrder = "api/orderitem/executeorder";
     public static final String SUCCESS = "success" ;
 

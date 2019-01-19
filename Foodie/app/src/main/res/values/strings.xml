@@ -20,6 +20,7 @@
     <!--Item Resourses for Admin-->
     <string name="dashboard">Dashboard</string>
     <string name="app_registeration">Registration</string>
+    <string name="user">Users</string>
     <string name="app_register">Register</string>
     <string name="orders">Order History</string>
     <string name="order">Place New Order</string>

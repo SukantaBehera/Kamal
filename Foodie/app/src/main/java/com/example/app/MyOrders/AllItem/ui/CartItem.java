@@ -21,8 +21,8 @@ import com.example.app.MyOrders.AllItem.datamodels.OrderItem;
 import com.example.app.MyOrders.AllItem.datamodels.PaymentDetails;
 import com.example.app.MyOrders.AllItem.mvp.ItemsView;
 import com.example.app.MyOrders.Common.BaseActivity;
+import com.example.app.foodie.DrawerActivity;
 import com.example.sukanta.foodie.R;
-import com.example.app.foodie.WelcomeActivity;
 
 import java.util.ArrayList;
 
@@ -96,7 +96,7 @@ public class CartItem extends BaseActivity implements ItemsView{
             submit.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), "Order Placed Sucessfully...", Toast.LENGTH_SHORT).show();
 
-            Intent in1 = new Intent(CartItem.this, WelcomeActivity.class);
+            Intent in1 = new Intent(CartItem.this, DrawerActivity.class);
             startActivity(in1);
             finish();
 

@@ -13,6 +13,8 @@ public class QomModel {
     Integer quantity_avail;
 
 
+
+
     public QomModel(String name, String description, double price, String status, Integer unit_id, String entered_by, String id, String qom_status, Integer quantity_avail) {
         this.name = name;
         this.description = description;

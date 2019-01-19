@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import com.example.sukanta.foodie.R;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivitynouse extends AppCompatActivity {
     ConnectionDetector cd = null;
     SessionManager sessionManager = null;
     LinearLayout splashLogo;
@@ -22,17 +22,17 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
        /* splashLogo = (LinearLayout)findViewById(R.id.splash_logo);*/
-        sessionManager = new SessionManager(SplashActivity.this);
+        sessionManager = new SessionManager(SplashActivitynouse.this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-        PermissionUtil.checkPermission(SplashActivity.this);
-        cd = new ConnectionDetector(SplashActivity.this);
+        PermissionUtil.checkPermission(SplashActivitynouse.this);
+        cd = new ConnectionDetector(SplashActivitynouse.this);
         isInternetPresent = cd.isConnectingToInternet();
 
-        SharedPreferenceClass.clearData(DrawerActivity.this);
+       // SharedPreferenceClass.clearData(DrawerActivity.this);
         // check for Internet status
         if (!isInternetPresent) {
             // Internet connection is not present
@@ -47,7 +47,7 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     sessionManager.checkLogin();
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    Intent intent = new Intent(SplashActivitynouse.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                     overridePendingTransition(R.anim.right_in, R.anim.left_out);

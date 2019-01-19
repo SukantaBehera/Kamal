@@ -158,7 +158,8 @@ public class SharedPreferenceClass {
 	 * @param context context
 	 */
 	public static void clearData(Context context) {
-		getEditor(context).clear().commit();
+		getEditor(context).clear();
+		getEditor(context).commit();
 	}
 }
 
