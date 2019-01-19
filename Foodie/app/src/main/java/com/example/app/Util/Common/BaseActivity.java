@@ -1,4 +1,4 @@
-package com.example.app.MyOrders.Common;
+package com.example.app.Util.Common;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -17,8 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.app.MyOrders.Common.ApiClient;
-import com.example.app.MyOrders.Common.WebApi;
+import com.example.app.Util.Common.ApiClient;
+import com.example.app.Util.Common.WebApi;
 import com.example.app.Request.LoginRequest;
 import com.example.app.Response.LoginResponse;
 import com.example.app.Util.RegPrefManager;

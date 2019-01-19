@@ -1,13 +1,18 @@
 package com.example.app.USERLIST.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.example.app.foodie.DrawerActivity;
 import com.example.sukanta.foodie.R;
 
 public class ViewEmployeeDetails extends AppCompatActivity {
@@ -20,10 +25,24 @@ public class ViewEmployeeDetails extends AppCompatActivity {
     TextView email_id;
     TextView status;
     TextView user_id;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_employee_details);
+
+
+        toolbar = findViewById(R.id.toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ViewEmployeeDetails.this, DrawerActivity.class));
+                finish();
+            }
+        });
+
         emp_id = findViewById(R.id.dist_id);
         Photo = findViewById(R.id.distribitor_photo);
         name = findViewById(R.id.companynamelist);

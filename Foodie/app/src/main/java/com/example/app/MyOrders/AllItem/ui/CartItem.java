@@ -20,7 +20,7 @@ import com.example.app.MyOrders.AllItem.datamodels.OrderDetails;
 import com.example.app.MyOrders.AllItem.datamodels.OrderItem;
 import com.example.app.MyOrders.AllItem.datamodels.PaymentDetails;
 import com.example.app.MyOrders.AllItem.mvp.ItemsView;
-import com.example.app.MyOrders.Common.BaseActivity;
+import com.example.app.Util.Common.BaseActivity;
 import com.example.app.foodie.DrawerActivity;
 import com.example.sukanta.foodie.R;
 

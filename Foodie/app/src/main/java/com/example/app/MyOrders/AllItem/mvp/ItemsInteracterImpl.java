@@ -4,8 +4,8 @@ package com.example.app.MyOrders.AllItem.mvp;
 
 import com.example.app.MyOrders.AllItem.datamodels.OrderPlacedResponse;
 import com.example.app.MyOrders.AllItem.datamodels.OrderRequest;
-import com.example.app.MyOrders.Common.ApiClient;
-import com.example.app.MyOrders.Common.WebApi;
+import com.example.app.Util.Common.ApiClient;
+import com.example.app.Util.Common.WebApi;
 
 import retrofit2.Call;
 import retrofit2.Callback;

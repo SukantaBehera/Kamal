@@ -25,16 +25,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.app.ITEM.UI.AddItemsActivity;
 import com.example.app.ITEM.UTIL.DilogueFRagment;
-import com.example.app.MyOrders.Common.ApiClient;
-import com.example.app.MyOrders.Common.RecyclerItemClickListener;
-import com.example.app.MyOrders.Common.WebApi;
+import com.example.app.Util.Common.ApiClient;
+import com.example.app.Util.Common.RecyclerItemClickListener;
+import com.example.app.Util.Common.WebApi;
 import com.example.app.QOM.Adapter.QomListAdapter;
 import com.example.app.QOM.Model.QomModel;
 import com.example.app.Request.UpdateQomRequest;
@@ -42,12 +37,9 @@ import com.example.app.Response.GetAllQomReponse;
 import com.example.app.Response.ResultQOM;
 import com.example.app.Response.TokenResponse;
 import com.example.app.Response.UpdateQomResponse;
-import com.example.app.foodie.LoginActivity;
-import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;
 import com.example.sukanta.foodie.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
