@@ -31,6 +31,8 @@ public class SplashActivity extends AppCompatActivity {
         PermissionUtil.checkPermission(SplashActivity.this);
         cd = new ConnectionDetector(SplashActivity.this);
         isInternetPresent = cd.isConnectingToInternet();
+
+        SharedPreferenceClass.clearData(DrawerActivity.this);
         // check for Internet status
         if (!isInternetPresent) {
             // Internet connection is not present
@@ -39,11 +41,13 @@ public class SplashActivity extends AppCompatActivity {
 
         }else{
 
+
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     sessionManager.checkLogin();
-                    Intent intent = new Intent(SplashActivity.this, UsernameActivity.class);
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(intent);
                     finish();
                     overridePendingTransition(R.anim.right_in, R.anim.left_out);

@@ -293,7 +293,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
                     public void onClick(DialogInterface dialog, int id) {
                        // sharedPreferenceClass.setValue_string("ROLEID", "");
 
-                        Intent intent1 = new Intent(WelcomeActivity.this, UsernameActivity.class);
+                        Intent intent1 = new Intent(WelcomeActivity.this, LoginActivity.class);
                         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         startActivity(intent1);
@@ -488,7 +488,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
                     public void onClick(DialogInterface dialog, int id) {
                         // sharedPreferenceClass.setValue_string("ROLEID", "");
 
-                        Intent intent1 = new Intent(WelcomeActivity.this, UsernameActivity.class);
+                        Intent intent1 = new Intent(WelcomeActivity.this, LoginActivity.class);
                         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
                         startActivity(intent1);
