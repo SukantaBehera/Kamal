@@ -1,53 +1,45 @@
 package com.example.app.Request;
 
-public class UpdateFranchisorRequest {
-    private String dist_id;
-    private String company_name;
-    private String unit_holder_name;
-    private String unit_address;
-    private String permanent_address;
+public class UpdateEmployeeRequest {
+    private Long emp_id;
+    private String first_name;
+    private String last_name;
+    private String designation;
     private String phone_no;
+    private String address;
     private String email_id;
     private String status;
 
-    public String getDist_id() {
-        return dist_id;
+    public Long getEmp_id() {
+        return emp_id;
     }
 
-    public void setDist_id(String dist_id) {
-        this.dist_id = dist_id;
+    public void setEmp_id(Long emp_id) {
+        this.emp_id = emp_id;
     }
 
-    public String getCompany_name() {
-        return company_name;
+    public String getFirst_name() {
+        return first_name;
     }
 
-    public void setCompany_name(String company_name) {
-        this.company_name = company_name;
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
     }
 
-    public String getUnit_holder_name() {
-        return unit_holder_name;
+    public String getLast_name() {
+        return last_name;
     }
 
-    public void setUnit_holder_name(String unit_holder_name) {
-        this.unit_holder_name = unit_holder_name;
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 
-    public String getUnit_address() {
-        return unit_address;
+    public String getDesignation() {
+        return designation;
     }
 
-    public void setUnit_address(String unit_address) {
-        this.unit_address = unit_address;
-    }
-
-    public String getPermanent_address() {
-        return permanent_address;
-    }
-
-    public void setPermanent_address(String permanent_address) {
-        this.permanent_address = permanent_address;
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
     public String getPhone_no() {
@@ -56,6 +48,14 @@ public class UpdateFranchisorRequest {
 
     public void setPhone_no(String phone_no) {
         this.phone_no = phone_no;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getEmail_id() {

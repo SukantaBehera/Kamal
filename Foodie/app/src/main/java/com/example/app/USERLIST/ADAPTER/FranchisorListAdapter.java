@@ -59,7 +59,7 @@ public class FranchisorListAdapter extends RecyclerView.Adapter<FranchisorListAd
                 Intent intent = new Intent(context,ViewFranchisorDetails.class);
 
                 intent.putExtra("fran_id",viewHolder.fran_id.getText().toString());
-                intent.putExtra("fran_id",viewHolder.company_name.getText().toString());
+                intent.putExtra("company_name",viewHolder.company_name.getText().toString());
                 intent.putExtra("phone_no",viewHolder.phone_no.getText().toString());
                 intent.putExtra("email_id",viewHolder.email_id.getText().toString());
                 intent.putExtra("unit_address",viewHolder.unit_address.getText().toString());

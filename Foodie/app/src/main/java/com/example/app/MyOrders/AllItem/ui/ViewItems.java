@@ -5,13 +5,18 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -65,8 +70,15 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
 
 
     ItemsPresenterImpl itemsPresenter;
+    TextView textCartItemCount;
+    int mCartItemCount = 10;
 
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Confirm this fragment has menu items.
+        setHasOptionsMenu(true);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,7 +89,7 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
         recycleview = (RecyclerView) rootView.findViewById(R.id.item_list);
         cartCount = (TextView) rootView.findViewById(R.id.cartCount);
         LinearLayout cartLayout = (LinearLayout) rootView.findViewById(R.id.cartLayout);
-        cartLayout.setVisibility(View.VISIBLE);
+        cartLayout.setVisibility(View.GONE);
         cartCount.setText("Total Count: 0  Total Price : 0.00 ");
 
         itemsPresenter = new ItemsPresenterImpl(this);
@@ -195,6 +207,7 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
                                         sumprice = sumprice + pocketDetailOne.getTotal_price();
 
                                     }
+                                    setupBadge();
                                     cartCount.setText("Total Items added ="+cartlist.size()+"   Total Price="+new DecimalFormat("#.##").format(sumprice));
 
                                     totalAmount = sumprice;
@@ -421,4 +434,73 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
     public void showError(String message) {
 
     }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the fragment menu items.
+        inflater.inflate(R.menu.cartmenu, menu);
+
+        final MenuItem menuItem = menu.findItem(R.id.cartmenuId);
+
+        View actionView = MenuItemCompat.getActionView(menuItem);
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        setupBadge();
+
+        actionView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+
+
+        if(itemId == R.id.cartmenuId)
+        {
+            if(cartlist.size() > 0){
+                OrderDetails orderDetail = new OrderDetails(Integer.parseInt(userId),"EXECUTED","2018-12-2");
+                PaymentDetails paymentDetails = new PaymentDetails(1,5,totalAmount,"SUCCESS","2019-12-2");
+
+                Intent in1 = new Intent(getActivity(),CartItem.class);
+                in1.putExtra("itemArray",cartlist);
+                in1.putExtra("paymentdetail",paymentDetails);
+                in1.putExtra("orderDetail",orderDetail);
+                in1.putExtra("totalPrice",totalAmount+"");
+                in1.putExtra("acesstoken",acess_token);
+                startActivity(in1);
+                //itemsPresenter.createOrder(orderDetail,paymentDetails,cartlist);
+            }else {
+                Toast.makeText(getActivity(), "Please add atleast one item to cart...", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setupBadge() {
+
+        if (textCartItemCount != null) {
+            if (cartlist.size() == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(Math.min(cartlist.size(), 99)));
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
 }

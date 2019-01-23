@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.example.app.foodie.DrawerActivity;
 import com.example.sukanta.foodie.R;
 
-public class ViewEmployeeDetails extends AppCompatActivity {
+public class ViewEmployeeDetails extends AppCompatActivity implements View.OnClickListener {
     TextView emp_id;
     TextView name;
     ImageView Photo;
@@ -25,6 +25,7 @@ public class ViewEmployeeDetails extends AppCompatActivity {
     TextView email_id;
     TextView status;
     TextView user_id;
+    ImageView updateemp ;
     private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class ViewEmployeeDetails extends AppCompatActivity {
         email_id = findViewById(R.id.distributor_mobile_number);
         status = findViewById(R.id.dist_email);
         user_id = findViewById(R.id.user_id);
+        updateemp = findViewById(R.id.updateemp);
+        updateemp.setOnClickListener(this);
 
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -83,5 +86,14 @@ public class ViewEmployeeDetails extends AppCompatActivity {
             user_id.setText(getUserid);
         }
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.updateemp:
+
+                break;
+        }
     }
 }

@@ -28,6 +28,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.example.app.Util.Common.Constants.RESPONSE_ERROR;
+import static com.example.app.Util.Common.Constants.RESPONSE_OK;
+
 
 public class ChangePasswordFragment extends Fragment {
 
@@ -105,7 +108,7 @@ public class ChangePasswordFragment extends Fragment {
            //     simpleProgressBar.setVisibility(View.INVISIBLE);
                 int code=response.code();
                 switch (code){
-                    case 200:
+                    case RESPONSE_OK:
                         String status = response.body().getStatus();
                         if (status.equals("SUCCESS")) {
                             String msg = response.body().getMessage();
@@ -113,7 +116,7 @@ public class ChangePasswordFragment extends Fragment {
                             startActivity(new Intent(getContext(), DrawerActivity.class));
                         }
                         break;
-                    case 417:
+                    case RESPONSE_ERROR:
                         Toast.makeText(getActivity(), "Please Enter Correct old Password", Toast.LENGTH_SHORT).show();
                         break;
                 }

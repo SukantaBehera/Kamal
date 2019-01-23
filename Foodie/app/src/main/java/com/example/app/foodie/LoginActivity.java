@@ -41,6 +41,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.example.app.Util.Common.Constants.RESPONSE_ERROR;
+import static com.example.app.Util.Common.Constants.RESPONSE_OK;
+
 public class LoginActivity extends AppCompatActivity {
 
     LinearLayout layoutuser_name;
@@ -125,10 +128,10 @@ public class LoginActivity extends AppCompatActivity {
                     simpleProgressBar.setVisibility(View.INVISIBLE);
                     int code=response.code();
                     switch (code){
-                        case 417:
+                        case RESPONSE_ERROR:
                             Toast.makeText(LoginActivity.this,"Please Enter Correct Login Credential",Toast.LENGTH_LONG).show();
                             break;
-                        case 200:
+                        case RESPONSE_OK:
                             String status=response.body().getStatus();
                             if(status.equals("SUCCESS")){
                                 String role=response.body().getResult().getRole();

@@ -14,8 +14,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="back" />
-                            <entry key="sourceFile" value="D:\DownloadImages\left-arrow.svg" />
+                            <entry key="height" value="15" />
+                            <entry key="outputName" value="ic_angle_arrow_down" />
+                            <entry key="overrideSize" value="true" />
+                            <entry key="sourceFile" value="D:\komal\icon\angle-arrow-down.svg" />
+                            <entry key="width" value="15" />
                           </map>
                         </option>
                       </PersistentState>

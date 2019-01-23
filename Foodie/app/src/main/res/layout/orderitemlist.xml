@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/orderlayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dimen_10"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
     android:orientation="horizontal"
     android:layout_gravity="center"
     android:background="@drawable/custom_border"
@@ -21,7 +22,7 @@
         android:padding="5dp"
         android:text="0"
         android:layout_margin="5dp"
-        android:textSize="25dp"
+        android:textSize="17dp"
         android:background="@drawable/kamal_png" />
 
     <LinearLayout

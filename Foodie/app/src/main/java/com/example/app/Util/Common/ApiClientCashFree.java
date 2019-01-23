@@ -7,7 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiClient {
+public class ApiClientCashFree {
 
     public static Retrofit getRetrofit() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -21,7 +21,7 @@ public class ApiClient {
 
         return new Retrofit
                 .Builder()
-                .baseUrl(AppConstants.BASEURL)
+                .baseUrl(AppConstants.BASEURL_CASHFREE)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

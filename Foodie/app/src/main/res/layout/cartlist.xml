@@ -26,16 +26,30 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
         <TextView
             android:id="@+id/itemname"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1.6"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:padding="2dp"
+            android:lines="1"
+            android:ellipsize="end"
             android:text="Item Name"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/logintextColor"/>
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:src="@drawable/delete"
+                android:layout_height="20dp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/itemprice"
@@ -49,6 +63,36 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Description" />
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+
+              android:weightSum="2"
+              android:layout_marginTop="2dp"
+              android:layout_marginBottom="2dp">
+              <TextView
+                  android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:layout_height="wrap_content"
+                  android:text="Qty "
+                  android:gravity="right"
+                  android:textSize="15sp"
+                  android:textColor="@android:color/black"
+                  android:layout_marginRight="10dp"
+                  android:layout_marginTop="10dp"/>
+              <Spinner
+                  android:id="@+id/spinner"
+                  android:layout_width="0dp"
+                  android:layout_weight="1"
+                  android:gravity="right"
+                  android:layout_centerHorizontal="true"
+
+                  android:layout_height="wrap_content"
+                 />
+
+          </LinearLayout>
 
 
 

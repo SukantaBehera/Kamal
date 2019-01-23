@@ -1,7 +1,7 @@
 package com.example.app.Request;
 
-public class UpdateFranchisorRequest {
-    private String fran_id;
+public class UpdateDistributorRequest {
+    private String dist_id;
     private String company_name;
     private String unit_holder_name;
     private String unit_address;
@@ -11,11 +11,11 @@ public class UpdateFranchisorRequest {
     private String status;
 
     public String getDist_id() {
-        return fran_id;
+        return dist_id;
     }
 
     public void setDist_id(String dist_id) {
-        this.fran_id = dist_id;
+        this.dist_id = dist_id;
     }
 
     public String getCompany_name() {

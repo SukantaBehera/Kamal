@@ -3,6 +3,8 @@ package com.example.app.Util.Common;
 public class AppConstants {
     public static  final String BASEURL = "http://209.97.136.18:8080/rest-svc/";
 
+    public static  final String BASEURL_CASHFREE = "https://test.cashfree.com/api/v2/";
+
     public static  final String takeOrder = "api/orderitem/execute-update-purchase";
 
     public static  final String LOGIN = "userauth-svc/userlogin";
@@ -10,8 +12,13 @@ public class AppConstants {
     public static  final String QOMLIST="api/itemsvc/getall_item_and_qom";
     public static  final String UPDATEQOM="api/itemsvc/update_item_and_qom";
     public static  final String CHANGEPASSWORD="api/changepassword";
+    public static  final String UPDATEFRANCHISOR="api/edit-franchisor-by-id";
+    public static  final String UPDATEDISTRIBUTOR="api/edit-distriButor-by-id";
+    public static  final String UPDATEEMPLOYEE="api/edit-employee-by-id";
 
-   // public static  final String takeOrder = "api/orderitem/executeorder";
+    public static  final String CASHFREE="cftoken/order";
+
+    // public static  final String takeOrder = "api/orderitem/executeorder";
     public static final String SUCCESS = "success" ;
 
 

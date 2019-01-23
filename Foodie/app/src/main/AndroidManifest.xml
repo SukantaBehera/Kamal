@@ -14,16 +14,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PaymentActivity"></activity>
+        <activity android:name="com.example.app.USERLIST.UI.UpdateFranchisorActivity" />
         <activity
             android:name="com.example.app.HOME.SplashActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/NoTitleAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.example.app.foodie.DrawerActivity"
             android:screenOrientation="sensorPortrait"
@@ -32,36 +34,30 @@
             android:name="com.example.app.foodie.LoginActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/NoTitleAppTheme" />
-
-        <activity android:name="com.example.app.USERLIST.UI.ViewDistributorDetails"
+        <activity
+            android:name="com.example.app.USERLIST.UI.ViewDistributorDetails"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.example.app.MyOrders.AllItem.ui.CartItem"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.example.app.ITEM.UI.AddItemsActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.example.app.USERLIST.UI.AddEmplyoeeActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.example.app.USERLIST.UI.AddDistributorActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.example.app.USERLIST.UI.AddFranchisorActivity"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.example.app.USERLIST.UI.ViewFranchisorDetails"
             android:screenOrientation="sensorPortrait"
@@ -74,14 +70,10 @@
             android:name="com.example.app.MyOrders.OrderListById.UI.ViewDetailsOrders"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name="com.example.app.MyOrders.OrderListById.UI.ItemDetail"
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
-
     </application>
+
 </manifest>

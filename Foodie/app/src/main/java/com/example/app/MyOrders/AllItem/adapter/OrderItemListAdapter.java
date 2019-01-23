@@ -1,5 +1,6 @@
 package com.example.app.MyOrders.AllItem.adapter;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.app.ITEM.MODEL.ItemDetail;
@@ -64,8 +66,10 @@ public class OrderItemListAdapter extends RecyclerView.Adapter<OrderItemListAdap
         if(listItemDetail.get(position).getBuyStatus().equals("NOT")){
 
         }else {
-           viewHolder.pPhoto.setBackgroundResource(R.drawable.ic_check_green_24dp);
-           viewHolder.pPhoto.setText(listItemDetail.get(position).getBuyStatus());
+         /*  viewHolder.pPhoto.setBackgroundResource(R.drawable.ic_check_green_24dp);
+           viewHolder.pPhoto.setText(listItemDetail.get(position).getBuyStatus());*/
+            viewHolder.orderlayout.setBackgroundResource(R.drawable.custom_border_green);
+            viewHolder.pPhoto.setText(listItemDetail.get(position).getBuyStatus());
         }
 
     }
@@ -82,12 +86,15 @@ public class OrderItemListAdapter extends RecyclerView.Adapter<OrderItemListAdap
         TextView itemPrice;
         TextView itemDescription;
 
+        LinearLayout orderlayout;
+
         public ViewHolder (View view){
             super(view);
             pPhoto = view.findViewById(R.id.promoter_photo);
             ItemName = view.findViewById(R.id.itemname);
             itemPrice = view.findViewById(R.id.itemprice);
             itemDescription = view.findViewById(R.id.itemdescription);
+            orderlayout=view.findViewById(R.id.orderlayout);
 
         }
     }

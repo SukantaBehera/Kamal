@@ -9,11 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app.MyOrders.AllItem.adapter.CartAdapter;
+import com.example.app.MyOrders.AllItem.adapter.CustomAdapter;
 import com.example.app.MyOrders.AllItem.datamodels.OrderPlacedResponse;
 import com.example.app.MyOrders.AllItem.mvp.ItemsPresenterImpl;
 import com.example.app.MyOrders.AllItem.datamodels.OrderDetails;
@@ -42,6 +45,7 @@ public class CartItem extends BaseActivity implements ItemsView{
 
     String acess_token;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,7 @@ public class CartItem extends BaseActivity implements ItemsView{
         subTotal = findViewById(R.id.totalPrice);
         submit = findViewById(R.id.next);
         recycleview = findViewById(R.id.recycler_view);
+
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,7 +71,7 @@ public class CartItem extends BaseActivity implements ItemsView{
 
         subTotal.setText(totalPrice+"");
 
-        cartlistlistAdapter = new CartAdapter(cartlist);
+        cartlistlistAdapter = new CartAdapter(CartItem.this,cartlist);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recycleview.setLayoutManager(mLayoutManager);
         recycleview.setItemAnimator(new DefaultItemAnimator());
@@ -119,4 +124,6 @@ public class CartItem extends BaseActivity implements ItemsView{
     public void showError(String message) {
 
     }
+
+
 }
