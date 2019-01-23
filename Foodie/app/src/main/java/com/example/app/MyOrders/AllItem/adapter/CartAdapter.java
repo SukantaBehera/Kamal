@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app.MyOrders.AllItem.datamodels.OrderItem;
+import com.example.app.Response.ViewResultCart;
 import com.example.app.foodie.LoginActivity;
 import com.example.sukanta.foodie.R;
 
@@ -35,12 +36,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     int count = 0;*/
     Context context1;
     String quanty="null";
-
-    private ArrayList<OrderItem> listItemDetail;
+    String qty;
+    private ArrayList<ViewResultCart> listItemDetail;
 
     String[] itemlist={"1","2","3","4","5","more"};
+    int spinnerpos=0;
+    boolean flag;
 
-    public CartAdapter(Context context,ArrayList<OrderItem> listUsers) {
+    public CartAdapter(Context context,ArrayList<ViewResultCart> listUsers) {
         this.listItemDetail = listUsers;
         context1=context;
     }
@@ -56,24 +59,62 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int position) {
-        viewHolder.ItemName.setText(listItemDetail.get(position).getItem_name());
-        viewHolder.itemPrice.setText("Quantity: "+listItemDetail.get(position).getItem_count()+"   Total Price"+listItemDetail.get(position).getTotal_price());
+        ViewResultCart orderItem=listItemDetail.get(position);
+       final int position1=position;
+        viewHolder.ItemName.setText(orderItem.getName());
+       // viewHolder.itemPrice.setText("Quantity: "+listItemDetail.get(position).getItem_count()+"   Total Price"+listItemDetail.get(position).getTotal_price());
         //viewHolder.itemDescription.setText("Status: "+listItemDetail.get(position).getOrder_status());
-
-
+        viewHolder.qtyTv.setText("Quantity: "+orderItem.getTotalQuantity());
+        viewHolder.price.setText("Price:"+orderItem.getTotalPrice());
+        flag=false;
         CustomAdapter customAdapter=new CustomAdapter(context1,itemlist);
         viewHolder.spinner.setAdapter(customAdapter);
         viewHolder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String name=itemlist[position];
-               // viewHolder.itemPrice.setText("Qty:"+name);
-                viewHolder.itemPrice.setText("Quantity: "+name+"   Total Price"+listItemDetail.get(position).getTotal_price());
+                ViewResultCart orderItem=listItemDetail.get(position1);
+                 qty=itemlist[position];
+                Log.d("Tag",qty);
 
-              //  dialogDisplay();
-                if(name.equals("more")){
-                    dialogDisplay(view);
+                if(qty.equals("1")) {
+
+                    /*Log.d("Tag",name);
+                     viewHolder.qtyTv.setText("Quantity: "+orderItem.getItemCount());
+                     //int qtyv=Integer.valueOf(name);
+                  //   double pricev=listItemDetail.get(position1).getTotal_price();
+                    // double value=pricev*qtyv;
+                     viewHolder.price.setText(""+orderItem.getTotal_price());
+                    // double price=listItemDetail.get(position).getTotal_price();*/
+
+                    if(spinnerpos!=0){
+                        double price=orderItem.getPrice();
+                        double totalprice=Integer.parseInt(qty)*price;
+                        viewHolder.qtyTv.setText("Quantity: "+qty);
+                        viewHolder.price.setText(""+totalprice);
+                    }
+                    spinnerpos=0;
+
+                   // viewHolder.itemPrice.setText("Quantity: " + name);
+                }else if(qty.equals("more")){
+                    Log.d("Tag","Name====>"+qty);
+                    spinnerpos=2;
+
+                }else {
+                    Log.d("Tag",qty);
+                    spinnerpos=1;
+                    double price=orderItem.getPrice();
+                    double totalprice=Integer.parseInt(qty)*price;
+                    viewHolder.qtyTv.setText("Quantity: "+qty);
+                    viewHolder.price.setText(""+totalprice);
+                //    viewHolder.itemPrice.setText("Quantity: " + name);
+                  /*  double price=orderItem.getTotal_price();
+                    double totalprice=Integer.parseInt(name)*price;*/
+
+
+
+
                 }
+
             }
 
             @Override
@@ -81,9 +122,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
             }
         });
+
+
+
     }
 
-    private void dialogDisplay(View v) {
+    /*private void dialogDisplay(View v) {
 
 
         final Dialog dialog = new Dialog(context1);
@@ -119,7 +163,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         dialog.show();
 
 
-    }
+    }*/
 
     @Override
     public int getItemCount() {
@@ -128,16 +172,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView ItemName;
+        TextView ItemName,qtyTv,price;
         ImageView pPhoto;
-        TextView itemPrice;
+      //  TextView itemPrice;
         TextView itemDescription;
         Spinner spinner;
 
         public ViewHolder (View view){
             super(view);
             ItemName = view.findViewById(R.id.itemname);
-            itemPrice = view.findViewById(R.id.itemprice);
+            qtyTv = view.findViewById(R.id.qtyTv);
+            price=view.findViewById(R.id.price);
             itemDescription = view.findViewById(R.id.itemdescription);
             spinner=view.findViewById(R.id.spinner);
 

@@ -18,6 +18,7 @@ import com.example.app.Response.LoginResponse;
 import com.example.app.Response.TokenResponse;
 import com.example.app.Response.UpdateQomResponse;
 import com.example.app.Response.UpdateUserResponse;
+import com.example.app.Response.ViewAllItemResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -75,4 +76,6 @@ public interface WebApi {
     @POST(AppConstants.CASHFREE)
     Call<CashfreePaymantResponse> getCashFreeToken(@Body CashfreeMerchantRequest cashfreeMerchantRequest);
 
+    @GET(AppConstants.ALLITEMS)
+    Call<ViewAllItemResponse> getAllItem(@Query("access_token") String access_token);
 }

@@ -2,9 +2,13 @@ package com.example.app.MyOrders.AllItem.ui;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -17,21 +21,23 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.app.MyOrders.AllItem.adapter.OrderItemListAdapter;
+import com.example.app.MyOrders.AllItem.adapter.ViewListAdapter;
 import com.example.app.MyOrders.AllItem.datamodels.OrderPlacedResponse;
 import com.example.app.MyOrders.AllItem.mvp.ItemsPresenterImpl;
 import com.example.app.MyOrders.AllItem.mvp.ItemsView;
@@ -40,7 +46,15 @@ import com.example.app.ITEM.UTIL.DilogueFRagment;
 import com.example.app.MyOrders.AllItem.datamodels.OrderDetails;
 import com.example.app.MyOrders.AllItem.datamodels.OrderItem;
 import com.example.app.MyOrders.AllItem.datamodels.PaymentDetails;
+import com.example.app.Response.TokenResponse;
+import com.example.app.Response.ViewAllItemResponse;
+import com.example.app.Response.ViewResult;
+import com.example.app.Response.ViewResultCart;
+import com.example.app.Util.Common.ApiClient;
 import com.example.app.Util.Common.RecyclerItemClickListener;
+import com.example.app.Util.Common.WebApi;
+import com.example.app.Util.RegPrefManager;
+import com.example.app.foodie.LoginActivity;
 import com.example.sukanta.foodie.R;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;
@@ -48,10 +62,16 @@ import com.example.app.foodie.SharedPreferenceClass;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class ViewItems extends DilogueFRagment implements ItemsView {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+public class ViewItems extends DilogueFRagment  {
     ProgressDialog progressDialog;
     SharedPreferenceClass sharedPreferenceClass;
     int i;
@@ -62,6 +82,7 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
     ArrayList<OrderItem> cartlist = new ArrayList<OrderItem>();
     private OrderItemListAdapter itemlistAdapter;
     RecyclerView recycleview;
+    private ViewListAdapter viewListAdapter;
 
     FloatingActionButton fab;
     TextView cartCount;
@@ -72,7 +93,12 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
     ItemsPresenterImpl itemsPresenter;
     TextView textCartItemCount;
     int mCartItemCount = 10;
-
+    private WebApi webApi;
+    private RelativeLayout myorderLayout;
+    Retrofit retrofit;
+    private ArrayList<ViewResult> viewResultsArray;
+    private ArrayList<ViewResult> filterResultsArray;
+    private ArrayList<ViewResultCart> filterResultsArray1;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,62 +110,30 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.layout_item_list, container, false);
 
-        sharedPreferenceClass = new SharedPreferenceClass(getContext());
+
         progressDialog = new ProgressDialog(getContext());
         recycleview = (RecyclerView) rootView.findViewById(R.id.item_list);
-        cartCount = (TextView) rootView.findViewById(R.id.cartCount);
-        LinearLayout cartLayout = (LinearLayout) rootView.findViewById(R.id.cartLayout);
-        cartLayout.setVisibility(View.GONE);
-        cartCount.setText("Total Count: 0  Total Price : 0.00 ");
 
-        itemsPresenter = new ItemsPresenterImpl(this);
+        retrofit = ApiClient.getRetrofit();
 
-        userId=  SharedPreferenceClass.readString(getActivity(), "USERID","");
-
-        cartLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(cartlist.size() > 0){
-                    OrderDetails orderDetail = new OrderDetails(Integer.parseInt(userId),"EXECUTED","2018-12-2");
-                    PaymentDetails paymentDetails = new PaymentDetails(1,5,totalAmount,"SUCCESS","2019-12-2");
-
-                    Intent in1 = new Intent(getActivity(),CartItem.class);
-                    in1.putExtra("itemArray",cartlist);
-                    in1.putExtra("paymentdetail",paymentDetails);
-                    in1.putExtra("orderDetail",orderDetail);
-                    in1.putExtra("totalPrice",totalAmount+"");
-                    in1.putExtra("acesstoken",acess_token);
-                    startActivity(in1);
-                    //itemsPresenter.createOrder(orderDetail,paymentDetails,cartlist);
-                }else {
-                    Toast.makeText(getActivity(), "Please add atleast one item to cart...", Toast.LENGTH_SHORT).show();
-
-                }
-
-
-
-            }
-        });
-
-
-        fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-        fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add_white_24dp));
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getActivity(),"clicked fab icon",Toast.LENGTH_LONG).show();
-               // getActivity().startActivity(new Intent(getActivity(),AddItems.class));
-            }
-        });
+        webApi = retrofit.create(WebApi.class);
+        viewResultsArray=new ArrayList<>();
+        filterResultsArray=new ArrayList<>();
+        filterResultsArray1=new ArrayList<>();
+    myorderLayout=rootView.findViewById(R.id.myorderLayout);
+        if (isNetworkAvailable()) {
+            fetchAcessToken();
+        } else {
+            Toast.makeText(getContext(), "Please Check Network Connection", Toast.LENGTH_LONG).show();
+        }
 
 
         recycleview.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), recycleview ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                    @Override public void onItemClick(final View view, int position) {
                         // do whatever
 
-                        final ItemDetail selectedObject = itemList.get(position);
+                        final ViewResult selectedObject = viewResultsArray.get(position);
                         Toast.makeText(getActivity(), selectedObject.getId()+"----Name"+selectedObject.getName(), Toast.LENGTH_SHORT).show();
 
 
@@ -158,75 +152,33 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
                         dialogBuilder.setTitle("Enter Quantity");
                         dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-
-                                String quantity  = quantityEdt.getText().toString();
                                 if(quantityEdt.getText().toString().isEmpty()){
-                                    quantity = "0";
+                                    quantityEdt.setError("Please Enter quantity");
+                                }else {
+                                    String quantity_value = quantityEdt.getText().toString();
 
-                                }else if(quantityEdt.getText().toString().equals("0")){
+                                    double total=Integer.parseInt(quantity_value)*selectedObject.getPrice();
 
-                                    Toast.makeText(getActivity(), "Give value more than 0", Toast.LENGTH_SHORT).show();
-                                }else{
-
-                                    double totalPrice = 0.0;
-                                    double itemPrice = Double.parseDouble(selectedObject.getPrice());
-                                    totalPrice  = Integer.parseInt(quantity) * itemPrice;
-
-                                    OrderItem newItemAdded  =   new OrderItem(Integer.parseInt(selectedObject.getItemId()),Integer.parseInt(quantityEdt.getText().toString()),totalPrice,"2018-8-5","Active",selectedObject.getName());
-
-
-
-                                    boolean flag = true;
-                                    int k = 0;
-
-                                    if(cartlist.size()> 0){
-                                        for(int i = 0; i<cartlist.size();i++){
-                                            OrderItem pocketDetailone = cartlist.get(i);
-                                            if(pocketDetailone.getItem_id().equals(newItemAdded.getItem_id())){
-                                                flag = false;
-                                                k = i;
-                                            }
-                                        }
-
-                                        if(flag == false){
-                                            cartlist.set(k,newItemAdded);
-
-                                        }else{
-                                            cartlist.add(newItemAdded);
-                                        }
-                                    }else{
-                                        cartlist.add(newItemAdded);
-                                    }
-
-
-
-
-                                    double sumprice = 0.0;
-                                    for(int i = 0; i<cartlist.size(); i++){
-                                        OrderItem pocketDetailOne = cartlist.get(i);
-                                        sumprice = sumprice + pocketDetailOne.getTotal_price();
-
-                                    }
-                                    setupBadge();
-                                    cartCount.setText("Total Items added ="+cartlist.size()+"   Total Price="+new DecimalFormat("#.##").format(sumprice));
-
-                                    totalAmount = sumprice;
-
-                                    selectedObject.setBuyStatus(quantity);
-                                    itemlistAdapter = new OrderItemListAdapter(itemList);
-                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                                    recycleview.setLayoutManager(mLayoutManager);
-                                    recycleview.setItemAnimator(new DefaultItemAnimator());
-                                    recycleview.setAdapter(itemlistAdapter);
-                                    itemlistAdapter.notifyDataSetChanged();
-
+                                    ViewResultCart viewResult=new ViewResultCart();
+                                   // viewResult.setName(selectedObject.getName());
+                                    viewResult.setDescription(selectedObject.getDescription());
+                                    viewResult.setEntered_by(selectedObject.getEntered_by());
+                                    viewResult.setId(selectedObject.getId());
+                                    viewResult.setIs_active(selectedObject.getIs_active());
+                                    viewResult.setItem_id(selectedObject.getItem_id());
+                                    viewResult.setName(selectedObject.getName());
+                                    viewResult.setPrice(selectedObject.getPrice());
+                                    viewResult.setTotalPrice(total);
+                                    viewResult.setTotalQuantity(Integer.parseInt(quantity_value));
+                                    filterResultsArray1.add(viewResult);
 
 
                                 }
-
-
+                                setupBadge();
+                                dialog.dismiss();
                                 //cartList.remove(selectedObject);
                             }
+
                         });
                         dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
@@ -241,61 +193,42 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
 
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        final ItemDetail selectedObject = itemList.get(position);
-                        String status = selectedObject.getBuyStatus();
-                        boolean flag = true;
-                        OrderItem pocketDetailone = null;
+                    @Override
+                    public void onLongItemClick(View view, int position) {
 
-                        if(status.equals("NOT")){
-
-                        }else{
-                            if(cartlist.size()> 0){
-                                for(int i = 0; i<cartlist.size();i++){
-                                     pocketDetailone = cartlist.get(i);
-                                    if(pocketDetailone.getItem_id().equals(selectedObject.getItemId())){
-                                        flag = false;
-                                    }
-                                }
-
-                                if(flag == false){
-                                    cartlist.remove(pocketDetailone);
-
-                                }else{
-
-                                }
-                            }
-                            double sumprice = 0.0;
-                            for(int i = 0; i<cartlist.size(); i++){
-                                OrderItem pocketDetailOne = cartlist.get(i);
-                                sumprice = sumprice + pocketDetailOne.getTotal_price();
-
-                            }
-                            cartCount.setText("Total Items added ="+cartlist.size()+"   Total Price="+new DecimalFormat("#.##").format(sumprice));
-
-                            totalAmount = sumprice;
-
-
-                        }
                     }
+
+
                 })
         );
-
-        fetchAcessToken(rootView);
-
         return rootView;
     }
 
-
-    private void fetchAcessToken(final View view) {
+    private void fetchAcessToken() {
         //getting the progressbar
 
 
-        final ProgressBar pprogressBar = (ProgressBar) view.findViewById(R.id.progressBarDil);
-        //making the progressbar visible
-        pprogressBar.setVisibility(View.VISIBLE);
+        Call<TokenResponse> call=webApi.accessToken("password","fbApp","fbApp","admin","123");
 
-        //creating a string request to send request to the url
+        call.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, retrofit2.Response<TokenResponse> response) {
+                //  pprogressBar.setVisibility(View.INVISIBLE);
+                acess_token=response.body().getValue();
+                Log.d("Tag","token===>"+acess_token);
+                networkAllItems();
+            }
+
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                //     pprogressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+      /*  //creating a string request to send request to the url
         StringRequest stringRequest = new StringRequest(Request.Method.GET, ServerLinks.getToken,
                 new Response.Listener<String>() {
                     @Override
@@ -331,109 +264,86 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
 
         //adding the string request to request queue
-        requestQueue.add(stringRequest);
+        requestQueue.add(stringRequest);*/
     }
 
-    private void getAllItemList(View view) {
-        //getting the progressbar
+    private void networkAllItems(){
+        Call<ViewAllItemResponse> call=webApi.getAllItem(acess_token);
+        call.enqueue(new Callback<ViewAllItemResponse>() {
+            @Override
+            public void onResponse(Call<ViewAllItemResponse> call, Response<ViewAllItemResponse> response) {
+            String status=response.body().getStatus();
+            if(status.equals("SUCCESS")){
+                viewResultsArray=response.body().getResult();
+                String role= RegPrefManager.getInstance(getContext()).getLoginRoleId();
+                if(role.equals("ROLE_FRANCH")){
+                //    filterResultsArray.clear();
+                    for(int i=0;i<viewResultsArray.size();i++){
+                        String flag=viewResultsArray.get(i).getFranch_view_flag();
+                        if(!flag.equals("N")){
+                            ViewResult v=new ViewResult();
+                            v.setDescription(viewResultsArray.get(i).getDescription());
+                            v.setEntered_by(viewResultsArray.get(i).getEntered_by());
+                            v.setId(viewResultsArray.get(i).getId());
+                            v.setIs_active(viewResultsArray.get(i).getIs_active());
+                            v.setItem_id(viewResultsArray.get(i).getItem_id());
+                            v.setName(viewResultsArray.get(i).getName());
+                            v.setPrice(viewResultsArray.get(i).getPrice());
 
+                            filterResultsArray.add(v);
 
-        final ProgressBar pprogressBar = (ProgressBar) view.findViewById(R.id.progressBarDil);
-        //making the progressbar visible
-        pprogressBar.setVisibility(View.VISIBLE);
-
-        //creating a string request to send request to the url
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, ServerLinks.getAllItems + acess_token,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //hiding the progressbar after completion
-                        pprogressBar.setVisibility(View.INVISIBLE);
-                        Log.e("Response", response);
-
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            if (obj.getString("status").equals("SUCCESS")) {
-
-                                JSONArray jsonArray = obj.getJSONArray("result");
-                                Toast.makeText(getActivity(), "Total Items present = " + jsonArray.length(), Toast.LENGTH_SHORT).show();
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-
-                                    String itemId = jsonObject.getString("item_id");
-                                    String name = jsonObject.getString("name");
-                                    String description = jsonObject.getString("description");
-                                    String price = jsonObject.getString("price");
-                                    String status = jsonObject.getString("status");
-                                    String unit_id = jsonObject.getString("unit_id");
-                                    String entered_by = jsonObject.getString("entered_by");
-                                    String id = jsonObject.getString("id");
-                                    itemList.add(new ItemDetail(itemId, name, description, price, status, unit_id, entered_by, id,"NOT"));
-                                }
-                                // cartList = response.getDetail();
-                                itemlistAdapter = new OrderItemListAdapter(itemList);
-                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                                recycleview.setLayoutManager(mLayoutManager);
-                                recycleview.setItemAnimator(new DefaultItemAnimator());
-                                recycleview.setAdapter(itemlistAdapter);
-                                itemlistAdapter.notifyDataSetChanged();
-
-                            } else {
-
-                            }
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
+
+                   }
+                    viewResultsArray.clear();
+                    if(filterResultsArray.size()>0){
+                        viewResultsArray=filterResultsArray;
+                        myorderLayout.setVisibility(View.GONE);
+                        recycleview.setVisibility(View.VISIBLE);
+                        recycleview.setHasFixedSize(true);
+                        recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
+                        //placeRecyclerview.setItemAnimator(new DefaultItemAnimator());
+                        viewListAdapter=new ViewListAdapter(getContext(),viewResultsArray);
+                        recycleview.setAdapter(viewListAdapter);
+                        //filterResultsArray.clear();
+                    }else {
+                        myorderLayout.setVisibility(View.VISIBLE);
+                        recycleview.setVisibility(View.GONE);
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //displaying the error in toast if occurrs
-                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                }
+                else { // distributor
+                    if(viewResultsArray.size()>0){
+                        myorderLayout.setVisibility(View.GONE);
+                        recycleview.setVisibility(View.VISIBLE);
+                        recycleview.setHasFixedSize(true);
+                        recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
+                        //placeRecyclerview.setItemAnimator(new DefaultItemAnimator());
+                        viewListAdapter=new ViewListAdapter(getContext(),viewResultsArray);
+                        recycleview.setAdapter(viewListAdapter);
+                    }else {
+                        myorderLayout.setVisibility(View.VISIBLE);
+                        recycleview.setVisibility(View.GONE);
                     }
-                });
+                }
 
-        //creating a request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+            }
+            }
 
-        //adding the string request to request queue
-        requestQueue.add(stringRequest);
+            @Override
+            public void onFailure(Call<ViewAllItemResponse> call, Throwable t) {
+                Toast.makeText(getContext(),"Failed",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
-
-    @Override
-    public void onValidationFail(int type) {
-
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    @Override
-    public void onLoad(OrderPlacedResponse response) {
-
-        if(response.getStatus().equals("SUCCESS")){
-            Toast.makeText(getActivity(), "Order Placed Sucessfully...", Toast.LENGTH_SHORT).show();
-
-        }
-
-    }
-
-    @Override
-    public void showDialog() {
-
-    }
-
-    @Override
-    public void hideDialog() {
-
-    }
-
-    @Override
-    public void showError(String message) {
-
-    }
 
 
     @Override
@@ -466,18 +376,29 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
 
         if(itemId == R.id.cartmenuId)
         {
-            if(cartlist.size() > 0){
-                OrderDetails orderDetail = new OrderDetails(Integer.parseInt(userId),"EXECUTED","2018-12-2");
-                PaymentDetails paymentDetails = new PaymentDetails(1,5,totalAmount,"SUCCESS","2019-12-2");
+            if(filterResultsArray1.size() > 0){
+             //   RegPrefManager.getInstance(getContext()).setCartItems(filterResultsArray1);
 
-                Intent in1 = new Intent(getActivity(),CartItem.class);
-                in1.putExtra("itemArray",cartlist);
-                in1.putExtra("paymentdetail",paymentDetails);
-                in1.putExtra("orderDetail",orderDetail);
-                in1.putExtra("totalPrice",totalAmount+"");
-                in1.putExtra("acesstoken",acess_token);
-                startActivity(in1);
                 //itemsPresenter.createOrder(orderDetail,paymentDetails,cartlist);
+
+
+             //   filterResultsArray1.add(viewResult);
+              /*  ArrayList<ViewResultCart> object = new ArrayList<ViewResultCart>();
+                object=filterResultsArray1;
+                Intent intent = new Intent(getContext(), CartItem.class);
+                Bundle args = new Bundle();
+                args.putSerializable("ARRAYLIST",(Serializable)object);
+                intent.putExtra("BUNDLE",args);
+                startActivity(intent);*/
+
+             //   startActivity(new Intent(getContext(),CartItem.class));
+                Intent i = new Intent(getActivity(),CartItem.class);
+                i.putExtra("mylist", filterResultsArray1);
+              //  ArrayList<testparcel> testing = new ArrayList<testparcel>();
+
+                //i.putParcelableArrayListExtra("extraextra", (ArrayList)filterResultsArray1);
+                startActivity(i);
+
             }else {
                 Toast.makeText(getActivity(), "Please add atleast one item to cart...", Toast.LENGTH_SHORT).show();
 
@@ -490,12 +411,12 @@ public class ViewItems extends DilogueFRagment implements ItemsView {
     private void setupBadge() {
 
         if (textCartItemCount != null) {
-            if (cartlist.size() == 0) {
+            if (filterResultsArray1.size() == 0) {
                 if (textCartItemCount.getVisibility() != View.GONE) {
                     textCartItemCount.setVisibility(View.GONE);
                 }
             } else {
-                textCartItemCount.setText(String.valueOf(Math.min(cartlist.size(), 99)));
+                textCartItemCount.setText(String.valueOf(Math.min(filterResultsArray1.size(), 99)));
                 if (textCartItemCount.getVisibility() != View.VISIBLE) {
                     textCartItemCount.setVisibility(View.VISIBLE);
                 }

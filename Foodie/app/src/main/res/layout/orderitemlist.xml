@@ -12,7 +12,7 @@
     android:background="@drawable/custom_border"
     >
 
-    <TextView
+    <!--<TextView
         android:id="@+id/promoter_photo"
         android:layout_width="90dp"
         android:layout_height="68dp"
@@ -23,7 +23,16 @@
         android:text="0"
         android:layout_margin="5dp"
         android:textSize="17dp"
-        android:background="@drawable/kamal_png" />
+        android:background="@drawable/kamal_png" />-->
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/kamal_png"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="5dp"/>
 
     <LinearLayout
         android:layout_width="180dp"

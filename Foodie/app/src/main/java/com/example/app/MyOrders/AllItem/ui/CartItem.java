@@ -17,19 +17,22 @@ import android.widget.Toast;
 
 import com.example.app.MyOrders.AllItem.adapter.CartAdapter;
 import com.example.app.MyOrders.AllItem.adapter.CustomAdapter;
+import com.example.app.MyOrders.AllItem.adapter.ViewListAdapter;
 import com.example.app.MyOrders.AllItem.datamodels.OrderPlacedResponse;
 import com.example.app.MyOrders.AllItem.mvp.ItemsPresenterImpl;
 import com.example.app.MyOrders.AllItem.datamodels.OrderDetails;
 import com.example.app.MyOrders.AllItem.datamodels.OrderItem;
 import com.example.app.MyOrders.AllItem.datamodels.PaymentDetails;
 import com.example.app.MyOrders.AllItem.mvp.ItemsView;
+import com.example.app.Response.ViewResultCart;
 import com.example.app.Util.Common.BaseActivity;
+import com.example.app.Util.RegPrefManager;
 import com.example.app.foodie.DrawerActivity;
 import com.example.sukanta.foodie.R;
 
 import java.util.ArrayList;
 
-public class CartItem extends BaseActivity implements ItemsView{
+public class CartItem extends BaseActivity{
 
     ArrayList<OrderItem> cartlist = new ArrayList<OrderItem>();
     TextView subTotal;
@@ -45,6 +48,7 @@ public class CartItem extends BaseActivity implements ItemsView{
 
     String acess_token;
 
+    private ArrayList<ViewResultCart> filterResultsArray1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,69 +65,29 @@ public class CartItem extends BaseActivity implements ItemsView{
         setSupportActionBar(toolbar);
         enableActionBar(true);
 
-        itemsPresenter = new ItemsPresenterImpl(this);
-        cartlist = this.getIntent().getExtras().getParcelableArrayList("itemArray");
-        orderDetails = this.getIntent().getExtras().getParcelable("orderDetail");
-        paymentDetails = this.getIntent().getExtras().getParcelable("paymentdetail");
-        String totalPrice = this.getIntent().getExtras().getString("totalPrice");
-        acess_token = this.getIntent().getExtras().getString("acesstoken");
-        Log.e("acessToken",acess_token);
+       // filterResultsArray1=new ArrayList<>();
 
-        subTotal.setText(totalPrice+"");
+       // filterResultsArray1= RegPrefManager.getInstance(this).getCartItems("CARTLIST");
+        filterResultsArray1=   (ArrayList<ViewResultCart>) getIntent().getSerializableExtra("mylist");
+       Log.d("Tag","Size====>"+filterResultsArray1.size());
 
-        cartlistlistAdapter = new CartAdapter(CartItem.this,cartlist);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recycleview.setLayoutManager(mLayoutManager);
-        recycleview.setItemAnimator(new DefaultItemAnimator());
-        recycleview.setAdapter(cartlistlistAdapter);
-        cartlistlistAdapter.notifyDataSetChanged();
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast.makeText(getApplicationContext(), "PLACING ORDER...", Toast.LENGTH_SHORT).show();
-                itemsPresenter.createOrder(orderDetails,acess_token,paymentDetails,cartlist);
-
-
-            }
-        });
-
-    }
-
-    @Override
-    public void onValidationFail(int type) {
-
-    }
-
-    @Override
-    public void onLoad(OrderPlacedResponse response) {
-        if(response.getStatus().equals("SUCCESS")){
-            submit.setVisibility(View.GONE);
-            Toast.makeText(getApplicationContext(), "Order Placed Sucessfully...", Toast.LENGTH_SHORT).show();
-
-            Intent in1 = new Intent(CartItem.this, DrawerActivity.class);
-            startActivity(in1);
-            finish();
-
-        }else{
-            Toast.makeText(getApplicationContext(), "Something went wrong! try later...", Toast.LENGTH_SHORT).show();
+        if(filterResultsArray1.size()>0){
+            recycleview.setVisibility(View.VISIBLE);
+            recycleview.setHasFixedSize(true);
+            recycleview.setLayoutManager(new LinearLayoutManager(this));
+            //placeRecyclerview.setItemAnimator(new DefaultItemAnimator());
+            cartlistlistAdapter=new CartAdapter(CartItem.this,filterResultsArray1);
+            recycleview.setAdapter(cartlistlistAdapter);
         }
-    }
 
-    @Override
-    public void showDialog() {
-        showProgressBar();
-    }
 
-    @Override
-    public void hideDialog() {
-        closeProgressbar();
-    }
 
-    @Override
-    public void showError(String message) {
+
+
 
     }
+
+
 
 
 }

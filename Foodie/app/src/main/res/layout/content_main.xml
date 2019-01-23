@@ -24,7 +24,8 @@
             android:layout_weight="1"
             android:layout_margin="5dp"
             android:padding="7dp"
-            tools:ignore="RtlCompat" />
+            tools:ignore="RtlCompat"
+            android:visibility="gone"/>
 
 
 

@@ -148,7 +148,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         //resetAllMenuItems(navigationView);
         setTextColorForMenuItem(item, R.color.logintextColor);
 
-
+// admin
         if(rolename.equals("ROLE_ADMIN")){
             if (id == R.id.dashboard) {
                 mFragmentManager = getSupportFragmentManager();
@@ -329,11 +329,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
             }
         }
-        else {
+        else {  // display to distributor and fran and emp
             if (id == R.id.neworder) {
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.containerView, new ViewItems()).commit();
+                mFragmentTransaction.replace(R.id.containerView, new ViewItems()).commit(); // display to distributor and fran
                 setTextColorForMenuItem(item, R.color.logintextColor);
                 toolbar.setTitle(getResources().getString(R.string.app_display_name));
                 toolbar.setSubtitle("Item List");

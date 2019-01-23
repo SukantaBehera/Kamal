@@ -16,6 +16,8 @@ public class AppConstants {
     public static  final String UPDATEDISTRIBUTOR="api/edit-distriButor-by-id";
     public static  final String UPDATEEMPLOYEE="api/edit-employee-by-id";
 
+    public static  final String ALLITEMS="api/itemsvc/getallitem";
+
     public static  final String CASHFREE="cftoken/order";
 
     // public static  final String takeOrder = "api/orderitem/executeorder";

@@ -97,21 +97,21 @@
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/next"
-            android:layout_alignParentStart="true"
-            >
+            android:layout_alignParentStart="true">
 
 
             <TextView
                 android:id="@+id/totalQunatity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:padding="10dp"
                 android:text="SUB TOTAL"

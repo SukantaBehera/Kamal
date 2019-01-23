@@ -4,8 +4,13 @@ package com.example.app.Util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.app.Response.ViewResultCart;
 import com.example.app.foodie.SharedPreferenceClass;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -57,6 +62,35 @@ public class RegPrefManager {
     public String getLoginEmailId(){
         return mSharedPreferences.getString("EMAILID",null);
     }
+
+    /*public void setCartItems(ArrayList<ViewResultCart> list){
+
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        mSharedPreferences.edit().putString("CARTLIST", json).apply();
+           // This line is IMPORTANT !!!
+
+
+    }
+
+    public ArrayList<ViewResultCart> getCartItems(String key){
+
+        Gson gson = new Gson();
+        String json = mSharedPreferences.getString(key, null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        return gson.fromJson(json, type);
+    }
+    public ArrayList<ViewResultCart> getTasksFromSharedPrefs(Context context) {
+       // SharedPreferences appSharedPrefs = PreferenceManager .getDefaultSharedPreferemces(context.getApplicationContext());
+        Gson gson = new Gson();
+        String json = mSharedPreferences.getString("CARTLIST", "");
+       ViewResultCart tasks = gson.fromJson(json, new TypeToken<ArrayList<ViewResultCart>>(){}.getType());
+        return tasks;
+    }
+*/
+
+
+
 
 
    public void Clear(){

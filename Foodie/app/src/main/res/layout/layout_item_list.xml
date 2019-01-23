@@ -21,7 +21,7 @@
             android:layout_height="40dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:visibility="invisible">
+            android:visibility="gone">
 
 
             <TextView
