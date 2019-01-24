@@ -91,6 +91,14 @@ public class RegPrefManager {
 
 
 
+    public void setFlagCart(String flag){
+        mSharedPreferences.edit().putString("FLAGCART",flag).apply();
+
+
+    }
+    public String getFlagCart(){
+        return mSharedPreferences.getString("FLAGCART",null);
+    }
 
 
    public void Clear(){
@@ -98,6 +106,11 @@ public class RegPrefManager {
        editor.clear();
        editor.commit();
    }
+    public void ClearCartFlag(){
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.remove("FLAGCART");
+        editor.commit();
+    }
 
 }
 

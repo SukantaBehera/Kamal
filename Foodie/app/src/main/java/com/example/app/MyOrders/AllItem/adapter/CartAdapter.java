@@ -1,10 +1,10 @@
 package com.example.app.MyOrders.AllItem.adapter;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app.MyOrders.AllItem.datamodels.OrderItem;
+import com.example.app.MyOrders.AllItem.ui.CartItem;
 import com.example.app.Response.ViewResultCart;
+import com.example.app.Util.RegPrefManager;
 import com.example.app.foodie.LoginActivity;
 import com.example.sukanta.foodie.R;
 
@@ -42,6 +44,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     String[] itemlist={"1","2","3","4","5","more"};
     int spinnerpos=0;
     boolean flag;
+
+    double price_more,totalprice_more;
 
     public CartAdapter(Context context,ArrayList<ViewResultCart> listUsers) {
         this.listItemDetail = listUsers;
@@ -78,19 +82,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
                 if(qty.equals("1")) {
 
-                    /*Log.d("Tag",name);
-                     viewHolder.qtyTv.setText("Quantity: "+orderItem.getItemCount());
-                     //int qtyv=Integer.valueOf(name);
-                  //   double pricev=listItemDetail.get(position1).getTotal_price();
-                    // double value=pricev*qtyv;
-                     viewHolder.price.setText(""+orderItem.getTotal_price());
-                    // double price=listItemDetail.get(position).getTotal_price();*/
+
 
                     if(spinnerpos!=0){
                         double price=orderItem.getPrice();
                         double totalprice=Integer.parseInt(qty)*price;
                         viewHolder.qtyTv.setText("Quantity: "+qty);
                         viewHolder.price.setText(""+totalprice);
+                        listItemDetail.get(position1).setTotalPrice(totalprice);
+                        listItemDetail.get(position1).setTotalQuantity(Integer.parseInt(qty));
+
+                        ((CartItem)context1).getSelected(); //return array
                     }
                     spinnerpos=0;
 
@@ -98,14 +100,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }else if(qty.equals("more")){
                     Log.d("Tag","Name====>"+qty);
                     spinnerpos=2;
+                    showDialog(context1,position1,viewHolder);
+
+
 
                 }else {
                     Log.d("Tag",qty);
                     spinnerpos=1;
                     double price=orderItem.getPrice();
                     double totalprice=Integer.parseInt(qty)*price;
+                    listItemDetail.get(position1).setTotalPrice(totalprice);
+                    listItemDetail.get(position1).setTotalQuantity(Integer.parseInt(qty));
                     viewHolder.qtyTv.setText("Quantity: "+qty);
                     viewHolder.price.setText(""+totalprice);
+                    ((CartItem)context1).getSelected(); //return array
+
                 //    viewHolder.itemPrice.setText("Quantity: " + name);
                   /*  double price=orderItem.getTotal_price();
                     double totalprice=Integer.parseInt(name)*price;*/
@@ -123,47 +132,68 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         });
 
+        viewHolder.deleteImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listItemDetail.remove(position1);
+
+                Log.d("dharitri","CART_POSITION------>");
+                notifyDataSetChanged();
+                ((CartItem)context1).getSelected();
+
+            }
+        });
 
 
     }
 
-    /*private void dialogDisplay(View v) {
+    private void showDialog(final Context context, final int position, final ViewHolder viewHolder){
+        final ViewResultCart orderItem=listItemDetail.get(position);
+        android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        //  LayoutInflater inflater =. getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.custom_dialog, null);
+
+        dialogBuilder.setView(dialogView);
+
+        final EditText quantityEdt = (EditText) dialogView.findViewById(R.id.quantity);
 
 
-        final Dialog dialog = new Dialog(context1);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.quantitycart);
+        dialogBuilder.setTitle("Enter Quantity");
+        dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if(quantityEdt.getText().toString().isEmpty()){
+                    quantityEdt.setError("Please Enter quantity");
+                }else {
+                    qty=quantityEdt.getText().toString();
+                    price_more=orderItem.getPrice();
+                    totalprice_more=Integer.parseInt(quantityEdt.getText().toString())*price_more;
 
-        final TextView text = (TextView) dialog.findViewById(R.id.quantity);
-        // text.setText(msg);
-        TextView cancelTv=dialog.findViewById(R.id.cancelTv);
-        TextView okTv=dialog.findViewById(R.id.okTv);
-
-
-        okTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-             // context1. viewHolder.itemPrice.setText("Quantity: "+name+"   Total Price"+listItemDetail.get(position).getTotal_price());
-                if(!text.getText().toString().isEmpty()) {
-                    String name = text.getText().toString();
-                    q
-                    Log.d("Tag","name"+name);
                 }
-
-            }
-        });
-        cancelTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                listItemDetail.get(position).setTotalQuantity(Integer.parseInt(qty));
+                listItemDetail.get(position).setTotalPrice(totalprice_more);
+                viewHolder.qtyTv.setText("Quantity: "+qty);
+                viewHolder.price.setText(""+totalprice_more);
                 dialog.dismiss();
+                ((CartItem)context1).getSelected();
+                //cartList.remove(selectedObject);
+            }
+
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.dismiss();
+                //pass
             }
         });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
 
-        dialog.show();
+
+    }
 
 
-    }*/
 
     @Override
     public int getItemCount() {
@@ -173,7 +203,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView ItemName,qtyTv,price;
-        ImageView pPhoto;
+        ImageView deleteImg;
       //  TextView itemPrice;
         TextView itemDescription;
         Spinner spinner;
@@ -185,10 +215,17 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             price=view.findViewById(R.id.price);
             itemDescription = view.findViewById(R.id.itemdescription);
             spinner=view.findViewById(R.id.spinner);
+            deleteImg=view.findViewById(R.id.deleteImg);
+
 
 
 
 
         }
+    }
+
+    // method to access in activity after updating selection
+    public ArrayList<ViewResultCart> getSelectedItems() {
+        return listItemDetail;
     }
 }

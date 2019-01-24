@@ -127,6 +127,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         viewIsAtHome = true;
 
 
+
+
     }
 
 

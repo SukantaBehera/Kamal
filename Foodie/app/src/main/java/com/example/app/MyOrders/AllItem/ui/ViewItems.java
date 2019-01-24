@@ -54,6 +54,7 @@ import com.example.app.Util.Common.ApiClient;
 import com.example.app.Util.Common.RecyclerItemClickListener;
 import com.example.app.Util.Common.WebApi;
 import com.example.app.Util.RegPrefManager;
+import com.example.app.Util.SessionManager;
 import com.example.app.foodie.LoginActivity;
 import com.example.sukanta.foodie.R;
 import com.example.app.foodie.ServerLinks;
@@ -71,6 +72,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+@SuppressWarnings("All")
 public class ViewItems extends DilogueFRagment  {
     ProgressDialog progressDialog;
     SharedPreferenceClass sharedPreferenceClass;
@@ -89,7 +91,7 @@ public class ViewItems extends DilogueFRagment  {
     String userId;
     Double totalAmount = 0.0;
 
-
+    SessionManager session;
     ItemsPresenterImpl itemsPresenter;
     TextView textCartItemCount;
     int mCartItemCount = 10;
@@ -104,6 +106,7 @@ public class ViewItems extends DilogueFRagment  {
         super.onCreate(savedInstanceState);
         // Confirm this fragment has menu items.
         setHasOptionsMenu(true);
+        session = new SessionManager(getContext());
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -120,87 +123,19 @@ public class ViewItems extends DilogueFRagment  {
         viewResultsArray=new ArrayList<>();
         filterResultsArray=new ArrayList<>();
         filterResultsArray1=new ArrayList<>();
-    myorderLayout=rootView.findViewById(R.id.myorderLayout);
+         myorderLayout=rootView.findViewById(R.id.myorderLayout);
         if (isNetworkAvailable()) {
             fetchAcessToken();
         } else {
             Toast.makeText(getContext(), "Please Check Network Connection", Toast.LENGTH_LONG).show();
         }
+        /*String flag=RegPrefManager.getInstance(getContext()).getFlagCart();
+        if(flag==null) {
+            Log.d("Tag","Tag");
+        }else {
+            getSelected();
+        }*/
 
-
-        recycleview.addOnItemTouchListener(
-                new RecyclerItemClickListener(getActivity(), recycleview ,new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(final View view, int position) {
-                        // do whatever
-
-                        final ViewResult selectedObject = viewResultsArray.get(position);
-                        Toast.makeText(getActivity(), selectedObject.getId()+"----Name"+selectedObject.getName(), Toast.LENGTH_SHORT).show();
-
-
-
-                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-
-
-                        LayoutInflater inflater = getLayoutInflater();
-                        final View dialogView = inflater.inflate(R.layout.custom_dialog, null);
-
-                        dialogBuilder.setView(dialogView);
-
-                        final EditText quantityEdt = (EditText) dialogView.findViewById(R.id.quantity);
-
-
-                        dialogBuilder.setTitle("Enter Quantity");
-                        dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                if(quantityEdt.getText().toString().isEmpty()){
-                                    quantityEdt.setError("Please Enter quantity");
-                                }else {
-                                    String quantity_value = quantityEdt.getText().toString();
-
-                                    double total=Integer.parseInt(quantity_value)*selectedObject.getPrice();
-
-                                    ViewResultCart viewResult=new ViewResultCart();
-                                   // viewResult.setName(selectedObject.getName());
-                                    viewResult.setDescription(selectedObject.getDescription());
-                                    viewResult.setEntered_by(selectedObject.getEntered_by());
-                                    viewResult.setId(selectedObject.getId());
-                                    viewResult.setIs_active(selectedObject.getIs_active());
-                                    viewResult.setItem_id(selectedObject.getItem_id());
-                                    viewResult.setName(selectedObject.getName());
-                                    viewResult.setPrice(selectedObject.getPrice());
-                                    viewResult.setTotalPrice(total);
-                                    viewResult.setTotalQuantity(Integer.parseInt(quantity_value));
-                                    filterResultsArray1.add(viewResult);
-
-
-                                }
-                                setupBadge();
-                                dialog.dismiss();
-                                //cartList.remove(selectedObject);
-                            }
-
-                        });
-                        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dialog.dismiss();
-                                //pass
-                            }
-                        });
-                        AlertDialog b = dialogBuilder.create();
-                        b.show();
-
-
-
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-
-                    }
-
-
-                })
-        );
         return rootView;
     }
 
@@ -228,43 +163,6 @@ public class ViewItems extends DilogueFRagment  {
 
 
 
-      /*  //creating a string request to send request to the url
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, ServerLinks.getToken,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //hiding the progressbar after completion
-                        pprogressBar.setVisibility(View.INVISIBLE);
-                        Log.e("Response", response);
-
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            acess_token = obj.getString("value");
-                            if (acess_token != null) {
-                                getAllItemList(view);
-                            } else {
-                                Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
-                            }
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //displaying the error in toast if occurrs
-                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        //creating a request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-        //adding the string request to request queue
-        requestQueue.add(stringRequest);*/
     }
 
     private void networkAllItems(){
@@ -303,7 +201,7 @@ public class ViewItems extends DilogueFRagment  {
                         recycleview.setHasFixedSize(true);
                         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
                         //placeRecyclerview.setItemAnimator(new DefaultItemAnimator());
-                        viewListAdapter=new ViewListAdapter(getContext(),viewResultsArray);
+                        viewListAdapter=new ViewListAdapter(getContext(),viewResultsArray,ViewItems.this);
                         recycleview.setAdapter(viewListAdapter);
                         //filterResultsArray.clear();
                     }else {
@@ -319,7 +217,7 @@ public class ViewItems extends DilogueFRagment  {
                         recycleview.setHasFixedSize(true);
                         recycleview.setLayoutManager(new LinearLayoutManager(getContext()));
                         //placeRecyclerview.setItemAnimator(new DefaultItemAnimator());
-                        viewListAdapter=new ViewListAdapter(getContext(),viewResultsArray);
+                        viewListAdapter=new ViewListAdapter(getContext(),viewResultsArray,ViewItems.this);
                         recycleview.setAdapter(viewListAdapter);
                     }else {
                         myorderLayout.setVisibility(View.VISIBLE);
@@ -344,7 +242,19 @@ public class ViewItems extends DilogueFRagment  {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+    public void getSelected(){
+        ArrayList<ViewResultCart> arrayList = ((ViewListAdapter) viewListAdapter)
+                .getSelectedItems();
+        Log.d("Tag","size===>"+arrayList.size());
 
+        filterResultsArray1=arrayList;
+        Log.d("Tag","size===>"+filterResultsArray1.size());
+        if(filterResultsArray1.size()>0) {
+            setupBadge();
+        }
+
+
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -373,30 +283,14 @@ public class ViewItems extends DilogueFRagment  {
         int itemId = item.getItemId();
 
 
-
-        if(itemId == R.id.cartmenuId)
+    if(itemId == R.id.cartmenuId)
         {
             if(filterResultsArray1.size() > 0){
-             //   RegPrefManager.getInstance(getContext()).setCartItems(filterResultsArray1);
-
-                //itemsPresenter.createOrder(orderDetail,paymentDetails,cartlist);
-
-
-             //   filterResultsArray1.add(viewResult);
-              /*  ArrayList<ViewResultCart> object = new ArrayList<ViewResultCart>();
-                object=filterResultsArray1;
-                Intent intent = new Intent(getContext(), CartItem.class);
-                Bundle args = new Bundle();
-                args.putSerializable("ARRAYLIST",(Serializable)object);
-                intent.putExtra("BUNDLE",args);
-                startActivity(intent);*/
-
+                RegPrefManager.getInstance(getContext()).ClearCartFlag();
              //   startActivity(new Intent(getContext(),CartItem.class));
                 Intent i = new Intent(getActivity(),CartItem.class);
-                i.putExtra("mylist", filterResultsArray1);
-              //  ArrayList<testparcel> testing = new ArrayList<testparcel>();
-
-                //i.putParcelableArrayListExtra("extraextra", (ArrayList)filterResultsArray1);
+                session.ClearArraylist();
+                session.SetCart_ProductList(filterResultsArray1);
                 startActivity(i);
 
             }else {
