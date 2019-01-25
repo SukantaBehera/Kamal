@@ -82,7 +82,7 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
         TextView name;
         TextView designation;
         TextView phone_no;
-       // ImageView Photo;
+        // ImageView Photo;
         TextView address;
         TextView email_id;
         TextView aadhar_card_no;

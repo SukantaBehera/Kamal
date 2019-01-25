@@ -49,11 +49,11 @@ public class FranchisorListAdapter extends RecyclerView.Adapter<FranchisorListAd
         viewHolder.email_id.setText(franchisordetails.get(position).getEmail_id());
         viewHolder.unit_address.setText(franchisordetails.get(position).getUnit_address());
         viewHolder.resident_address.setText(franchisordetails.get(position).getResident_address());
-        viewHolder.status.setText(franchisordetails.get(position).getStatus());
+        viewHolder.is_active.setText(franchisordetails.get(position).getIs_active());
         viewHolder.user_id.setText(franchisordetails.get(position).getUser_id());
 
 
-       viewHolder.viewmore.setOnClickListener(new View.OnClickListener() {
+        viewHolder.viewmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,ViewFranchisorDetails.class);
@@ -64,7 +64,8 @@ public class FranchisorListAdapter extends RecyclerView.Adapter<FranchisorListAd
                 intent.putExtra("email_id",viewHolder.email_id.getText().toString());
                 intent.putExtra("unit_address",viewHolder.unit_address.getText().toString());
                 intent.putExtra("resident_address",viewHolder.resident_address.getText().toString());
-                intent.putExtra("status",viewHolder.status.getText().toString());
+                intent.putExtra("is_active",viewHolder.is_active.getText().toString());
+                //intent.putExtra("status",viewHolder.status.getText().toString());
                 intent.putExtra("user_id",viewHolder.user_id.getText().toString());
                 context.startActivity(intent);
             }
@@ -86,7 +87,7 @@ public class FranchisorListAdapter extends RecyclerView.Adapter<FranchisorListAd
         ImageView Photo;
         TextView unit_address;
         TextView resident_address;
-        TextView status;
+        TextView is_active;
         TextView user_id;
         TextView viewmore;
 
@@ -97,10 +98,10 @@ public class FranchisorListAdapter extends RecyclerView.Adapter<FranchisorListAd
             Photo = view.findViewById(R.id.distribitor_photo);
             company_name = view.findViewById(R.id.companynamelist);
             phone_no = view.findViewById(R.id.unitholder_address);
-            email_id = view.findViewById(R.id.unit_address);
+            email_id = view.findViewById(R.id.dist_email);
             unit_address = view.findViewById(R.id.permanent_address);
             resident_address = view.findViewById(R.id.distributor_mobile_number);
-            status = view.findViewById(R.id.dist_email);
+            is_active = view.findViewById(R.id.userStatus);
             user_id = view.findViewById(R.id.user_id);
             viewmore = view.findViewById(R.id.viewdetails);
 

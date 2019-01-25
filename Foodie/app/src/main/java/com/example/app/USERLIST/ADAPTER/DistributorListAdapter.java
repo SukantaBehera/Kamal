@@ -39,7 +39,7 @@ public class DistributorListAdapter extends RecyclerView.Adapter<DistributorList
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View listView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.distributorlist,viewGroup,false);
-                return new ViewHolder(listView);
+        return new ViewHolder(listView);
     }
 
     @Override

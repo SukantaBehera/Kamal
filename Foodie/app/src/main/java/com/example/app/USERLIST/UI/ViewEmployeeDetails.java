@@ -80,8 +80,8 @@ public class ViewEmployeeDetails extends AppCompatActivity implements View.OnCli
             address.setText(getpermanentaddress);
             String getMobileNo = (String)bundle.get("email_id");
             email_id.setText(getMobileNo);
-            String getEmailid = (String)bundle.get("status");
-            status.setText(getEmailid);
+            String getStatus = (String)bundle.get("is_active");
+            status.setText(getStatus);
             String getUserid = (String)bundle.get("user_id");
             user_id.setText(getUserid);
         }

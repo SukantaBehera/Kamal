@@ -184,7 +184,7 @@ public class ViewDistributor extends DilogueFRagment {
                                     String permanent_address = jsonObject.getString("permanent_address");
                                     String phone_no = jsonObject.getString("phone_no");
                                     String email_id = jsonObject.getString("email_id");
-                                    String status = jsonObject.getString("status");
+                                    String status = jsonObject.getString("is_active");
                                     String id = jsonObject.getString("user_id");
                                     distributorlist.add(new Distributordetail(dist_id, company_name, unit_holder_name,unit_address,permanent_address,phone_no, email_id,status, id));
 
