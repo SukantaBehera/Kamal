@@ -39,9 +39,9 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int position) {
         viewHolder.orderId.setText(listItemDetail.get(position).getOrder_id());
         viewHolder.totalPrice.setText(listItemDetail.get(position).getTotal_price()+"");
-        viewHolder.userType.setText(listItemDetail.get(position).getCust_id());
+    //    viewHolder.userType.setText(listItemDetail.get(position).getCust_id());
         viewHolder.orderDate.setText(listItemDetail.get(position).getOrder_date());
-        viewHolder.status.setText(listItemDetail.get(position).getStatus());
+     //   viewHolder.status.setText(listItemDetail.get(position).getStatus());
         viewHolder.name.setText(listItemDetail.get(position).getName());
         /*viewHolder.viewDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +81,10 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
             super(view);
             orderId= view.findViewById(R.id.orderId);
             totalPrice = view.findViewById(R.id.tprice);
-            userType = view.findViewById(R.id.userrole);
+           // userType = view.findViewById(R.id.userrole);
             userName= view.findViewById(R.id.username);
             orderDate = view.findViewById(R.id.odate);
-            status = view.findViewById(R.id.statusallorder);
+           // status = view.findViewById(R.id.statusallorder);
             name = view.findViewById(R.id.username);
            /* desc = view.findViewById(R.id.description);
             price = view.findViewById(R.id.price);

@@ -93,15 +93,58 @@ public class RegPrefManager {
 
     public void setFlagCart(String flag){
         mSharedPreferences.edit().putString("FLAGCART",flag).apply();
-
-
     }
+
     public String getFlagCart(){
         return mSharedPreferences.getString("FLAGCART",null);
     }
 
+    public void setUpdateStatus(String status){
+        mSharedPreferences.edit().putString("ORDERSTATUS",status).apply();
 
-   public void Clear(){
+
+    }
+    public String getUpdateStatus(){
+        return mSharedPreferences.getString("ORDERSTATUS",null);
+    }
+
+    public void setDeliveryDate(String date){
+        mSharedPreferences.edit().putString("ORDERDELIVER",date).apply();
+
+
+    }
+    public String getDeliveryDate(){
+        return mSharedPreferences.getString("ORDERDELIVER",null);
+    }
+
+    public void setDispatchDate(String flag){
+        mSharedPreferences.edit().putString("ORDERDISPATCH",flag).apply();
+
+
+    }
+    public String getDispatchDate(){
+        return mSharedPreferences.getString("ORDERDISPATCH",null);
+    }
+
+    public void setDispatchBy(String flag){
+        mSharedPreferences.edit().putString("DISPATCHBY",flag).apply();
+
+
+    }
+    public String getDispatchBy(){
+        return mSharedPreferences.getString("DISPATCHBY",null);
+    }
+
+    public void setDeliverBy(String flag){
+        mSharedPreferences.edit().putString("DELIVERBY",flag).apply();
+
+
+    }
+    public String getDeliverBy(){
+        return mSharedPreferences.getString("DELIVERBY",null);
+    }
+
+    public void Clear(){
        SharedPreferences.Editor editor = mSharedPreferences.edit();
        editor.clear();
        editor.commit();

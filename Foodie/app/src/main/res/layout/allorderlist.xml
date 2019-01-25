@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="300dp"
     android:layout_marginTop="@dimen/cardCornerRadius"
     android:background="@drawable/home_bg">
 
@@ -71,31 +71,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/layout_inner_padding"
-                    android:text="@string/user_type"
-                    android:textSize="@dimen/heading_lable_message"
-                    android:textStyle="bold|normal"
-                    android:textColor="@color/blackTextColor"
-                    android:textAlignment="textStart"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/userrole"
-                    android:padding="@dimen/layout_inner_padding"
-                    android:textSize="@dimen/text_lable_message"
-                    android:textStyle="normal"
-                    android:textColor="@color/blackTextColor"
-                    android:textAlignment="textStart"/>
 
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -161,7 +137,7 @@
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"/>
 
-                <TextView
+               <!-- <TextView
                     android:id="@+id/statusallorder"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
@@ -169,100 +145,152 @@
                     android:textAlignment="textStart"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/text_lable_message"
-                    android:textStyle="normal" />
+                    android:textStyle="normal" />-->
 
-<!--
+                </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/more"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="90dp"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
-                    android:text="@string/details"
+                    android:text="Dispatch Date:"
+                    android:textSize="@dimen/heading_lable_message"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+                <TextView
+                    android:id="@+id/dispatchDateTv"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
                     android:textAlignment="textStart"
+                    android:hint="Dispatch Date"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/text_lable_message"
                     android:textStyle="normal" />
--->
+
 
             </LinearLayout>
-
-          <!--  <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/item_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="90dp"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
-                    android:text="@string/details"
+                    android:text="Delivery Date:"
+                    android:textSize="@dimen/heading_lable_message"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+
+                <TextView
+                    android:id="@+id/deliveredDateTv"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
                     android:textAlignment="textStart"
+                    android:textColor="@color/colorAccent"
+                    android:hint="Delivery date"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="dispatched_by:"
+                    android:textSize="@dimen/heading_lable_message"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+
+                <TextView
+                    android:id="@+id/dispatchedByTv"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorAccent"
+                    android:hint="dispatched_by"
+                    android:textSize="@dimen/text_lable_message"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:text="delivered By:"
+                    android:textSize="@dimen/heading_lable_message"
+                    android:textStyle="bold|normal"
+                    android:textColor="@color/blackTextColor"
+                    android:textAlignment="textStart"/>
+
+                <TextView
+                    android:id="@+id/deliveredByTv"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/layout_inner_padding"
+                    android:textAlignment="textStart"
+                    android:hint="deliveredBy"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/text_lable_message"
                     android:textStyle="normal" />
 
-            </LinearLayout>-->
-           <!-- <LinearLayout
+
+            </LinearLayout>
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
 
 
                 <TextView
-                    android:id="@+id/description"
+                    android:id="@+id/changeStatusTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="90dp"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
-                    android:text="@string/details"
                     android:textAlignment="textStart"
+                    android:text="Change Status"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_lable_message"
-                    android:textStyle="normal" />
-
-            </LinearLayout>-->
-           <!-- <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="90dp"
-                    android:padding="@dimen/layout_inner_padding"
-                    android:text="@string/details"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_lable_message"
-                    android:textStyle="normal" />
-
-            </LinearLayout>-->
-           <!-- <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    />
 
                 <TextView
-                    android:id="@+id/itemcount"
+                    android:id="@+id/viewmoreTv"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="90dp"
+                    android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
-                    android:text="@string/details"
                     android:textAlignment="textStart"
+                    android:text="View More"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_lable_message"
-                    android:textStyle="normal" />
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"/>
+            </RelativeLayout>
 
-            </LinearLayout>-->
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

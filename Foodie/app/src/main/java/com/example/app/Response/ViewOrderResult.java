@@ -9,12 +9,54 @@ public class ViewOrderResult {
         @SerializedName("delivered_by_empId")
         private String delivered_by_empId;
 
+        @SerializedName("delivered_by_empName")
+        private String delivered_by_empName;
+    @SerializedName("delivery_date")
+        private String delivery_date;
+
+        @SerializedName("dispatched_by_empId")
+        private String dispatched_by_empId;
+        @SerializedName("dispatched_by_empName")
+        private String dispatched_by_empName;
+
+        @SerializedName("dispatch_date")
+        private String dispatch_date;
+
+        @SerializedName("itemQOmEmbed")
+        private ArrayList<ItemQOmEmbed>itemQOmEmbed;
+
+        @SerializedName("orderby_custId")
+        private int orderby_custId;
+
+        @SerializedName("orderDate")
+        private String orderDate;
+
+        @SerializedName("order_deliv_status")
+        private String order_deliv_status;
+
+        @SerializedName("order_id")
+        private int order_id;
+
+        @SerializedName("total_price")
+        private double total_price;
+
+        @SerializedName("userName")
+        private String userName;
+
     public String getDelivered_by_empId() {
         return delivered_by_empId;
     }
 
     public void setDelivered_by_empId(String delivered_by_empId) {
         this.delivered_by_empId = delivered_by_empId;
+    }
+
+    public String getDelivered_by_empName() {
+        return delivered_by_empName;
+    }
+
+    public void setDelivered_by_empName(String delivered_by_empName) {
+        this.delivered_by_empName = delivered_by_empName;
     }
 
     public String getDelivery_date() {
@@ -31,6 +73,14 @@ public class ViewOrderResult {
 
     public void setDispatched_by_empId(String dispatched_by_empId) {
         this.dispatched_by_empId = dispatched_by_empId;
+    }
+
+    public String getDispatched_by_empName() {
+        return dispatched_by_empName;
+    }
+
+    public void setDispatched_by_empName(String dispatched_by_empName) {
+        this.dispatched_by_empName = dispatched_by_empName;
     }
 
     public String getDispatch_date() {
@@ -81,11 +131,11 @@ public class ViewOrderResult {
         this.order_id = order_id;
     }
 
-    public int getTotal_price() {
+    public double getTotal_price() {
         return total_price;
     }
 
-    public void setTotal_price(int total_price) {
+    public void setTotal_price(double total_price) {
         this.total_price = total_price;
     }
 
@@ -113,38 +163,7 @@ public class ViewOrderResult {
         this.user_active_status = user_active_status;
     }
 
-    @SerializedName("delivery_date")
-        private String delivery_date;
-
-        @SerializedName("dispatched_by_empId")
-        private String dispatched_by_empId;
-
-        @SerializedName("dispatch_date")
-        private String dispatch_date;
-
-        @SerializedName("itemQOmEmbed")
-        private ArrayList<ItemQOmEmbed>itemQOmEmbed;
-
-        @SerializedName("orderby_custId")
-        private int orderby_custId;
-
-        @SerializedName("orderDate")
-        private String orderDate;
-
-        @SerializedName("order_deliv_status")
-        private String order_deliv_status;
-
-        @SerializedName("order_id")
-        private int order_id;
-
-        @SerializedName("total_price")
-        private int total_price;
-
-        @SerializedName("userName")
-        private String userName;
-
-
-        @SerializedName("userRoleCode")
+    @SerializedName("userRoleCode")
         private String userRoleCode;
 
         @SerializedName("user_active_status")

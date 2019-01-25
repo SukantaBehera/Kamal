@@ -5,6 +5,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class OrderResponse {
+
+
+    @SerializedName("message")
+    private String message;
+
     public String getMessage() {
         return message;
     }
@@ -29,9 +34,7 @@ public class OrderResponse {
         this.result = result;
     }
 
-    @SerializedName("message")
-    private String message;
-     @SerializedName("status")
+    @SerializedName("status")
     private String status;
    @SerializedName("result")
     private ArrayList<ViewOrderResult> result;

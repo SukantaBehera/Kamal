@@ -18,6 +18,9 @@ public class AppConstants {
 
     public static  final String ALLITEMS="api/itemsvc/getallitem";
 
+    public static  final String ORDERALLITEMS="api/orderitem/get_cons_order_details";
+    public static  final String ORDERALLITEMS_BYID="api/orderitem/get-order-details-by-custid";
+
     public static  final String CASHFREE="cftoken/order";
 
     // public static  final String takeOrder = "api/orderitem/executeorder";

@@ -1,7 +1,10 @@
 package com.example.app.MyOrders.OrderListById.UI;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -20,13 +23,19 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.app.ITEM.ADAPTER.ItemListAdapter;
 import com.example.app.ITEM.UTIL.DilogueFRagment;
+import com.example.app.MyOrders.OrderListById.Adapter.MyOrderAdapterNew;
+import com.example.app.Response.OrderResponse;
+import com.example.app.Response.TokenResponse;
+import com.example.app.Response.ViewOrderResult;
+import com.example.app.Util.Common.ApiClient;
 import com.example.app.Util.Common.RecyclerItemClickListener;
 import com.example.app.MyOrders.OrderListById.Model.OrderItemDetail;
+import com.example.app.Util.Common.WebApi;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;
 import com.example.app.MyOrders.AllItem.datamodels.OrderItem;
@@ -38,6 +47,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 public class ViewOrderItems extends DilogueFRagment {
     ProgressDialog progressDialog;
     SharedPreferenceClass sharedPreferenceClass;
@@ -48,14 +62,16 @@ public class ViewOrderItems extends DilogueFRagment {
     ArrayList<OrderItemDetail> itemList = new ArrayList<OrderItemDetail>();
     ArrayList<OrderItemDetail> itemList1 = new ArrayList<OrderItemDetail>();
     private MyOrderAdapter itemlistAdapter;
-    private MyOrderAdapter itemlistAdapter2;
+    private MyOrderAdapterNew adapterNew;
     RecyclerView recycleview;
+    private ArrayList<ViewOrderResult> viewOrderResultsArray;
 
     FloatingActionButton fab;
     String userId;
     String role;
     EditText search;
-
+    private WebApi webApi;
+    Retrofit retrofit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +83,9 @@ public class ViewOrderItems extends DilogueFRagment {
         recycleview = (RecyclerView) rootView.findViewById(R.id.item_list);
         search = (EditText) rootView.findViewById(R.id.searchlist);
         userId=  SharedPreferenceClass.readString(getActivity(), "USERID","");
-
+        retrofit = ApiClient.getRetrofit();
+        webApi = retrofit.create(WebApi.class);
+        viewOrderResultsArray=new ArrayList<>();
         role=  SharedPreferenceClass.readString(getActivity(), "ROLEID","");
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add_white_24dp));
@@ -92,17 +110,21 @@ public class ViewOrderItems extends DilogueFRagment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (itemList != null) {
+                if (viewOrderResultsArray != null) {
                     filter(editable.toString());
                 }
 
             }
         });
+        if(isNetworkAvailable()) {
+            fetchAcessToken(rootView);
+        }else {
+            Toast.makeText(getContext(), "Please Check Network Connection", Toast.LENGTH_LONG).show();
+        }
 
-        fetchAcessToken(rootView);
 
 
-        recycleview.addOnItemTouchListener(
+       /* recycleview.addOnItemTouchListener(
                 new RecyclerItemClickListener(getActivity(), recycleview ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         // do whatever
@@ -126,173 +148,146 @@ public class ViewOrderItems extends DilogueFRagment {
 
                     }
                 })
-        );
+        );*/
 
 
 
         return rootView;
     }
-    void filter(String text) {
-        ArrayList<OrderItemDetail> temp = new ArrayList();
-        for (OrderItemDetail d : itemList) {
+   /* void filter(String text) {
+        ArrayList<ViewOrderResult> temp = new ArrayList();
+        for (ViewOrderResult d : viewOrderResultsArray) {
             if (d.getOrder_id().contains(text) ) {
                 temp.add(d);
             }
         }
-        itemlistAdapter.updateList(temp);
+        adapterNew.updateList(temp);
+    }*/
+
+    void filter(String text) {
+        ArrayList<ViewOrderResult> temp = new ArrayList();
+        for(int i=0;i<viewOrderResultsArray.size();i++){
+            ViewOrderResult result=viewOrderResultsArray.get(i);
+            String  id=String.valueOf(result.getOrder_id());
+            if(id.contains(text.toLowerCase())){
+                temp.add(result);
+            }
+        }
+
+        adapterNew.updateList(temp);
     }
-
-
-    private void fetchAcessToken(final View view) {
+    private void fetchAcessToken(final View rootView) {
         //getting the progressbar
 
 
-        final ProgressBar pprogressBar = (ProgressBar) view.findViewById(R.id.progressBarDil);
-        //making the progressbar visible
-        pprogressBar.setVisibility(View.VISIBLE);
+        Call<TokenResponse> call = webApi.accessToken("password", "fbApp", "fbApp", "admin", "123");
 
-        //creating a string request to send request to the url
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, ServerLinks.getToken,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //hiding the progressbar after completion
-                        pprogressBar.setVisibility(View.INVISIBLE);
-                        Log.e("Response", response);
+        call.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, retrofit2.Response<TokenResponse> response) {
+                //  pprogressBar.setVisibility(View.INVISIBLE);
+                acess_token = response.body().getValue();
+                Log.d("Tag", "token===>" + acess_token);
+                getAllItemList(rootView);
+            }
 
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            acess_token = obj.getString("value");
-                            if (acess_token != null) {
-                                getAllItemList(view);
-                            } else {
-                                Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
-                            }
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                //     pprogressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //displaying the error in toast if occurrs
-                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        //creating a request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-
-        //adding the string request to request queue
-        requestQueue.add(stringRequest);
     }
+        private void getAllItemList(View view){
+            //getting the progressbar
 
-    private void getAllItemList(View view) {
-        //getting the progressbar
-        final ProgressBar pprogressBar = (ProgressBar) view.findViewById(R.id.progressBarDil);
-        //making the progressbar visible
-        pprogressBar.setVisibility(View.VISIBLE);
 
-        String orderUrl = "";
-        //creating a string request to send request to the url
-        if(role.equals("ROLE_ADMIN")){
-            orderUrl = ServerLinks.allorders+acess_token;
-        }else if(role.equals("ROLE_KML_EMP")){
-            orderUrl = ServerLinks.allorders+acess_token;
-        }else{
-           //orderUrl = ServerLinks.allorders+acess_token;
-           //orderUrl  = ServerLinks.ordersById+userId+"?access_token="+acess_token;
-            Log.e("URLALLORDERBYID",orderUrl);
-            orderUrl  = ServerLinks.ordersById+"?access_token="+acess_token+"&custId="+userId;
+            String orderUrl = "";
+            //creating a string request to send request to the url
+            if (role.equals("ROLE_ADMIN")) {
+               networkAdmin(view);
+            } else if (role.equals("ROLE_KML_EMP")) {
+                networkAdmin(view);
+            } else {
+                netwOrderById(view,userId);
+
+            }
+
 
         }
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, orderUrl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //hiding the progressbar after completion
-                        pprogressBar.setVisibility(View.INVISIBLE);
-                        Log.e("Response", response);
-
-                        try {
-                            JSONObject obj = new JSONObject(response);
-                            if (obj.getString("status").equals("SUCCESS")) {
-
-                                JSONArray jsonArray = obj.getJSONArray("result");
-                                Toast.makeText(getActivity(), "Total Items present = " + jsonArray.length(), Toast.LENGTH_SHORT).show();
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    String order_id = jsonObject.getString("order_id");
-                                    Double total_price = jsonObject.getDouble("total_price");
-                                    String cust_id = jsonObject.getString("orderby_custId");
-
-                                    String orderdate = jsonObject.getString("orderDate");
-                                    String status = jsonObject.getString("status");
-                                    String st = "";
-                                    if (status.equals("EXECUTED")) {
-                                        st = "PENDING";
-                                    }
-                                    String uname = jsonObject.getString("userName");
-                                    JSONArray jsonArray1 = jsonObject.getJSONArray("itemQOmEmbed");
-                                    itemDetail = new ArrayList<OrderItem>();
-                                    for (int j = 0; j < jsonArray1.length(); j++) {
-                                        JSONObject data = jsonArray1.getJSONObject(j);
-                                        String name = data.getString("name");
-                                        String description = data.getString("description");
-                                        Double price = data.getDouble("price");
-                                        String item_count = data.getString("item_count");
-                                        String statusorder = data.getString("status");
-
-                                                itemList1.add(new OrderItemDetail(name, description, price, item_count));
-                                                itemDetail.add(new OrderItem(name, description, price, item_count,statusorder));
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
 
+         private void networkAdmin(View view){
+             final ProgressBar pprogressBar = (ProgressBar) view.findViewById(R.id.progressBarDil);
+             //making the progressbar visible
+             pprogressBar.setVisibility(View.VISIBLE);
+        Call<OrderResponse> call=webApi.getOrderAllItem(acess_token);
+        call.enqueue(new Callback<OrderResponse>() {
+            @Override
+            public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
+                pprogressBar.setVisibility(View.GONE);
+               String status=response.body().getStatus();
+               if(status.equals("SUCCESS")){
+                   viewOrderResultsArray=response.body().getResult();
+                   Log.d("Tag","Size===>"+viewOrderResultsArray.size());
+                   if(viewOrderResultsArray.size()>0){
+                       adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray);
+                       RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                       recycleview.setLayoutManager(mLayoutManager);
+                       recycleview.setItemAnimator(new DefaultItemAnimator());
+                       recycleview.setAdapter(adapterNew);
+                       adapterNew.notifyDataSetChanged();
+                   }
+               }
+            }
 
-                                    }
-                             itemList.add(new OrderItemDetail(total_price, order_id, cust_id, orderdate, st, uname, itemList1,itemDetail));
+            @Override
+            public void onFailure(Call<OrderResponse> call, Throwable t) {
+                pprogressBar.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+            }
+        });
+        }
 
-
-
-
-
-                                }
-
-
-                                itemlistAdapter = new MyOrderAdapter(itemList,getContext());
-                                itemlistAdapter2 = new MyOrderAdapter(itemList1,getContext());
-                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                                recycleview.setLayoutManager(mLayoutManager);
-                                recycleview.setItemAnimator(new DefaultItemAnimator());
-                                recycleview.setAdapter(itemlistAdapter);
-                                itemlistAdapter.notifyDataSetChanged();
-
-                            } else {
-
-                            }
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
+        private void netwOrderById(View view,String id){
+            final ProgressBar pprogressBar = (ProgressBar) view.findViewById(R.id.progressBarDil);
+            //making the progressbar visible
+            pprogressBar.setVisibility(View.VISIBLE);
+            Call<OrderResponse> call=webApi.getOrderById(acess_token,id);
+            call.enqueue(new Callback<OrderResponse>() {
+                @Override
+                public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
+                    pprogressBar.setVisibility(View.GONE);
+                    String status=response.body().getStatus();
+                    if(status.equals("SUCCESS")){
+                        viewOrderResultsArray=response.body().getResult();
+                        Log.d("Tag","Size===>"+viewOrderResultsArray.size());
+                        if(viewOrderResultsArray.size()>0){
+                            adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray);
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                            recycleview.setLayoutManager(mLayoutManager);
+                            recycleview.setItemAnimator(new DefaultItemAnimator());
+                            recycleview.setAdapter(adapterNew);
+                            adapterNew.notifyDataSetChanged();
                         }
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //displaying the error in toast if occurrs
-                        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                }
 
-        //creating a request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                @Override
+                public void onFailure(Call<OrderResponse> call, Throwable t) {
+                    pprogressBar.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-        //adding the string request to request queue
-        requestQueue.add(stringRequest);
-    }
+        }
 
 
 }

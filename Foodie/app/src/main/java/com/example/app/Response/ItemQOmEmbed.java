@@ -7,6 +7,15 @@ public class ItemQOmEmbed {
     @SerializedName("description")
     private String description;
 
+    @SerializedName("item_count")
+    private int item_count;
+
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("order_by_cust_id")
+    private int order_by_cust_id;
+
     public String getDescription() {
         return description;
     }
@@ -54,15 +63,6 @@ public class ItemQOmEmbed {
     public void setPurchase_status(String purchase_status) {
         this.purchase_status = purchase_status;
     }
-
-    @SerializedName("item_count")
-    private int item_count;
-
-    @SerializedName("name")
-    private String name;
-
-    @SerializedName("order_by_cust_id")
-    private int order_by_cust_id;
 
     @SerializedName("price")
     private  double price;
