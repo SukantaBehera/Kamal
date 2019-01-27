@@ -41,6 +41,7 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
     final Calendar myCalendar = Calendar.getInstance();
     private String[] statusArray={"Pending","Dispatched","Delivered"};
     private int mYear, mMonth, mDay, mHour, mMinute;
+    private String spinselect;
     public MyOrderAdapterNew(Context context, ArrayList<ViewOrderResult> viewlist) {
         this.viewlist = viewlist;
         this.context=context;
@@ -62,7 +63,7 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
         holder.tprice.setText(viewResult.getTotal_price()+"");
     //    holder.userType.setText(viewResult.getOrderby_custId());
         holder.odate.setText(viewResult.getOrderDate());
-       // holder.statusallorder.setText(viewResult.getOrder_deliv_status());
+        holder.statusallorder.setText(viewResult.getOrder_deliv_status());
         holder.username.setText(viewResult.getUserName());
         holder.dispatchDateTv.setText(viewResult.getDispatch_date());
         holder.deliveredDateTv.setText(viewResult.getDelivery_date());
@@ -96,8 +97,12 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        String select=statusArray[position];
-                        RegPrefManager.getInstance(context).setUpdateStatus(select);
+                         spinselect=statusArray[position];
+                        RegPrefManager.getInstance(context).setUpdateStatus(spinselect);
+                        if (spinselect.equals("Dispatched")){
+                            dispatchdateTv.setVisibility(View.VISIBLE);
+                            dispatchEd.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     @Override
@@ -193,7 +198,7 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
         ViewHolder(View itemView) {
             super(itemView);
 
-           // statusallorder = (TextView) itemView.findViewById(R.id.statusallorder);
+            statusallorder = (TextView) itemView.findViewById(R.id.statusallorder);
             odate=(TextView)itemView.findViewById(R.id.odate);
             username=itemView.findViewById(R.id.username);
             tprice=itemView.findViewById(R.id.tprice);

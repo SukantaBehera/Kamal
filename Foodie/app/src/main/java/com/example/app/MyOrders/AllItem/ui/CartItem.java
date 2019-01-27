@@ -267,7 +267,7 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.placeBtn:
-                tokenGenerate();
+              //  tokenGenerate();
                 break;
         }
     }

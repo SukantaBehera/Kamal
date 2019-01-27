@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="310dp"
     android:layout_marginTop="@dimen/cardCornerRadius"
     android:background="@drawable/home_bg">
 
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/adapter_cardview_margin"
         android:elevation="@dimen/cardview_vertical_padding">
@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:text="@string/orderid"
-                    android:textSize="@dimen/heading_lable_message"
+                    android:textSize="@dimen/text_order"
                     android:textStyle="bold|normal"
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/orderId"
                     android:padding="@dimen/layout_inner_padding"
-                    android:textSize="@dimen/text_lable_message"
+                    android:textSize="11sp"
                     android:textStyle="normal"
                     android:textColor="@color/colorAccent"
                     android:textAlignment="textStart"/>
@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:text="@string/total_price"
-                    android:textSize="@dimen/heading_lable_message"
+                    android:textSize="@dimen/text_order"
                     android:textStyle="bold|normal"
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"/>
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tprice"
                     android:padding="@dimen/layout_inner_padding"
-                    android:textSize="@dimen/text_lable_message"
+                    android:textSize="11sp"
                     android:textStyle="normal"
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"/>
@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:text="@string/username"
-                    android:textSize="@dimen/heading_lable_message"
+                    android:textSize="@dimen/text_order"
                     android:textStyle="bold|normal"
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"/>
@@ -91,9 +91,9 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/username"
                     android:padding="@dimen/layout_inner_padding"
-                    android:textSize="@dimen/text_lable_message"
+                    android:textSize="11sp"
                     android:textStyle="normal"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/black"
                     android:textAlignment="textStart"/>
 
             </LinearLayout>
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:text="@string/order_date"
-                    android:textSize="@dimen/heading_lable_message"
+                    android:textSize="@dimen/text_order"
                     android:textStyle="bold|normal"
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"/>
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/odate"
                     android:padding="@dimen/layout_inner_padding"
-                    android:textSize="@dimen/text_lable_message"
+                    android:textSize="11sp"
                     android:textStyle="normal"
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"/>
@@ -132,20 +132,20 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:text="@string/status"
-                    android:textSize="@dimen/heading_lable_message"
+                    android:textSize="@dimen/text_order"
                     android:textStyle="bold|normal"
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"/>
 
-               <!-- <TextView
+                <TextView
                     android:id="@+id/statusallorder"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:textAlignment="textStart"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_lable_message"
-                    android:textStyle="normal" />-->
+                    android:textSize="11sp"
+                    android:textStyle="normal" />
 
                 </LinearLayout>
 
@@ -158,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:text="Dispatch Date:"
-                    android:textSize="@dimen/heading_lable_message"
+                    android:textSize="@dimen/text_order"
                     android:textStyle="bold|normal"
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"/>
@@ -169,8 +169,8 @@
                     android:padding="@dimen/layout_inner_padding"
                     android:textAlignment="textStart"
                     android:hint="Dispatch Date"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_lable_message"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
                     android:textStyle="normal" />
 
 
@@ -184,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:text="Delivery Date:"
-                    android:textSize="@dimen/heading_lable_message"
+                    android:textSize="@dimen/text_order"
                     android:textStyle="bold|normal"
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"/>
@@ -195,9 +195,9 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:textAlignment="textStart"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/black"
                     android:hint="Delivery date"
-                    android:textSize="@dimen/text_lable_message"
+                    android:textSize="11sp"
                     android:textStyle="normal" />
 
 
@@ -211,7 +211,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:text="dispatched_by:"
-                    android:textSize="@dimen/heading_lable_message"
+                    android:textSize="@dimen/text_order"
                     android:textStyle="bold|normal"
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"/>
@@ -222,9 +222,9 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:textAlignment="textStart"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/black"
                     android:hint="dispatched_by"
-                    android:textSize="@dimen/text_lable_message"
+                    android:textSize="11sp"
                     android:textStyle="normal" />
 
 
@@ -238,7 +238,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
                     android:text="delivered By:"
-                    android:textSize="@dimen/heading_lable_message"
+                    android:textSize="@dimen/text_order"
                     android:textStyle="bold|normal"
                     android:textColor="@color/blackTextColor"
                     android:textAlignment="textStart"/>
@@ -250,8 +250,8 @@
                     android:padding="@dimen/layout_inner_padding"
                     android:textAlignment="textStart"
                     android:hint="deliveredBy"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_lable_message"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
                     android:textStyle="normal" />
 
 
@@ -260,7 +260,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="3dp">
 
 
                 <TextView
@@ -271,7 +271,7 @@
                     android:textAlignment="textStart"
                     android:text="Change Status"
                     android:textColor="@color/colorAccent"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="normal"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
@@ -285,7 +285,7 @@
                     android:textAlignment="textStart"
                     android:text="View More"
                     android:textColor="@color/colorAccent"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="normal"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"/>
@@ -295,4 +295,4 @@
 
     </android.support.v7.widget.CardView>
 
-</LinearLayout>
+</RelativeLayout>
