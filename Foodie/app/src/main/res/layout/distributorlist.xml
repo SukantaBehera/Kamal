@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/dimen_10"
-    android:layout_marginLeft="20dp"
+    android:layout_marginLeft="10dp"
     android:layout_marginRight="0dp"
     android:orientation="horizontal"
     android:background="@drawable/custom_border"
@@ -26,126 +26,127 @@
         android:padding="5dp"
         android:layout_margin="5dp"
         card_view:cardCornerRadius="4dp">
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       android:weightSum="2">
-       <ImageView
-           android:id="@+id/distribitor_photo"
-           android:layout_width="0dp"
-           android:layout_height="105dp"
-           android:layout_marginTop="2dp"
-           android:layout_marginBottom="2dp"
-           android:cropToPadding="true"
-           android:padding="5dp"
-           android:src="@drawable/man"
-           android:layout_weight="0.5"
-           />
-       <LinearLayout
-           android:layout_width="0dp"
-           android:layout_height="wrap_content"
-           android:orientation="vertical"
-           android:layout_weight="1.5"
-           >
-           <TextView
-               android:id="@+id/dist_id"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="10dp"
-               android:text="Jayadev Vihar"
-               android:visibility="gone" />
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-           <TextView
-               android:id="@+id/companynamelist"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="5dp"
-               android:layout_marginTop="5dp"
-               android:padding="2dp"
-               android:lines="1"
-               android:ellipsize="end"
-               android:text="CompanyName"
-               android:layout_alignParentLeft="true"
-               android:textAppearance="?android:attr/textAppearanceMedium"
-               android:textColor="@color/logintextColor" />
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/deleteimg"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <ImageView
+                android:id="@+id/distribitor_photo"
+                android:layout_width="0dp"
+                android:layout_height="105dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:cropToPadding="true"
+                android:padding="5dp"
+                android:src="@drawable/man"
+                android:layout_weight="0.5"
+                />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1.5"
+                >
+                <TextView
+                    android:id="@+id/dist_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
-                    android:padding="1dp"
-                    android:src="@drawable/delete"/>
-            </RelativeLayout>
+                    android:layout_marginLeft="10dp"
+                    android:text="Jayadev Vihar"
+                    android:visibility="gone" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/companynamelist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="2dp"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:text="CompanyName"
+                        android:layout_alignParentLeft="true"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/logintextColor" />
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/deleteimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        android:padding="1dp"
+                        android:src="@drawable/delete"/>
+                </RelativeLayout>
 
-           <TextView
-               android:id="@+id/unitholder_address"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="10dp"
-               android:text="Jayadev Vihar" />
+                <TextView
+                    android:id="@+id/unitholder_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Jayadev Vihar" />
 
-           <TextView
-               android:id="@+id/unit_address"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="10dp"
-               android:text="Jayadev Vihar"
-               android:visibility="gone" />
+                <TextView
+                    android:id="@+id/unit_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Jayadev Vihar"
+                    android:visibility="gone" />
 
-           <TextView
-               android:id="@+id/permanent_address"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="10dp"
-               android:text="Jayadev Vihar"
-               android:visibility="gone" />
+                <TextView
+                    android:id="@+id/permanent_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Jayadev Vihar"
+                    android:visibility="gone" />
 
-           <TextView
-               android:id="@+id/distributor_mobile_number"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="10dp"
-               android:text="9040019803" />
+                <TextView
+                    android:id="@+id/distributor_mobile_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="9040019803" />
 
-           <TextView
-               android:id="@+id/dist_email"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="10dp"
-               android:inputType="textEmailAddress"
-               android:text="abc@com" />
+                <TextView
+                    android:id="@+id/dist_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="textEmailAddress"
+                    android:text="abc@com" />
+                <TextView
+                    android:id="@+id/userStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:inputType="textEmailAddress"
+                    android:text="Active" />
 
-           <TextView
-               android:id="@+id/status"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="10dp"
-               android:text="Active"
-               android:visibility="gone" />
 
-           <TextView
-               android:id="@+id/user_id"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="10dp"
-               android:text="Active"
-               android:visibility="gone" />
 
-           <TextView
-               android:id="@+id/viewdetails"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_marginLeft="10dp"
-               android:text="@string/viewdetails"
-               android:textColor="@color/buttoncolor" />
+                <TextView
+                    android:id="@+id/user_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Active"
+                    android:visibility="gone" />
 
-       </LinearLayout>
-   </LinearLayout>
+                <TextView
+                    android:id="@+id/viewdetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/viewdetails"
+                    android:textColor="@color/buttoncolor" />
+
+            </LinearLayout>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
 </LinearLayout>

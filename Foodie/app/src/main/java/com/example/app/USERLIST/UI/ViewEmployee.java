@@ -190,7 +190,7 @@ public class ViewEmployee extends DilogueFRagment {
                                     String adhharcardno = jsonObject.getString("aadhar_card_no");
                                     String phone_no = jsonObject.getString("phone_no");
                                     String email_id = jsonObject.getString("email_id");
-                                    String status = jsonObject.getString("status");
+                                    String status = jsonObject.getString("is_active");
                                     String id = jsonObject.getString("user_id");
                                     employeelist.add(new Employeedetail(emp_id,name,designation,address,adhharcardno,phone_no, email_id,status, id));
 

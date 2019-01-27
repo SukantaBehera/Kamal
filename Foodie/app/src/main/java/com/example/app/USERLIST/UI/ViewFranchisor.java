@@ -176,10 +176,30 @@ public class ViewFranchisor extends DilogueFRagment {
                                     String phone_no = jsonObject.getString("phone_no");
                                     String email_id = jsonObject.getString("email_id");
                                     String unit_address = jsonObject.getString("unit_address");
+                                    if(unit_address.equals("null"))
+                                    {
+                                        unit_address = "her";
+                                    }
                                     String resident_address = jsonObject.getString("resident_address");
-                                    String status = jsonObject.getString("status");
+                                    if(resident_address.equals("null"))
+                                    {
+                                        resident_address = "her";
+                                    }
+                                    String is_active = jsonObject.getString("is_active");
+                                    if(is_active.equals("Y"))
+                                    {
+                                        is_active = "Active";
+                                    }
+                                    else {
+                                        is_active = "In Active";
+                                    }
+
                                     String id = jsonObject.getString("user_id");
-                                    franchisorlist.add(new Franchisordetail(fran_id, company_name, phone_no, email_id, unit_address, resident_address, status, id));
+                                    if(id.equals(""))
+                                    {
+                                        id = "null";
+                                    }
+                                    franchisorlist.add(new Franchisordetail(fran_id, company_name, phone_no, email_id, unit_address, resident_address, is_active, id));
 
 
                                 }

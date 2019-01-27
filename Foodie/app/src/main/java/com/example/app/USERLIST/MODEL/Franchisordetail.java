@@ -9,18 +9,26 @@ public class Franchisordetail {
     String email_id;
     String unit_address;
     String resident_address;
-    String status;
+    String is_active;
     String user_id;
 
-    public Franchisordetail(String fran_id, String company_name, String phone_no, String email_id, String unit_address, String resident_address, String status, String user_id) {
+    public Franchisordetail(String fran_id, String company_name, String phone_no, String email_id, String unit_address, String resident_address, String is_active,String user_id) {
         this.fran_id = fran_id;
         this.company_name = company_name;
         this.phone_no = phone_no;
         this.email_id = email_id;
         this.unit_address = unit_address;
         this.resident_address = resident_address;
-        this.status = status;
+        this.is_active = is_active;
         this.user_id = user_id;
+    }
+
+    public String getIs_active() {
+        return is_active;
+    }
+
+    public void setIs_active(String is_active) {
+        this.is_active = is_active;
     }
 
     public String getFran_id() {
@@ -69,14 +77,6 @@ public class Franchisordetail {
 
     public void setResident_address(String resident_address) {
         this.resident_address = resident_address;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getUser_id() {

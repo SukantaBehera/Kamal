@@ -91,12 +91,13 @@ public class ViewFranchisorDetails extends AppCompatActivity implements View.OnC
 
             String getMobileNo = (String)bundle.get("resident_address");
             residenceaddress.setText(getMobileNo);
-            String getEmailid = (String)bundle.get("status");
-            if (getEmailid.equals("Y")){
+            String getStatus = (String)bundle.get("is_active");
+            status.setText(getStatus);
+            /*if (getEmailid.equals("Y")){
                 status.setText("Active");
             }else {
                 status.setText("Inactive");
-            }
+            }*/
 
             String getUserid = (String)bundle.get("user_id");
          //   Userid.setText(getUserid);
