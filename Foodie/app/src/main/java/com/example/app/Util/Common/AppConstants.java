@@ -1,9 +1,9 @@
 package com.example.app.Util.Common;
 
 public class AppConstants {
-  //  public static  final String BASEURL = "http://209.97.136.18:8080/rest-svc/";
+    public static  final String BASEURL = "http://209.97.136.18:8080/rest-svc/";
 
-    public static  final String BASEURL = "http://192.168.3.75:8085/rest-svc/";
+   // public static  final String BASEURL = "http://192.168.3.75:8085/rest-svc/";
 
     public static  final String BASEURL_CASHFREE = "https://test.cashfree.com/api/v2/";
 
