@@ -1,48 +1,64 @@
 package com.example.app.foodie;
 
-import android.content.Intent;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.sukanta.foodie.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reports extends Fragment {
-    TextView dailyreport, franchisoreport, feedbackreport;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.activity_reports, container, false);
-        // Setting ViewPager for each Tabs
-        ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-        // Set Tabs inside Toolbar
-        TabLayout tabs = (TabLayout) rootView.findViewById(R.id.result_tabs);
-        tabs.setupWithViewPager(viewPager);
 
-        return rootView;
+public class PartyFragment extends Fragment {
+
+
+    public PartyFragment() {
+        // Required empty public constructor
     }
 
 
-    // Add Fragments to Tabs
+    public static PartyFragment newInstance(String param1, String param2) {
+        PartyFragment fragment = new PartyFragment();
+
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v= inflater.inflate(R.layout.fragment_party, container, false);
+        ViewPager viewPager = (ViewPager) v.findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+        // Set Tabs inside Toolbar
+        TabLayout tabs = (TabLayout) v.findViewById(R.id.result_tabs);
+        tabs.setupWithViewPager(viewPager);
+
+        return v;
+    }
+
     private void setupViewPager(ViewPager viewPager) {
 
 
-        Adapter adapter = new Adapter(getChildFragmentManager());
-        adapter.addFragment(new AllFragment(), "ALL");
-        adapter.addFragment(new DailyFragment(), "Daily");
-        adapter.addFragment(new PartyFragment(), "Party");
+        Reports.Adapter adapter = new Reports.Adapter(getChildFragmentManager());
+        adapter.addFragment(new DistributorFragment(), "Distributor");
+        adapter.addFragment(new FranchansorFragment(), "Franchansor");
+
 
         viewPager.setAdapter(adapter);
 
@@ -78,6 +94,5 @@ public class Reports extends Fragment {
             return mFragmentTitleList.get(position);
         }
     }
-
 
 }

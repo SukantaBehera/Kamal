@@ -1,12 +1,14 @@
 package com.example.app.MyOrders.OrderListById.UI;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +31,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.app.ITEM.ADAPTER.ItemListAdapter;
 import com.example.app.ITEM.UTIL.DilogueFRagment;
 import com.example.app.MyOrders.OrderListById.Adapter.MyOrderAdapterNew;
+import com.example.app.Request.MyOrderUpdateDeliveryRequest;
+import com.example.app.Request.MyOrderUpdateRequest;
+import com.example.app.Response.MyOrderUpdateResponse;
 import com.example.app.Response.OrderResponse;
 import com.example.app.Response.TokenResponse;
 import com.example.app.Response.ViewOrderResult;
@@ -41,16 +46,22 @@ import com.example.app.foodie.SharedPreferenceClass;
 import com.example.app.MyOrders.AllItem.datamodels.OrderItem;
 import com.example.app.MyOrders.OrderListById.Adapter.MyOrderAdapter;
 import com.example.sukanta.foodie.R;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static com.example.app.Util.Common.Constants.RESPONSE_BAD;
+import static com.example.app.Util.Common.Constants.RESPONSE_ERROR;
+import static com.example.app.Util.Common.Constants.RESPONSE_OK;
 
 public class ViewOrderItems extends DilogueFRagment {
     ProgressDialog progressDialog;
@@ -225,6 +236,7 @@ public class ViewOrderItems extends DilogueFRagment {
 
 
          private void networkAdmin(View view){
+             viewOrderResultsArray.clear();
              final ProgressBar pprogressBar = (ProgressBar) view.findViewById(R.id.progressBarDil);
              //making the progressbar visible
              pprogressBar.setVisibility(View.VISIBLE);
@@ -238,7 +250,7 @@ public class ViewOrderItems extends DilogueFRagment {
                    viewOrderResultsArray=response.body().getResult();
                    Log.d("Tag","Size===>"+viewOrderResultsArray.size());
                    if(viewOrderResultsArray.size()>0){
-                       adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray);
+                       adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this);
                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                        recycleview.setLayoutManager(mLayoutManager);
                        recycleview.setItemAnimator(new DefaultItemAnimator());
@@ -250,13 +262,14 @@ public class ViewOrderItems extends DilogueFRagment {
 
             @Override
             public void onFailure(Call<OrderResponse> call, Throwable t) {
-                pprogressBar.setVisibility(View.GONE);
+            //    pprogressBar.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
             }
         });
         }
 
         private void netwOrderById(View view,String id){
+            viewOrderResultsArray.clear();
             final ProgressBar pprogressBar = (ProgressBar) view.findViewById(R.id.progressBarDil);
             //making the progressbar visible
             pprogressBar.setVisibility(View.VISIBLE);
@@ -264,13 +277,13 @@ public class ViewOrderItems extends DilogueFRagment {
             call.enqueue(new Callback<OrderResponse>() {
                 @Override
                 public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
-                    pprogressBar.setVisibility(View.GONE);
+             //       pprogressBar.setVisibility(View.GONE);
                     String status=response.body().getStatus();
                     if(status.equals("SUCCESS")){
                         viewOrderResultsArray=response.body().getResult();
                         Log.d("Tag","Size===>"+viewOrderResultsArray.size());
                         if(viewOrderResultsArray.size()>0){
-                            adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray);
+                            adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this);
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                             recycleview.setLayoutManager(mLayoutManager);
                             recycleview.setItemAnimator(new DefaultItemAnimator());
@@ -286,6 +299,273 @@ public class ViewOrderItems extends DilogueFRagment {
                     Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
                 }
             });
+
+        }
+
+        public void updateStatus(String spinselect, final String by_format_value, String date_format_value, final String orderid){
+
+            if(spinselect.equals("Dispatched")){
+
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("order_id","38");
+                jsonObject.addProperty("dispatch_date","2019-01-28");
+                jsonObject.addProperty("dispatched_by","yue");
+                jsonObject.addProperty("status","DISPATCHED");
+
+                Call<MyOrderUpdateResponse> call=webApi.getUpdateDispatchResponse(acess_token,jsonObject);
+                call.enqueue(new Callback<MyOrderUpdateResponse>() {
+                    @Override
+                    public void onResponse(Call<MyOrderUpdateResponse> call, Response<MyOrderUpdateResponse> response) {
+                        int code=response.code();
+                        Log.d("Tag",""+code);
+                        switch (code){
+                            case RESPONSE_OK:
+                                String status=response.body().getStatus();
+                                if(status.equals("SUCCESS")){
+                                    String msg=response.body().getMessage();
+                                    Toast.makeText(getContext(),msg,Toast.LENGTH_LONG).show();
+                                    //getAllItemList();
+                                    for(int i=0;i<viewOrderResultsArray.size();i++){
+                                        ViewOrderResult value=viewOrderResultsArray.get(i);
+                                        if(value.getOrder_id()==Integer.valueOf(orderid)){
+                                            ViewOrderResult value1=new ViewOrderResult();
+                                            value1.setOrder_id(Integer.valueOf(orderid));
+                                            value1.setDelivered_by_empId(value.getDelivered_by_empId());
+                                            value1.setDelivered_by_empName(value.getDelivered_by_empName());
+                                            value1.setDelivery_date(value.getDelivery_date());
+                                            value1.setDispatched_by_empId(value.getDispatched_by_empId());
+                                            value1.setDispatched_by_empName(value.getDispatched_by_empName());
+                                            value1.setDispatch_date(value.getDispatch_date());
+                                            value1.setOrderby_custId(value.getOrderby_custId());
+                                            value1.setOrderDate(value.getOrderDate());
+                                            value1.setOrder_deliv_status(value.getOrder_deliv_status());
+                                            value1.setTotal_price(value.getTotal_price());
+                                            value1.setUserName(value.getUserName());
+                                            value1.setUserRoleCode(value.getUserRoleCode());
+                                            value1.setUser_active_status(value.getUser_active_status());
+                                            viewOrderResultsArray.set(i,value1);
+
+                                        }
+                                    }
+
+                                    if(viewOrderResultsArray.size()>0){
+                                        adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                        recycleview.setLayoutManager(mLayoutManager);
+                                        recycleview.setItemAnimator(new DefaultItemAnimator());
+                                        recycleview.setAdapter(adapterNew);
+                                        adapterNew.notifyDataSetChanged();
+                                    }
+                                }
+
+                                break;
+                            case RESPONSE_ERROR:
+                                Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+                                break;
+                            case RESPONSE_BAD:
+
+                                    Log.v("ERRor",response.errorBody().toString());
+
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyOrderUpdateResponse> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+
+
+                /*Call<MyOrderUpdateResponse> call=webApi.getUpdateDispatchResponse(acess_token,dispatchrequest);
+                call.enqueue(new Callback<MyOrderUpdateResponse>() {
+                    @Override
+                    public void onResponse(Call<MyOrderUpdateResponse> call, Response<MyOrderUpdateResponse> response) {
+                        String status=response.body().getStatus();
+                        if(status.equals("SUCCESS")){
+                            String msg=response.body().getMessage();
+                            Toast.makeText(getContext(),msg,Toast.LENGTH_LONG).show();
+                            //getAllItemList();
+                            for(int i=0;i<viewOrderResultsArray.size();i++){
+                                ViewOrderResult value=viewOrderResultsArray.get(i);
+                                if(value.getOrder_id()==Integer.valueOf(orderid)){
+                                    ViewOrderResult value1=new ViewOrderResult();
+                                    value1.setOrder_id(Integer.valueOf(orderid));
+                                    value1.setDelivered_by_empId(value.getDelivered_by_empId());
+                                    value1.setDelivered_by_empName(value.getDelivered_by_empName());
+                                    value1.setDelivery_date(value.getDelivery_date());
+                                    value1.setDispatched_by_empId(value.getDispatched_by_empId());
+                                    value1.setDispatched_by_empName(value.getDispatched_by_empName());
+                                    value1.setDispatch_date(value.getDispatch_date());
+                                    value1.setOrderby_custId(value.getOrderby_custId());
+                                    value1.setOrderDate(value.getOrderDate());
+                                    value1.setOrder_deliv_status(value.getOrder_deliv_status());
+                                    value1.setTotal_price(value.getTotal_price());
+                                    value1.setUserName(value.getUserName());
+                                    value1.setUserRoleCode(value.getUserRoleCode());
+                                    value1.setUser_active_status(value.getUser_active_status());
+                                     viewOrderResultsArray.set(i,value1);
+
+                                }
+                            }
+
+                            if(viewOrderResultsArray.size()>0){
+                                adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this);
+                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                recycleview.setLayoutManager(mLayoutManager);
+                                recycleview.setItemAnimator(new DefaultItemAnimator());
+                                recycleview.setAdapter(adapterNew);
+                                adapterNew.notifyDataSetChanged();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyOrderUpdateResponse> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+                    }
+                });
+*/
+            }
+            else {
+
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("order_id",Integer.valueOf(orderid));
+                jsonObject.addProperty("delivery_date",date_format_value);
+                jsonObject.addProperty("delivered_by",by_format_value);
+                jsonObject.addProperty("status","DELIVERED");
+
+                Call<MyOrderUpdateResponse> call=webApi.getUpdateDeliveryResponse(acess_token,jsonObject);
+                call.enqueue(new Callback<MyOrderUpdateResponse>() {
+                    @Override
+                    public void onResponse(Call<MyOrderUpdateResponse> call, Response<MyOrderUpdateResponse> response) {
+                        int code=response.code();
+                        Log.d("Tag",""+code);
+                        switch (code) {
+                            case RESPONSE_OK:
+                                String status = response.body().getStatus();
+                                if (status.equals("SUCCESS")) {
+                                    String msg = response.body().getMessage();
+                                    Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+                                    //getAllItemList();
+                                    for (int i = 0; i < viewOrderResultsArray.size(); i++) {
+                                        ViewOrderResult value = viewOrderResultsArray.get(i);
+                                        if (value.getOrder_id() == Integer.valueOf(orderid)) {
+                                            ViewOrderResult value1 = new ViewOrderResult();
+                                            value1.setOrder_id(Integer.valueOf(orderid));
+                                            value1.setDelivered_by_empId(value.getDelivered_by_empId());
+                                            value1.setDelivered_by_empName(value.getDelivered_by_empName());
+                                            value1.setDelivery_date(value.getDelivery_date());
+                                            value1.setDispatched_by_empId(value.getDispatched_by_empId());
+                                            value1.setDispatched_by_empName(value.getDispatched_by_empName());
+                                            value1.setDispatch_date(value.getDispatch_date());
+                                            value1.setOrderby_custId(value.getOrderby_custId());
+                                            value1.setOrderDate(value.getOrderDate());
+                                            value1.setOrder_deliv_status(value.getOrder_deliv_status());
+                                            value1.setTotal_price(value.getTotal_price());
+                                            value1.setUserName(value.getUserName());
+                                            value1.setUserRoleCode(value.getUserRoleCode());
+                                            value1.setUser_active_status(value.getUser_active_status());
+                                            viewOrderResultsArray.set(i, value1);
+
+                                        }
+                                    }
+
+                                    if (viewOrderResultsArray.size() > 0) {
+                                        adapterNew = new MyOrderAdapterNew(getContext(), viewOrderResultsArray, ViewOrderItems.this);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                        recycleview.setLayoutManager(mLayoutManager);
+                                        recycleview.setItemAnimator(new DefaultItemAnimator());
+                                        recycleview.setAdapter(adapterNew);
+                                        adapterNew.notifyDataSetChanged();
+                                    }
+                                }
+
+                                break;
+                            case RESPONSE_ERROR:
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyOrderUpdateResponse> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+
+             /*   MyOrderUpdateDeliveryRequest deliveryRequest=new MyOrderUpdateDeliveryRequest();
+                deliveryRequest.setDelivered_by(by_format_value);
+                deliveryRequest.setDelivery_date(date_format_value);
+                deliveryRequest.setOrder_id(Integer.valueOf(orderid));
+                deliveryRequest.setStatus("DELIVERED");
+
+                Call<MyOrderUpdateResponse> call=webApi.getUpdateDeliveryResponse(acess_token,deliveryRequest);
+                call.enqueue(new Callback<MyOrderUpdateResponse>() {
+                    @Override
+                    public void onResponse(Call<MyOrderUpdateResponse> call, Response<MyOrderUpdateResponse> response) {
+
+
+                        String status=response.body().getStatus();
+                        if(status.equals("SUCCESS")){
+                            String msg=response.body().getMessage();
+                            Toast.makeText(getContext(),msg,Toast.LENGTH_LONG).show();
+                           // getAllItemList();
+
+                            for(int i=0;i<viewOrderResultsArray.size();i++){
+                                ViewOrderResult value=viewOrderResultsArray.get(i);
+                                if(value.getOrder_id()==Integer.valueOf(orderid)){
+                                    ViewOrderResult value1=new ViewOrderResult();
+                                    value1.setOrder_id(Integer.valueOf(orderid));
+                                    value1.setDelivered_by_empId(value.getDelivered_by_empId());
+                                    value1.setDelivered_by_empName(value.getDelivered_by_empName());
+                                    value1.setDelivery_date(value.getDelivery_date());
+                                    value1.setDispatched_by_empId(value.getDispatched_by_empId());
+                                    value1.setDispatched_by_empName(value.getDispatched_by_empName());
+                                    value1.setDispatch_date(value.getDispatch_date());
+                                    value1.setOrderby_custId(value.getOrderby_custId());
+                                    value1.setOrderDate(value.getOrderDate());
+                                    value1.setOrder_deliv_status(value.getOrder_deliv_status());
+                                    value1.setTotal_price(value.getTotal_price());
+                                    value1.setUserName(value.getUserName());
+                                    value1.setUserRoleCode(value.getUserRoleCode());
+                                    value1.setUser_active_status(value.getUser_active_status());
+                                    viewOrderResultsArray.set(i,value1);
+
+                                }
+                            }
+
+                            if(viewOrderResultsArray.size()>0){
+                                adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this);
+                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                recycleview.setLayoutManager(mLayoutManager);
+                                recycleview.setItemAnimator(new DefaultItemAnimator());
+                                recycleview.setAdapter(adapterNew);
+                                adapterNew.notifyDataSetChanged();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyOrderUpdateResponse> call, Throwable t) {
+                        Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+                    }
+                });*/
+
+
+            }
+/*
+            MyOrderUpdateDeliveryRequest deliveryRequest=new MyOrderUpdateDeliveryRequest();
+            deliveryRequest.setDelivered_by(by_format_value);
+            deliveryRequest.setDelivery_date(date_format_value);
+            deliveryRequest.setOrder_id(Integer.valueOf(orderid));
+            deliveryRequest.setStatus("DELIVERED");*/
+
 
         }
 
