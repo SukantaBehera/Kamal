@@ -1,13 +1,71 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.app.foodie.DailyFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+    <EditText
+        android:id="@+id/startEd"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
+        android:hint="Start Date"
+        android:focusable="false"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+      android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/endEd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:hint="End Date"
+            android:focusable="false"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/item_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:layout_below="@+id/searchlist"
+        android:scrollbars="vertical" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:layout_below="@+id/imageView6"
+        android:layout_centerHorizontal="true"
+        android:text="No Orders" />
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/progressBarDil"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+</LinearLayout>
