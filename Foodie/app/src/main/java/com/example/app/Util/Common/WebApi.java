@@ -106,7 +106,7 @@ public interface WebApi {
 
     @Headers("Content-Type: application/json")
     @POST(AppConstants.STATUS_UPDATE)
-    Call<MyOrderUpdateResponse> getUpdateDispatchResponse(@Query("access_token") String access_token,@Body JsonObject jsonObject);
+    Call<MyOrderUpdateResponse> getUpdateDispatchResponse(@Query("access_token") String access_token,@Body MyOrderUpdateRequest jsonObject);
 
   /*  @Headers("Content-Type: application/json")
     @POST(AppConstants.STATUS_UPDATE)
@@ -114,7 +114,7 @@ public interface WebApi {
 
     @Headers("Content-Type: application/json")
     @POST(AppConstants.STATUS_UPDATE)
-    Call<MyOrderUpdateResponse> getUpdateDeliveryResponse(@Query("access_token") String access_token, @Body JsonObject jsonObject);
+    Call<MyOrderUpdateResponse> getUpdateDeliveryResponse(@Query("access_token") String access_token, @Body MyOrderUpdateDeliveryRequest jsonObject);
 
 
     @GET(AppConstants.ORDER_REPORT_PENDING)
