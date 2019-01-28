@@ -6,6 +6,7 @@ import android.app.Application;
 import com.example.app.MyOrders.AllItem.datamodels.OrderPlacedResponse;
 import com.example.app.MyOrders.AllItem.datamodels.OrderRequest;
 import com.example.app.Request.CashfreeMerchantRequest;
+import com.example.app.Request.DeleteUserRequest;
 import com.example.app.Request.LoginRequest;
 import com.example.app.Request.UpdateDistributorRequest;
 import com.example.app.Request.UpdateEmployeeRequest;
@@ -13,6 +14,7 @@ import com.example.app.Request.UpdateFranchisorRequest;
 import com.example.app.Request.UpdateQomRequest;
 import com.example.app.Response.CashfreePaymantResponse;
 import com.example.app.Response.ChangePasswordResponse;
+import com.example.app.Response.DeleteUserResponse;
 import com.example.app.Response.GetAllQomReponse;
 import com.example.app.Response.LoginResponse;
 import com.example.app.Response.OrderResponse;
@@ -85,4 +87,14 @@ public interface WebApi {
 
     @GET(AppConstants.ORDERALLITEMS_BYID)
     Call<OrderResponse> getOrderById(@Query("access_token") String access_token,@Query("custId") String custId);
+
+    @POST(AppConstants.DELETEDISTRIBUTOR_BYID)
+    Call<DeleteUserResponse> deletedistributor(@Query("access_token") String access_token, @Query("userId") String userId);
+
+    @POST(AppConstants.DELETEFRANCHISOR_BYID)
+    Call<DeleteUserResponse> deletefranchisor(@Query("access_token") String access_token, @Query("userId") String userId);
+
+    @POST(AppConstants.DELETEEMPLOYEE_BYID)
+    Call<DeleteUserResponse> deleteemployee(@Query("access_token") String access_token, @Query("userId") String userId);
+
 }

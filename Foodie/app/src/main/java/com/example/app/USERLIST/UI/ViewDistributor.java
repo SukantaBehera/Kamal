@@ -174,7 +174,7 @@ public class ViewDistributor extends DilogueFRagment {
                             if (obj.getString("status").equals("SUCCESS")) {
 
                                 JSONArray jsonArray = obj.getJSONArray("result");
-                                Toast.makeText(getActivity(), "Total Distributor's present = " + jsonArray.length(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(), "Total Distributor's present = " + jsonArray.length(), Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                                     String dist_id = jsonObject.getString("dist_id");
@@ -193,7 +193,7 @@ public class ViewDistributor extends DilogueFRagment {
 
 
                                 // cartList = response.getDetail();
-                                distributorListAdapter = new DistributorListAdapter(context,distributorlist);
+                                distributorListAdapter = new DistributorListAdapter(context,distributorlist,ViewDistributor.this);
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                 recycleview.setLayoutManager(mLayoutManager);
                                 recycleview.setItemAnimator(new DefaultItemAnimator());
@@ -223,6 +223,16 @@ public class ViewDistributor extends DilogueFRagment {
 
         //adding the string request to request queue
         requestQueue.add(stringRequest);
+    }
+
+    public void deleteItem(int pos){
+        distributorlist.remove(pos);
+        distributorListAdapter = new DistributorListAdapter(context,distributorlist,ViewDistributor.this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        recycleview.setLayoutManager(mLayoutManager);
+        recycleview.setItemAnimator(new DefaultItemAnimator());
+        recycleview.setAdapter(distributorListAdapter);
+        distributorListAdapter.notifyDataSetChanged();
     }
 }
 

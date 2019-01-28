@@ -7,6 +7,7 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="0dp"
     android:orientation="horizontal"
+    android:id="@+id/userLayout"
     android:background="@drawable/custom_border"
     >
 
@@ -71,15 +72,16 @@
                         android:layout_alignParentLeft="true"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/logintextColor" />
+
                     <android.support.v7.widget.AppCompatImageView
-                        android:id="@+id/deleteimg"
+                        android:id="@+id/deleteuser"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
                         android:padding="1dp"
-                        android:src="@drawable/delete"/>
+                        android:src="@drawable/delete" />
                 </RelativeLayout>
 
                 <TextView

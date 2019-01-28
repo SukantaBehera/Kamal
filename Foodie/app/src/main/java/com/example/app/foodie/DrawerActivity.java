@@ -238,7 +238,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             else if (id == R.id.reports) {
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.containerView, new Reports()).commit();
+                mFragmentTransaction.replace(R.id.containerView, new com.example.app.REPORTS.ReportsFragment()).commit();
                 setTextColorForMenuItem(item, R.color.logintextColor);
                 toolbar.setTitle(getResources().getString(R.string.app_display_name));
                 toolbar.setSubtitle(getResources().getString(R.string.reports));

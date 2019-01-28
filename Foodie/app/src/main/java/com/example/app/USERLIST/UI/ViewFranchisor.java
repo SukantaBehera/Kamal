@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.app.ITEM.UTIL.DilogueFRagment;
+import com.example.app.USERLIST.ADAPTER.DistributorListAdapter;
 import com.example.app.USERLIST.ADAPTER.FranchisorListAdapter;
 import com.example.app.USERLIST.MODEL.Franchisordetail;
 import com.example.app.foodie.ServerLinks;
@@ -206,7 +207,7 @@ public class ViewFranchisor extends DilogueFRagment {
 
 
                                 // cartList = response.getDetail();
-                                franchisorListAdapter = new FranchisorListAdapter(franchisorlist,getContext());
+                                franchisorListAdapter = new FranchisorListAdapter(franchisorlist,getContext(),ViewFranchisor.this);
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                 recycleview.setLayoutManager(mLayoutManager);
                                 recycleview.setItemAnimator(new DefaultItemAnimator());
@@ -236,6 +237,16 @@ public class ViewFranchisor extends DilogueFRagment {
 
         //adding the string request to request queue
         requestQueue.add(stringRequest);
+    }
+
+    public void deleteItem(int pos){
+        franchisorlist.remove(pos);
+        franchisorListAdapter = new FranchisorListAdapter(franchisorlist,getContext(),ViewFranchisor.this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        recycleview.setLayoutManager(mLayoutManager);
+        recycleview.setItemAnimator(new DefaultItemAnimator());
+        recycleview.setAdapter(franchisorListAdapter);
+        franchisorListAdapter.notifyDataSetChanged();
     }
 }
 

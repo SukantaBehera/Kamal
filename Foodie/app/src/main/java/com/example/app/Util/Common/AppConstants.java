@@ -21,6 +21,11 @@ public class AppConstants {
     public static  final String ORDERALLITEMS="api/orderitem/get_cons_order_details";
     public static  final String ORDERALLITEMS_BYID="api/orderitem/get-order-details-by-custid";
 
+    public static final String DELETEDISTRIBUTOR_BYID = "api/delete-distributor-by-id";
+    public static final String DELETEFRANCHISOR_BYID = "api/delete-franchisor-by-id";
+    public static final String DELETEEMPLOYEE_BYID = "api/delete-employee-by-id";
+
+
     public static  final String CASHFREE="cftoken/order";
 
     // public static  final String takeOrder = "api/orderitem/executeorder";

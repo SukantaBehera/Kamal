@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.app.ITEM.UTIL.DilogueFRagment;
+import com.example.app.USERLIST.ADAPTER.DistributorListAdapter;
 import com.example.app.USERLIST.ADAPTER.EmployeeListAdapter;
 import com.example.app.USERLIST.MODEL.Employeedetail;
 import com.example.app.foodie.ServerLinks;
@@ -199,7 +200,7 @@ public class ViewEmployee extends DilogueFRagment {
 
 
                                 // cartList = response.getDetail();
-                                employeeListAdapter = new EmployeeListAdapter(employeelist,context);
+                                employeeListAdapter = new EmployeeListAdapter(employeelist,context,ViewEmployee.this);
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                 recycleview.setLayoutManager(mLayoutManager);
                                 recycleview.setItemAnimator(new DefaultItemAnimator());
@@ -229,6 +230,15 @@ public class ViewEmployee extends DilogueFRagment {
 
         //adding the string request to request queue
         requestQueue.add(stringRequest);
+    }
+    public void deleteItem(int pos){
+        employeelist.remove(pos);
+        employeeListAdapter = new EmployeeListAdapter(employeelist,context,ViewEmployee.this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        recycleview.setLayoutManager(mLayoutManager);
+        recycleview.setItemAnimator(new DefaultItemAnimator());
+        recycleview.setAdapter(employeeListAdapter);
+        employeeListAdapter.notifyDataSetChanged();
     }
 }
 
