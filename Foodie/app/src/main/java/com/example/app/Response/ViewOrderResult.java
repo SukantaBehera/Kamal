@@ -11,7 +11,7 @@ public class ViewOrderResult {
 
         @SerializedName("delivered_by_empName")
         private String delivered_by_empName;
-    @SerializedName("delivery_date")
+         @SerializedName("delivery_date")
         private String delivery_date;
 
         @SerializedName("dispatched_by_empId")

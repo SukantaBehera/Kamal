@@ -1,7 +1,9 @@
 package com.example.app.Util.Common;
 
 public class AppConstants {
-    public static  final String BASEURL = "http://209.97.136.18:8080/rest-svc/";
+  //  public static  final String BASEURL = "http://209.97.136.18:8080/rest-svc/";
+
+    public static  final String BASEURL = "http://192.168.3.75:8085/rest-svc/";
 
     public static  final String BASEURL_CASHFREE = "https://test.cashfree.com/api/v2/";
 
@@ -20,6 +22,7 @@ public class AppConstants {
 
     public static  final String ORDERALLITEMS="api/orderitem/get_cons_order_details";
     public static  final String ORDERALLITEMS_BYID="api/orderitem/get-order-details-by-custid";
+    public static  final String STATUS_UPDATE="api/orderitem/update-order-status";
 
     public static  final String CASHFREE="cftoken/order";
 

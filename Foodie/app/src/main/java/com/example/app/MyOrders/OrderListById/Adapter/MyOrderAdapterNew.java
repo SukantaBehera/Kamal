@@ -1,6 +1,7 @@
 package com.example.app.MyOrders.OrderListById.Adapter;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -15,8 +16,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.app.MyOrders.AllItem.ui.ViewItems;
+import com.example.app.MyOrders.OrderListById.UI.ViewOrderItems;
+import com.example.app.Response.MyOrderUpdateResponse;
 import com.example.app.Response.ViewOrderResult;
 import com.example.app.Response.ViewResult;
 import com.example.app.Response.ViewResultCart;
@@ -28,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import retrofit2.Call;
+
 
 /**
  * Created by RatnaDev008 on 10/29/2018.
@@ -37,16 +43,17 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
     private Context context;
     private ArrayList<ViewOrderResult> viewlist;
     private ArrayList<ViewOrderResult> viewlistcart;
-    ViewItems fragments;
+    ViewOrderItems fragments;
     final Calendar myCalendar = Calendar.getInstance();
     private String[] statusArray={"Pending","Dispatched","Delivered"};
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private String spinselect;
-    public MyOrderAdapterNew(Context context, ArrayList<ViewOrderResult> viewlist) {
+    private String spinselect,by_format,by_format_value,date_format,date_format_value,orderid;
+
+    public MyOrderAdapterNew(Context context, ArrayList<ViewOrderResult> viewlist,ViewOrderItems frag) {
         this.viewlist = viewlist;
         this.context=context;
         viewlistcart=new ArrayList<>();
-        this.fragments=fragments;
+        this.fragments=frag;
     }
 
     @Override
@@ -102,6 +109,15 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
                         if (spinselect.equals("Dispatched")){
                             dispatchdateTv.setVisibility(View.VISIBLE);
                             dispatchEd.setVisibility(View.VISIBLE);
+                            deliveryDateEd.setVisibility(View.GONE);
+                            deliveryByEd.setVisibility(View.GONE);
+
+
+                        }else if(spinselect.equals("Delivered")){
+                            deliveryDateEd.setVisibility(View.VISIBLE);
+                            deliveryByEd.setVisibility(View.VISIBLE);
+                            dispatchdateTv.setVisibility(View.GONE);
+                            dispatchEd.setVisibility(View.GONE);
                         }
                     }
 
@@ -127,7 +143,7 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
                                     public void onDateSet(DatePicker view, int year,
                                                           int monthOfYear, int dayOfMonth) {
 
-                                        dispatchdateTv.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                        dispatchdateTv.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
 
                                     }
                                 }, mYear, mMonth, mDay);
@@ -152,7 +168,7 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
                                     public void onDateSet(DatePicker view, int year,
                                                           int monthOfYear, int dayOfMonth) {
 
-                                        deliveryDateEd.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                        deliveryDateEd.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
 
                                     }
                                 }, mYear, mMonth, mDay);
@@ -167,7 +183,27 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
                     RegPrefManager.getInstance(context).setDispatchDate(dispatchdateTv.getText().toString());
                     RegPrefManager.getInstance(context).setDeliverBy(deliveryByEd.getText().toString());
                     RegPrefManager.getInstance(context).setDispatchBy(dispatchEd.getText().toString());
-                    dialog.dismiss();
+                    if(spinselect.equals("Pending")) {
+                        Toast.makeText(context, "Please Select Dispatch or delivery status", Toast.LENGTH_LONG).show();
+                    }else   if (spinselect.equals("Dispatched")){
+                            by_format="dispatched_by";
+                            date_format="dispatched_date";
+                            by_format_value=dispatchEd.getText().toString();
+                            date_format_value=dispatchdateTv.getText().toString();
+                        orderid=String.valueOf(viewResult.getOrder_id());
+                        fragments.updateStatus(spinselect,by_format_value,date_format_value,orderid);
+                        }
+                        else {
+                        by_format="delivered_by";
+                        date_format="delivery_date";
+                        by_format_value=deliveryByEd.getText().toString();
+                        date_format_value=deliveryDateEd.getText().toString();
+                        orderid=String.valueOf(viewResult.getOrder_id());
+
+                        fragments.updateStatus(spinselect,by_format_value,date_format_value,orderid);
+                    }
+
+                        dialog.dismiss();
                     }
 
                 });
@@ -183,6 +219,8 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
             }
         });
     }
+
+
 
 
     @Override

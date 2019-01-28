@@ -7,6 +7,8 @@ import com.example.app.MyOrders.AllItem.datamodels.OrderPlacedResponse;
 import com.example.app.MyOrders.AllItem.datamodels.OrderRequest;
 import com.example.app.Request.CashfreeMerchantRequest;
 import com.example.app.Request.LoginRequest;
+import com.example.app.Request.MyOrderUpdateDeliveryRequest;
+import com.example.app.Request.MyOrderUpdateRequest;
 import com.example.app.Request.UpdateDistributorRequest;
 import com.example.app.Request.UpdateEmployeeRequest;
 import com.example.app.Request.UpdateFranchisorRequest;
@@ -15,11 +17,13 @@ import com.example.app.Response.CashfreePaymantResponse;
 import com.example.app.Response.ChangePasswordResponse;
 import com.example.app.Response.GetAllQomReponse;
 import com.example.app.Response.LoginResponse;
+import com.example.app.Response.MyOrderUpdateResponse;
 import com.example.app.Response.OrderResponse;
 import com.example.app.Response.TokenResponse;
 import com.example.app.Response.UpdateQomResponse;
 import com.example.app.Response.UpdateUserResponse;
 import com.example.app.Response.ViewAllItemResponse;
+import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -85,4 +89,16 @@ public interface WebApi {
 
     @GET(AppConstants.ORDERALLITEMS_BYID)
     Call<OrderResponse> getOrderById(@Query("access_token") String access_token,@Query("custId") String custId);
+
+    @Headers("Content-Type: application/json")
+    @POST(AppConstants.STATUS_UPDATE)
+    Call<MyOrderUpdateResponse> getUpdateDispatchResponse(@Query("access_token") String access_token,@Body JsonObject jsonObject);
+
+  /*  @Headers("Content-Type: application/json")
+    @POST(AppConstants.STATUS_UPDATE)
+    Call<MyOrderUpdateResponse> getUpdateDeliveryResponse(@Query("access_token") String access_token,@Body MyOrderUpdateDeliveryRequest myOrderUpdateRequest);*/
+
+    @Headers("Content-Type: application/json")
+    @POST(AppConstants.STATUS_UPDATE)
+    Call<MyOrderUpdateResponse> getUpdateDeliveryResponse(@Query("access_token") String access_token, @Body JsonObject jsonObject);
 }
