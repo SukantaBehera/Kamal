@@ -19,6 +19,7 @@ import com.example.app.Response.GetAllQomReponse;
 import com.example.app.Response.LoginResponse;
 import com.example.app.Response.MyOrderUpdateResponse;
 import com.example.app.Response.OrderResponse;
+import com.example.app.Response.PendingReportResponse;
 import com.example.app.Response.TokenResponse;
 import com.example.app.Response.UpdateQomResponse;
 import com.example.app.Response.UpdateUserResponse;
@@ -101,4 +102,7 @@ public interface WebApi {
     @Headers("Content-Type: application/json")
     @POST(AppConstants.STATUS_UPDATE)
     Call<MyOrderUpdateResponse> getUpdateDeliveryResponse(@Query("access_token") String access_token, @Body JsonObject jsonObject);
+
+    @GET(AppConstants.ORDER_REPORT_PENDING)
+    Call<PendingReportResponse> getPendingReport(@Query("access_token") String access_token);
 }
