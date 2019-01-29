@@ -17,10 +17,12 @@ import com.example.app.Request.UpdateQomRequest;
 import com.example.app.Response.CashfreePaymantResponse;
 import com.example.app.Response.ChangePasswordResponse;
 import com.example.app.Response.DeleteUserResponse;
+import com.example.app.Response.EmployeeIdResponse;
 import com.example.app.Response.GetAllQomReponse;
 import com.example.app.Response.LoginResponse;
 import com.example.app.Response.MyOrderUpdateResponse;
 import com.example.app.Response.OrderResponse;
+import com.example.app.Response.OrderViewResponse;
 import com.example.app.Response.PendingReportResponse;
 import com.example.app.Response.TokenResponse;
 import com.example.app.Response.UpdateQomResponse;
@@ -126,8 +128,14 @@ public interface WebApi {
     @GET(AppConstants.ORDER_REPORT_DELIVERED)
     Call<PendingReportResponse> getDeliveredReport(@Query("access_token") String access_token);
 
+
     @GET(AppConstants.ORDER_REPORT_DATEWISE)
     Call<PendingReportResponse> getDatewiseReport(@Query("access_token") String access_token,@Query("startdate") String startdate,@Query("enddate") String enddate);
 
+    @GET(AppConstants.EMPID)
+    Call<EmployeeIdResponse> getEmpID(@Query("access_token") String access_token);
 
+
+    @GET(AppConstants.ORDERITEMS_VIEWS)
+    Call<OrderViewResponse> getOrderViews(@Query("access_token") String access_token);
 }

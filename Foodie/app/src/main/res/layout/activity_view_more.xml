@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.example.app.MyOrders.OrderListById.UI.ViewMoreActivity">
+    <include
+        android:id="@+id/layout"
+        layout="@layout/layout_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/itemListRecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:layout_below="@+id/searchlist"
+        android:scrollbars="vertical" />
+    <TextView
+        android:id="@+id/noOrderTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:layout_below="@+id/imageView6"
+        android:layout_centerHorizontal="true"
+        android:text="No Orders"
+        android:visibility="gone"/>
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/progressBarDil"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+    </RelativeLayout>
+</LinearLayout>

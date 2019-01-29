@@ -3,7 +3,7 @@ package com.example.app.Request;
 public class MyOrderUpdateDeliveryRequest {
     private int order_id;
 
-    public MyOrderUpdateDeliveryRequest(int order_id, String delivery_date, String delivered_by, String status) {
+    public MyOrderUpdateDeliveryRequest(int order_id, String delivery_date, int delivered_by, String status) {
         this.order_id = order_id;
         this.delivery_date = delivery_date;
         this.delivered_by = delivered_by;
@@ -26,11 +26,11 @@ public class MyOrderUpdateDeliveryRequest {
         this.delivery_date = delivery_date;
     }
 
-    public String getDelivered_by() {
+    public int getDelivered_by() {
         return delivered_by;
     }
 
-    public void setDelivered_by(String delivered_by) {
+    public void setDelivered_by(int delivered_by) {
         this.delivered_by = delivered_by;
     }
 
@@ -43,7 +43,7 @@ public class MyOrderUpdateDeliveryRequest {
     }
 
     private String delivery_date;
-    private String delivered_by;
+    private int delivered_by;
     private String status;
 
 }

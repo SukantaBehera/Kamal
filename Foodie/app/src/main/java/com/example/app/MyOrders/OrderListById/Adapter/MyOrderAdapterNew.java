@@ -4,8 +4,11 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +23,15 @@ import android.widget.Toast;
 
 import com.example.app.MyOrders.AllItem.ui.ViewItems;
 import com.example.app.MyOrders.OrderListById.UI.ViewOrderItems;
+import com.example.app.Response.EmployeeIDResultResponse;
+import com.example.app.Response.EmployeeIdResponse;
 import com.example.app.Response.MyOrderUpdateResponse;
+import com.example.app.Response.TokenResponse;
 import com.example.app.Response.ViewOrderResult;
 import com.example.app.Response.ViewResult;
 import com.example.app.Response.ViewResultCart;
+import com.example.app.Util.Common.ApiClient;
+import com.example.app.Util.Common.WebApi;
 import com.example.app.Util.RegPrefManager;
 import com.example.sukanta.foodie.R;
 
@@ -33,6 +41,9 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 
 /**
@@ -46,14 +57,23 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
     ViewOrderItems fragments;
     final Calendar myCalendar = Calendar.getInstance();
     private String[] statusArray={"Pending","Dispatched","Delivered"};
-    private int mYear, mMonth, mDay, mHour, mMinute;
-    private String spinselect,by_format,by_format_value,date_format,date_format_value,orderid;
+    private int mYear, mMonth, mDay, mHour, mMinute,by_format_value;
+    private String spinselect,by_format,date_format,date_format_value,orderid;
+    private WebApi webApi;
+    private String acess_token;
+    Retrofit retrofit;
+    private Spinner dispatchEd,deliveryByEd;
+    private ArrayList<EmployeeIDResultResponse> emplist;
+    private CustomAdapter adapter;
 
-    public MyOrderAdapterNew(Context context, ArrayList<ViewOrderResult> viewlist,ViewOrderItems frag) {
+    public MyOrderAdapterNew(Context context, ArrayList<ViewOrderResult> viewlist,ViewOrderItems frag,ArrayList<EmployeeIDResultResponse> emplist) {
         this.viewlist = viewlist;
         this.context=context;
         viewlistcart=new ArrayList<>();
         this.fragments=frag;
+        retrofit = ApiClient.getRetrofit();
+        webApi = retrofit.create(WebApi.class);
+        this.emplist=emplist;
     }
 
     @Override
@@ -66,6 +86,8 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
     @Override
     public void onBindViewHolder(final ViewHolder holder,final int position) {
         final ViewOrderResult viewResult=viewlist.get(position);
+        String status=viewResult.getOrder_deliv_status();
+
         holder.orderId.setText(viewResult.getOrder_id()+"");
         holder.tprice.setText(viewResult.getTotal_price()+"");
     //    holder.userType.setText(viewResult.getOrderby_custId());
@@ -76,6 +98,8 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
         holder.deliveredDateTv.setText(viewResult.getDelivery_date());
         holder.dispatchedByTv.setText(viewResult.getDispatched_by_empName());
         holder.deliveredByTv.setText(viewResult.getDelivered_by_empName());
+
+
 
         holder.changeStatusTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,14 +116,23 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
 
                 final Spinner spinner = (Spinner) dialogView.findViewById(R.id.spinner);
                 final  EditText dispatchdateTv=(EditText)dialogView.findViewById(R.id.dispatchdateTv);
-                 final EditText dispatchEd=(EditText)dialogView.findViewById(R.id.dispatchEd);
+              final   Spinner   dispatchEd=(Spinner)dialogView.findViewById(R.id.dispatchSpinner);
                final EditText deliveryDateEd=(EditText)dialogView.findViewById(R.id.deliveryDateEd);
-               final EditText deliveryByEd=(EditText)dialogView.findViewById(R.id.deliveryByEd);
+             final   Spinner deliveryByEd=(Spinner)dialogView.findViewById(R.id.deliveryBySpinner);
                 //Creating the ArrayAdapter instance having the country list
                 ArrayAdapter aa = new ArrayAdapter(context,android.R.layout.simple_spinner_item,statusArray);
                 aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 //Setting the ArrayAdapter data on the Spinner
                 spinner.setAdapter(aa);
+
+                if (emplist.size()>0){
+// Create custom adapter object ( see below CustomAdapter.java )
+                    adapter = new CustomAdapter(context, R.layout.customspinnerlayout, emplist);
+
+                    // Set adapter to spinner
+                    dispatchEd.setAdapter(adapter);
+                    deliveryByEd.setAdapter(adapter);
+                }
 
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -176,27 +209,45 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
                     }
                 });
 
+                dispatchEd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        by_format_value=emplist.get(position).getUserID();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        by_format_value=emplist.get(0).getUserID();
+                    }
+                });
+                deliveryByEd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        by_format_value=emplist.get(position).getUserID();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        by_format_value=emplist.get(0).getUserID();
+                    }
+                });
+
                // dialogBuilder.setTitle("Enter Quantity");
                 dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                    RegPrefManager.getInstance(context).setDeliveryDate(deliveryDateEd.getText().toString());
-                    RegPrefManager.getInstance(context).setDispatchDate(dispatchdateTv.getText().toString());
-                    RegPrefManager.getInstance(context).setDeliverBy(deliveryByEd.getText().toString());
-                    RegPrefManager.getInstance(context).setDispatchBy(dispatchEd.getText().toString());
+
                     if(spinselect.equals("Pending")) {
                         Toast.makeText(context, "Please Select Dispatched or delivery status", Toast.LENGTH_LONG).show();
                     }else   if (spinselect.equals("Dispatched")){
-                            by_format="dispatched_by";
-                            date_format="dispatched_date";
-                            by_format_value=dispatchEd.getText().toString();
+
+
                             date_format_value=dispatchdateTv.getText().toString();
                         orderid=String.valueOf(viewResult.getOrder_id());
                         fragments.updateStatus(spinselect,by_format_value,date_format_value,orderid);
                         }
                         else {
-                        by_format="delivered_by";
-                        date_format="delivery_date";
-                        by_format_value=deliveryByEd.getText().toString();
+
+
                         date_format_value=deliveryDateEd.getText().toString();
                         orderid=String.valueOf(viewResult.getOrder_id());
 
@@ -218,11 +269,23 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
 
             }
         });
+
+        holder.viewmoreTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
 
 
-
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
     @Override
     public int getItemCount() {
         return viewlist.size();
@@ -258,6 +321,7 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
    /* public ArrayList<ViewOrderResult> getSelectedItems() {
         return viewlistcart;
     }*/
+
 
 
 }
