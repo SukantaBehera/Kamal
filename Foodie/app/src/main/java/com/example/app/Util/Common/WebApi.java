@@ -77,8 +77,8 @@ public interface WebApi {
 
     @Headers({
             "Content-Type:application/json",
-            "x-client-id:3232d5b14911b2d4d0ffeeb22323",
-            "x-client-secret:83215f095dd6c529f54f653f137f3b6b03cc2f74"
+            "x-client-id:3337dc7156012958cc5c3d1f7333",
+            "x-client-secret:2c7919671808922dff110e6aeb7be60e4c010249"
     })
     @POST(AppConstants.CASHFREE)
     Call<CashfreePaymantResponse> getCashFreeToken(@Body CashfreeMerchantRequest cashfreeMerchantRequest);

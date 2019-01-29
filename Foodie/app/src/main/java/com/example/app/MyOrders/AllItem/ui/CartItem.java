@@ -145,11 +145,11 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
 
     //payment Gateway
     private void tokenGenerate(){
-        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.progressBarDil);
-        simpleProgressBar .setVisibility(View.VISIBLE);
+      //  final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.progressBarDil);
+       // simpleProgressBar .setVisibility(View.VISIBLE);
         CashfreeMerchantRequest cashfreeMerchantRequest=new CashfreeMerchantRequest();
         cashfreeMerchantRequest.setOrderId("0001");
-        cashfreeMerchantRequest.setOrderAmount("1");
+        cashfreeMerchantRequest.setOrderAmount(subTotal.toString());
         cashfreeMerchantRequest.setOrderCurrency("INR");
 
         Call<CashfreePaymantResponse> call=webApi.getCashFreeToken(cashfreeMerchantRequest);
@@ -159,8 +159,11 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
                 String status=response.body().getStatus();
                 String message=response.body().getMessage();
                 tokengenerate=response.body().getCftoken();
+                if(status.equals("OK")){
+                    doPayment();
+                }
 
-                doPayment();
+
             }
 
             @Override
@@ -201,9 +204,9 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
          * Also, as explained below you will need to change your appId to prod
          * credentials before publishing your app.*/
 
-        String appId = "3232d5b14911b2d4d0ffeeb22323";
+        String appId = "3337dc7156012958cc5c3d1f7333";
         String orderId = "Order0001";
-        String orderAmount = String.valueOf(subTotal);
+        String orderAmount = String.valueOf(totalPrice);
         String orderNote = "Test Order";
         String customerName =RegPrefManager.getInstance(this).getLoginName();
         String customerPhone = "9040019803";
@@ -267,7 +270,7 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.placeBtn:
-              //  tokenGenerate();
+              tokenGenerate();
                 break;
         }
     }

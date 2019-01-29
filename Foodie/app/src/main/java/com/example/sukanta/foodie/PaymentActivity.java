@@ -47,7 +47,7 @@ public class PaymentActivity extends AppCompatActivity implements CFClientInterf
     }
 
 
-    private void tokenGenerate(){
+   /* private void tokenGenerate(){
         final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.progressBarDil);
         simpleProgressBar .setVisibility(View.VISIBLE);
         CashfreeMerchantRequest cashfreeMerchantRequest=new CashfreeMerchantRequest();
@@ -70,7 +70,7 @@ public class PaymentActivity extends AppCompatActivity implements CFClientInterf
             }
         });
 
-    }
+    }*/
     private void triggerPayment(boolean isUpiIntent) {
         /*
          * token can be generated from your backend by calling cashfree servers. Please
