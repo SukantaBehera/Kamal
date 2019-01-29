@@ -34,6 +34,29 @@
             android:textSize="18sp"
             android:layout_marginTop="10dp"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:padding="5dp"
+
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:id="@+id/btn_getData"
+            android:layout_gravity="center"
+            android:background="@drawable/buttons"
+            android:padding="12dp"
+            android:text="GET REPORT"
+            android:textColor="@color/white"
+            />
+
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

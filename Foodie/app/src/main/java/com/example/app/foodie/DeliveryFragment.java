@@ -112,10 +112,12 @@ public class DeliveryFragment extends Fragment {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
     private void getDeliveredtemList(){
+        progressBarDil.setVisibility(View.VISIBLE);
         Call<PendingReportResponse> call=webApi.getDeliveredReport(acess_token);
         call.enqueue(new Callback<PendingReportResponse>() {
             @Override
             public void onResponse(Call<PendingReportResponse> call, Response<PendingReportResponse> response) {
+                progressBarDil.setVisibility(View.GONE);
                 String status=response.body().getStatus();
                 if(status.equals("SUCCESS")){
                     resultDeliveredArrayList=response.body().getResult();
@@ -138,7 +140,10 @@ public class DeliveryFragment extends Fragment {
 
             @Override
             public void onFailure(Call<PendingReportResponse> call, Throwable t) {
+                progressBarDil.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+                itemlistRecyclerview.setVisibility(View.GONE);
+                textView2.setVisibility(View.VISIBLE);
             }
         });
     }

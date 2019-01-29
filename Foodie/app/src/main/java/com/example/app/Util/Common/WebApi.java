@@ -126,6 +126,8 @@ public interface WebApi {
     @GET(AppConstants.ORDER_REPORT_DELIVERED)
     Call<PendingReportResponse> getDeliveredReport(@Query("access_token") String access_token);
 
+    @GET(AppConstants.ORDER_REPORT_DATEWISE)
+    Call<PendingReportResponse> getDatewiseReport(@Query("access_token") String access_token,@Query("startdate") String startdate,@Query("enddate") String enddate);
 
 
 }

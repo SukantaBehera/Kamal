@@ -42,8 +42,8 @@ public class Reports extends Fragment {
 
         Adapter adapter = new Adapter(getChildFragmentManager());
         adapter.addFragment(new AllFragment(), "ALL");
-        adapter.addFragment(new DailyFragment(), "Daily");
-        adapter.addFragment(new PartyFragment(), "Party");
+        adapter.addFragment(new DailyFragment(), "Date Wise");
+        adapter.addFragment(new PartyFragment(), "Party Wise");
 
         viewPager.setAdapter(adapter);
 

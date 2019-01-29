@@ -57,7 +57,7 @@ public class PartyFragment extends Fragment {
 
         Reports.Adapter adapter = new Reports.Adapter(getChildFragmentManager());
         adapter.addFragment(new DistributorFragment(), "Distributor");
-        adapter.addFragment(new FranchansorFragment(), "Franchansor");
+        adapter.addFragment(new FranchansorFragment(), "Franchisor");
 
 
         viewPager.setAdapter(adapter);

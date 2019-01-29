@@ -184,7 +184,7 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
                     RegPrefManager.getInstance(context).setDeliverBy(deliveryByEd.getText().toString());
                     RegPrefManager.getInstance(context).setDispatchBy(dispatchEd.getText().toString());
                     if(spinselect.equals("Pending")) {
-                        Toast.makeText(context, "Please Select Dispatch or delivery status", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Please Select Dispatched or delivery status", Toast.LENGTH_LONG).show();
                     }else   if (spinselect.equals("Dispatched")){
                             by_format="dispatched_by";
                             date_format="dispatched_date";
