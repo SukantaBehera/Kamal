@@ -267,15 +267,16 @@
                     android:id="@+id/changeStatusTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="0dp"
                     android:padding="@dimen/layout_inner_padding"
-                    android:textAlignment="textStart"
                     android:text="Change Status"
+                    android:textAlignment="textStart"
                     android:textColor="@color/colorAccent"
                     android:textSize="15sp"
-                    android:textStyle="normal"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
-                    />
+                    android:textStyle="normal" />
 
                 <TextView
                     android:id="@+id/viewmoreTv"

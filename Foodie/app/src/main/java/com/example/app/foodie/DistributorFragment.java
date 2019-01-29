@@ -7,11 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.example.sukanta.foodie.R;
 
 public class DistributorFragment extends Fragment {
-
+    private String[] statusArray={"Pending","Dispatched","Delivered"};
 
     public DistributorFragment() {
         // Required empty public constructor
@@ -34,7 +36,14 @@ public class DistributorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_distributor, container, false);
+        View v = inflater.inflate(R.layout.fragment_distributor, container, false);
+        final Spinner spinner = (Spinner)v.findViewById(R.id.spinner);
+        ArrayAdapter aa = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_item,statusArray);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spinner.setAdapter(aa);
+
+        return v;
     }
 
 }
