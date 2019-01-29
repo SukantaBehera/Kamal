@@ -24,6 +24,7 @@ public class ApiClient {
                 .baseUrl(AppConstants.BASEURL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
+
                 .build();
     }
 }

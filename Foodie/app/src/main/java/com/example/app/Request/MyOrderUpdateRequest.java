@@ -1,7 +1,15 @@
 package com.example.app.Request;
 
 public class MyOrderUpdateRequest {
+    public MyOrderUpdateRequest(int order_id, String dispatch_date, String dispatched_by, String status) {
+        this.order_id = order_id;
+        this.dispatch_date = dispatch_date;
+        this.dispatched_by = dispatched_by;
+        this.status = status;
+    }
+
     private int order_id;
+
 
     public int getOrder_id() {
         return order_id;
@@ -11,7 +19,13 @@ public class MyOrderUpdateRequest {
         this.order_id = order_id;
     }
 
+    public String getDispatch_date() {
+        return dispatch_date;
+    }
 
+    public void setDispatch_date(String dispatch_date) {
+        this.dispatch_date = dispatch_date;
+    }
 
     public String getDispatched_by() {
         return dispatched_by;
@@ -27,14 +41,6 @@ public class MyOrderUpdateRequest {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getDispatch_date() {
-        return dispatch_date;
-    }
-
-    public void setDispatch_date(String dispatch_date) {
-        this.dispatch_date = dispatch_date;
     }
 
     private String dispatch_date;
