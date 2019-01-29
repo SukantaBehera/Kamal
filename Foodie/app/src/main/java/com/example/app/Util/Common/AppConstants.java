@@ -24,6 +24,8 @@ public class AppConstants {
     public static  final String ORDERALLITEMS_BYID="api/orderitem/get-order-details-by-custid";
     public static  final String STATUS_UPDATE="api/orderitem/update-order-status";
     public static  final String ORDER_REPORT_PENDING="api/orderitem/get-order-details-by-status/1";
+    public static  final String ORDER_REPORT_DISPATCHED="api/orderitem/get-order-details-by-status/2";
+    public static  final String ORDER_REPORT_DELIVERED="api/orderitem/get-order-details-by-status/3";
 
     public static final String DELETEDISTRIBUTOR_BYID = "api/delete-distributor-by-id";
     public static final String DELETEFRANCHISOR_BYID = "api/delete-franchisor-by-id";

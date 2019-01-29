@@ -107,10 +107,6 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
        // viewlist = list;
         notifyDataSetChanged();
     }
-    // method to access in activity after updating selection
-   /* public ArrayList<ViewOrderResult> getSelectedItems() {
-        return viewlistcart;
-    }*/
 
 
 }

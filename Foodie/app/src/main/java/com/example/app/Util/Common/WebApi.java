@@ -120,4 +120,12 @@ public interface WebApi {
     @GET(AppConstants.ORDER_REPORT_PENDING)
     Call<PendingReportResponse> getPendingReport(@Query("access_token") String access_token);
 
+    @GET(AppConstants.ORDER_REPORT_DISPATCHED)
+    Call<PendingReportResponse> getDispatchedReport(@Query("access_token") String access_token);
+
+    @GET(AppConstants.ORDER_REPORT_DELIVERED)
+    Call<PendingReportResponse> getDeliveredReport(@Query("access_token") String access_token);
+
+
+
 }

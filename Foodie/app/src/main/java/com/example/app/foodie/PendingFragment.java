@@ -139,7 +139,7 @@ public class PendingFragment extends Fragment {
 
             @Override
             public void onFailure(Call<PendingReportResponse> call, Throwable t) {
-                Toast.makeText(getActivity(), "Failer", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
