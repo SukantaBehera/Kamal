@@ -15,9 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.example.app.MyOrders.OrderListById.UI.ViewMoreActivity"></activity>
+        <activity android:name="com.example.app.MyOrders.OrderListById.UI.ViewMoreActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".PaymentActivity" />
-        <activity android:name="com.example.app.USERLIST.UI.UpdateFranchisorActivity" />
+        <activity android:name="com.example.app.USERLIST.UI.UpdateFranchisorActivity"
+            />
         <activity
             android:name="com.example.app.HOME.SplashActivity"
             android:screenOrientation="sensorPortrait"

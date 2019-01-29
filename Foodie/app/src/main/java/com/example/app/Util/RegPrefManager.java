@@ -144,6 +144,15 @@ public class RegPrefManager {
         return mSharedPreferences.getString("DELIVERBY",null);
     }
 
+    public void setOrderId(String id){
+        mSharedPreferences.edit().putString("ORDERID",id).apply();
+
+
+    }
+    public String getOrderId(){
+        return mSharedPreferences.getString("ORDERID",null);
+    }
+
     public void Clear(){
        SharedPreferences.Editor editor = mSharedPreferences.edit();
        editor.clear();

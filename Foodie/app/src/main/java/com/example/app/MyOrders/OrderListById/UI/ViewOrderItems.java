@@ -280,7 +280,7 @@ public class ViewOrderItems extends DilogueFRagment {
 
             @Override
             public void onFailure(Call<OrderResponse> call, Throwable t) {
-            //    pprogressBar.setVisibility(View.GONE);
+               pprogressBar.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
             }
         });

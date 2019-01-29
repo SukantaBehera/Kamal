@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AlertDialog;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app.MyOrders.AllItem.ui.ViewItems;
+import com.example.app.MyOrders.OrderListById.UI.ViewMoreActivity;
 import com.example.app.MyOrders.OrderListById.UI.ViewOrderItems;
 import com.example.app.Response.EmployeeIDResultResponse;
 import com.example.app.Response.EmployeeIdResponse;
@@ -273,6 +275,9 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
         holder.viewmoreTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ViewOrderResult viewResult=viewlist.get(position);
+            RegPrefManager.getInstance(context).setOrderId(String.valueOf(viewResult.getOrder_id()));
+                context.startActivity(new Intent(context, ViewMoreActivity.class));
 
             }
         });
