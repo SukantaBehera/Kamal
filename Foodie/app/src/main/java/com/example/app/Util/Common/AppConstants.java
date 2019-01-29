@@ -30,7 +30,8 @@ public class AppConstants {
     public static final String DELETEDISTRIBUTOR_BYID = "api/delete-distributor-by-id";
     public static final String DELETEFRANCHISOR_BYID = "api/delete-franchisor-by-id";
     public static final String DELETEEMPLOYEE_BYID = "api/delete-employee-by-id";
-
+    public static final String EMPID = "api/get-alluser-by-type/1";
+    public static final String ORDERITEMS_VIEWS = "api/orderitem/get-itemdetails-by-order/";
 
     public static  final String CASHFREE="cftoken/order";
 

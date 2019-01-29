@@ -48,7 +48,7 @@
             android:visibility="gone"/>
 
     </LinearLayout>
-    <EditText
+    <!--<EditText
         android:id="@+id/dispatchEd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,6 +58,15 @@
 
         android:textColor="@color/black"
         android:textSize="18sp"
+        android:visibility="gone"/>-->
+    <Spinner
+        android:id="@+id/dispatchSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textColor="@color/black"
+
         android:visibility="gone"/>
 
     <LinearLayout
@@ -86,7 +95,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
        >
-        <EditText
+     <!--   <EditText
             android:id="@+id/deliveryByEd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,6 +104,16 @@
             android:hint="Delivered By"
             android:textColor="@color/black"
             android:textSize="18sp"
+            android:visibility="gone"/>-->
+        <Spinner
+            android:id="@+id/deliveryBySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/black"
+
+
             android:visibility="gone"/>
 
     </LinearLayout>

@@ -1,7 +1,7 @@
 package com.example.app.Request;
 
 public class MyOrderUpdateRequest {
-    public MyOrderUpdateRequest(int order_id, String dispatch_date, String dispatched_by, String status) {
+    public MyOrderUpdateRequest(int order_id, String dispatch_date, int dispatched_by, String status) {
         this.order_id = order_id;
         this.dispatch_date = dispatch_date;
         this.dispatched_by = dispatched_by;
@@ -27,11 +27,11 @@ public class MyOrderUpdateRequest {
         this.dispatch_date = dispatch_date;
     }
 
-    public String getDispatched_by() {
+    public int getDispatched_by() {
         return dispatched_by;
     }
 
-    public void setDispatched_by(String dispatched_by) {
+    public void setDispatched_by(int dispatched_by) {
         this.dispatched_by = dispatched_by;
     }
 
@@ -44,7 +44,7 @@ public class MyOrderUpdateRequest {
     }
 
     private String dispatch_date;
-    private String dispatched_by;
+    private int dispatched_by;
     private String status;
 
 }

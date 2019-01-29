@@ -34,6 +34,8 @@ import com.example.app.ITEM.UTIL.DilogueFRagment;
 import com.example.app.MyOrders.OrderListById.Adapter.MyOrderAdapterNew;
 import com.example.app.Request.MyOrderUpdateDeliveryRequest;
 import com.example.app.Request.MyOrderUpdateRequest;
+import com.example.app.Response.EmployeeIDResultResponse;
+import com.example.app.Response.EmployeeIdResponse;
 import com.example.app.Response.MyOrderUpdateResponse;
 import com.example.app.Response.OrderResponse;
 import com.example.app.Response.TokenResponse;
@@ -50,7 +52,6 @@ import com.example.sukanta.foodie.R;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -67,9 +68,6 @@ import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -100,6 +98,8 @@ public class ViewOrderItems extends DilogueFRagment {
     private WebApi webApi;
     Retrofit retrofit;
 
+    private ArrayList<EmployeeIDResultResponse> emplist;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -115,6 +115,7 @@ public class ViewOrderItems extends DilogueFRagment {
         viewOrderResultsArray=new ArrayList<>();
         role=  SharedPreferenceClass.readString(getActivity(), "ROLEID","");
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        emplist=new ArrayList<>();
         fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add_white_24dp));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,10 +227,11 @@ public class ViewOrderItems extends DilogueFRagment {
         });
 
     }
+
         private void getAllItemList(View view){
             //getting the progressbar
 
-
+            getEmpList();
             String orderUrl = "";
             //creating a string request to send request to the url
             if (role.equals("ROLE_ADMIN")) {
@@ -266,7 +268,7 @@ public class ViewOrderItems extends DilogueFRagment {
                    viewOrderResultsArray=response.body().getResult();
                    Log.d("Tag","Size===>"+viewOrderResultsArray.size());
                    if(viewOrderResultsArray.size()>0){
-                       adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this);
+                       adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this,emplist);
                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                        recycleview.setLayoutManager(mLayoutManager);
                        recycleview.setItemAnimator(new DefaultItemAnimator());
@@ -299,7 +301,7 @@ public class ViewOrderItems extends DilogueFRagment {
                         viewOrderResultsArray=response.body().getResult();
                         Log.d("Tag","Size===>"+viewOrderResultsArray.size());
                         if(viewOrderResultsArray.size()>0){
-                            adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this);
+                            adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this,emplist);
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                             recycleview.setLayoutManager(mLayoutManager);
                             recycleview.setItemAnimator(new DefaultItemAnimator());
@@ -319,18 +321,18 @@ public class ViewOrderItems extends DilogueFRagment {
         }
 
 
- /*   public void updateStatus(String spinselect, final String by_format_value, String date_format_value, final String orderid){
+    public void updateStatus(final String spinselect, int  by_format_value, String date_format_value, final String orderid1){
 
         if(spinselect.equals("Dispatched")){
 
-              *//*  JsonObject jsonObject = new JsonObject();
+              /*  JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("order_id","38");
                 jsonObject.addProperty("dispatch_date","2019-01-28");
                 jsonObject.addProperty("dispatched_by","yue");
-                jsonObject.addProperty("status","DISPATCHED");*//*
+                jsonObject.addProperty("status","DISPATCHED");*/
 
             MyOrderUpdateRequest updateRequest=new MyOrderUpdateRequest(
-            Integer.valueOf(orderid),date_format_value,by_format_value,"DISPATCHED");
+            Integer.valueOf(orderid1),date_format_value,by_format_value,"DISPATCHED");
 
             Call<MyOrderUpdateResponse> call=webApi.getUpdateDispatchResponse(acess_token,updateRequest);
             call.enqueue(new Callback<MyOrderUpdateResponse>() {
@@ -347,9 +349,9 @@ public class ViewOrderItems extends DilogueFRagment {
                                 //getAllItemList();
                                 for(int i=0;i<viewOrderResultsArray.size();i++){
                                     ViewOrderResult value=viewOrderResultsArray.get(i);
-                                    if(value.getOrder_id()==Integer.valueOf(orderid)){
+                                    if(value.getOrder_id()==Integer.valueOf(orderid1)){
                                         ViewOrderResult value1=new ViewOrderResult();
-                                        value1.setOrder_id(Integer.valueOf(orderid));
+                                        value1.setOrder_id(Integer.valueOf(orderid1));
                                         value1.setDelivered_by_empId(value.getDelivered_by_empId());
                                         value1.setDelivered_by_empName(value.getDelivered_by_empName());
                                         value1.setDelivery_date(value.getDelivery_date());
@@ -358,7 +360,7 @@ public class ViewOrderItems extends DilogueFRagment {
                                         value1.setDispatch_date(value.getDispatch_date());
                                         value1.setOrderby_custId(value.getOrderby_custId());
                                         value1.setOrderDate(value.getOrderDate());
-                                        value1.setOrder_deliv_status(value.getOrder_deliv_status());
+                                        value1.setOrder_deliv_status(spinselect);
                                         value1.setTotal_price(value.getTotal_price());
                                         value1.setUserName(value.getUserName());
                                         value1.setUserRoleCode(value.getUserRoleCode());
@@ -369,7 +371,7 @@ public class ViewOrderItems extends DilogueFRagment {
                                 }
 
                                 if(viewOrderResultsArray.size()>0){
-                                    adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this);
+                                    adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this,emplist);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                     recycleview.setLayoutManager(mLayoutManager);
                                     recycleview.setItemAnimator(new DefaultItemAnimator());
@@ -404,20 +406,20 @@ public class ViewOrderItems extends DilogueFRagment {
         }
         else {
 
-              *//*  JsonObject jsonObject = new JsonObject();
+          /*      JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("order_id",Integer.valueOf(orderid));
                 jsonObject.addProperty("delivery_date",date_format_value);
                 jsonObject.addProperty("delivered_by",by_format_value);
-                jsonObject.addProperty("status","DELIVERED");*//*
+                jsonObject.addProperty("status","DELIVERED");*/
 
-            MyOrderUpdateDeliveryRequest deliveryRequest=new MyOrderUpdateDeliveryRequest(Integer.valueOf(orderid),date_format_value,by_format_value,"DELIVERED");
+            MyOrderUpdateDeliveryRequest deliveryRequest = new MyOrderUpdateDeliveryRequest(Integer.valueOf(orderid1), date_format_value, by_format_value, "DELIVERED");
 
-            Call<MyOrderUpdateResponse> call=webApi.getUpdateDeliveryResponse(acess_token,deliveryRequest);
+            Call<MyOrderUpdateResponse> call = webApi.getUpdateDeliveryResponse(acess_token, deliveryRequest);
             call.enqueue(new Callback<MyOrderUpdateResponse>() {
                 @Override
                 public void onResponse(Call<MyOrderUpdateResponse> call, Response<MyOrderUpdateResponse> response) {
-                    int code=response.code();
-                    Log.d("Tag",""+code);
+                    int code = response.code();
+                    Log.d("Tag", "" + code);
                     switch (code) {
                         case RESPONSE_OK:
                             String status = response.body().getStatus();
@@ -427,9 +429,9 @@ public class ViewOrderItems extends DilogueFRagment {
                                 //getAllItemList();
                                 for (int i = 0; i < viewOrderResultsArray.size(); i++) {
                                     ViewOrderResult value = viewOrderResultsArray.get(i);
-                                    if (value.getOrder_id() == Integer.valueOf(orderid)) {
+                                    if (value.getOrder_id() == Integer.valueOf(orderid1)) {
                                         ViewOrderResult value1 = new ViewOrderResult();
-                                        value1.setOrder_id(Integer.valueOf(orderid));
+                                        value1.setOrder_id(Integer.valueOf(orderid1));
                                         value1.setDelivered_by_empId(value.getDelivered_by_empId());
                                         value1.setDelivered_by_empName(value.getDelivered_by_empName());
                                         value1.setDelivery_date(value.getDelivery_date());
@@ -438,7 +440,7 @@ public class ViewOrderItems extends DilogueFRagment {
                                         value1.setDispatch_date(value.getDispatch_date());
                                         value1.setOrderby_custId(value.getOrderby_custId());
                                         value1.setOrderDate(value.getOrderDate());
-                                        value1.setOrder_deliv_status(value.getOrder_deliv_status());
+                                        value1.setOrder_deliv_status(spinselect);
                                         value1.setTotal_price(value.getTotal_price());
                                         value1.setUserName(value.getUserName());
                                         value1.setUserRoleCode(value.getUserRoleCode());
@@ -449,7 +451,7 @@ public class ViewOrderItems extends DilogueFRagment {
                                 }
 
                                 if (viewOrderResultsArray.size() > 0) {
-                                    adapterNew = new MyOrderAdapterNew(getContext(), viewOrderResultsArray, ViewOrderItems.this);
+                                    adapterNew = new MyOrderAdapterNew(getContext(), viewOrderResultsArray, ViewOrderItems.this,emplist);
                                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                     recycleview.setLayoutManager(mLayoutManager);
                                     recycleview.setItemAnimator(new DefaultItemAnimator());
@@ -460,7 +462,7 @@ public class ViewOrderItems extends DilogueFRagment {
 
                             break;
                         case RESPONSE_ERROR:
-                            Log.v("ERRor",response.errorBody().toString());
+                            Log.v("ERRor", response.errorBody().toString());
                             Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
                             break;
                     }
@@ -473,143 +475,31 @@ public class ViewOrderItems extends DilogueFRagment {
             });
 
 
-
-             *//*   MyOrderUpdateDeliveryRequest deliveryRequest=new MyOrderUpdateDeliveryRequest();
-                deliveryRequest.setDelivered_by(by_format_value);
-                deliveryRequest.setDelivery_date(date_format_value);
-                deliveryRequest.setOrder_id(Integer.valueOf(orderid));
-                deliveryRequest.setStatus("DELIVERED");
-
-                Call<MyOrderUpdateResponse> call=webApi.getUpdateDeliveryResponse(acess_token,deliveryRequest);
-                call.enqueue(new Callback<MyOrderUpdateResponse>() {
-                    @Override
-                    public void onResponse(Call<MyOrderUpdateResponse> call, Response<MyOrderUpdateResponse> response) {
-
-
-                        String status=response.body().getStatus();
-                        if(status.equals("SUCCESS")){
-                            String msg=response.body().getMessage();
-                            Toast.makeText(getContext(),msg,Toast.LENGTH_LONG).show();
-                           // getAllItemList();
-
-                            for(int i=0;i<viewOrderResultsArray.size();i++){
-                                ViewOrderResult value=viewOrderResultsArray.get(i);
-                                if(value.getOrder_id()==Integer.valueOf(orderid)){
-                                    ViewOrderResult value1=new ViewOrderResult();
-                                    value1.setOrder_id(Integer.valueOf(orderid));
-                                    value1.setDelivered_by_empId(value.getDelivered_by_empId());
-                                    value1.setDelivered_by_empName(value.getDelivered_by_empName());
-                                    value1.setDelivery_date(value.getDelivery_date());
-                                    value1.setDispatched_by_empId(value.getDispatched_by_empId());
-                                    value1.setDispatched_by_empName(value.getDispatched_by_empName());
-                                    value1.setDispatch_date(value.getDispatch_date());
-                                    value1.setOrderby_custId(value.getOrderby_custId());
-                                    value1.setOrderDate(value.getOrderDate());
-                                    value1.setOrder_deliv_status(value.getOrder_deliv_status());
-                                    value1.setTotal_price(value.getTotal_price());
-                                    value1.setUserName(value.getUserName());
-                                    value1.setUserRoleCode(value.getUserRoleCode());
-                                    value1.setUser_active_status(value.getUser_active_status());
-                                    viewOrderResultsArray.set(i,value1);
-
-                                }
-                            }
-
-                            if(viewOrderResultsArray.size()>0){
-                                adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this);
-                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                                recycleview.setLayoutManager(mLayoutManager);
-                                recycleview.setItemAnimator(new DefaultItemAnimator());
-                                recycleview.setAdapter(adapterNew);
-                                adapterNew.notifyDataSetChanged();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<MyOrderUpdateResponse> call, Throwable t) {
-                        Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
-                    }
-                });*//*
-
-
         }
-*//*
-            MyOrderUpdateDeliveryRequest deliveryRequest=new MyOrderUpdateDeliveryRequest();
-            deliveryRequest.setDelivered_by(by_format_value);
-            deliveryRequest.setDelivery_date(date_format_value);
-            deliveryRequest.setOrder_id(Integer.valueOf(orderid));
-            deliveryRequest.setStatus("DELIVERED");*//*
 
-
-    }*/
-
-    public void updateStatus(String spinselect, final String by_format_value, String date_format_value, final String orderid){
-        spinselect1=spinselect;
-        by_name=by_format_value;
-        by_date=date_format_value;
-        by_orderid=orderid;
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("order_id",Integer.parseInt(orderid));
-            jsonObject.put("dispatch_date",date_format_value);
-            jsonObject.put("dispatched_by",by_format_value);
-            jsonObject.put("status","DISPATCHED");
-
-            Log.d("Tag",jsonObject.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        String url="http://209.97.136.18:8080/rest-svc/api/orderitem/update-order-status?access_token="+acess_token;
-
-        foo(url,jsonObject);
 
     }
-    public static JSONObject foo(String url, JSONObject json) {
-        JSONObject jsonObjectResp = null;
 
-        try {
 
-            MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-            OkHttpClient client = new OkHttpClient();
+    private void getEmpList(){
+        Call<EmployeeIdResponse> call=webApi.getEmpID(acess_token);
+        call.enqueue(new Callback<EmployeeIdResponse>() {
+            @Override
+            public void onResponse(Call<EmployeeIdResponse> call, Response<EmployeeIdResponse> response) {
+                String status=response.body().getStatus();
+                if(status.equals("SUCCESS")){
+                    emplist=response.body().getResult();
 
-            okhttp3.RequestBody body = RequestBody.create(JSON, json.toString());
-            okhttp3.Request request = new okhttp3.Request.Builder()
-                    .url(url)
-                    .post(body)
-                    .build();
-
-            okhttp3.Response response = client.newCall(request).execute();
-
-            String networkResp = response.body().string();
-            if (!networkResp.isEmpty()) {
-                jsonObjectResp = parseJSONStringToJSONObject(networkResp);
+                }
             }
-        } catch (Exception ex) {
-            String err = String.format("{\"result\":\"false\",\"error\":\"%s\"}", ex.getMessage());
-            jsonObjectResp = parseJSONStringToJSONObject(err);
-        }
 
-        return jsonObjectResp;
-    }
+            @Override
+            public void onFailure(Call<EmployeeIdResponse> call, Throwable t) {
 
-
-    private static JSONObject parseJSONStringToJSONObject(final String strr) {
-
-        JSONObject response = null;
-        try {
-            response = new JSONObject(strr);
-        } catch (Exception ex) {
-            //  Log.e("Could not parse malformed JSON: \"" + json + "\"");
-            try {
-                response = new JSONObject();
-                response.put("result", "failed");
-                response.put("data", strr);
-                response.put("error", ex.getMessage());
-            } catch (Exception exx) {
             }
-        }
-        return response;
+        });
     }
+
+
+
 }
