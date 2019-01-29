@@ -37,6 +37,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface WebApi {
@@ -132,5 +133,5 @@ public interface WebApi {
     Call<EmployeeIdResponse> getEmpID(@Query("access_token") String access_token);
 
     @GET(AppConstants.ORDERITEMS_VIEWS)
-    Call<OrderViewResponse> getOrderViews(@Query("access_token") String access_token);
+    Call<OrderViewResponse> getOrderViews(@Path("orderid") int orderid, @Query("access_token") String access_token);
 }
