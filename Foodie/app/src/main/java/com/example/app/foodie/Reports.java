@@ -27,6 +27,7 @@ public class Reports extends Fragment {
         // Setting ViewPager for each Tabs
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
+
         // Set Tabs inside Toolbar
         TabLayout tabs = (TabLayout) rootView.findViewById(R.id.result_tabs);
         tabs.setupWithViewPager(viewPager);
