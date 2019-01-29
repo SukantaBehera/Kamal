@@ -62,7 +62,7 @@
                     android:textStyle="italic"
                     android:layout_below="@+id/imageView6"
                     android:layout_centerHorizontal="true"
-                    android:text="No Orders" />
+                    android:text="No Orders Found" />
             </RelativeLayout>
             <ProgressBar
                 android:visibility="gone"

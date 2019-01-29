@@ -239,7 +239,7 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
                     public void onClick(DialogInterface dialog, int whichButton) {
 
                     if(spinselect.equals("Pending")) {
-                        Toast.makeText(context, "Please Select Dispatch or delivery status", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Please Select Dispatched or delivery status", Toast.LENGTH_LONG).show();
                     }else   if (spinselect.equals("Dispatched")){
 
 

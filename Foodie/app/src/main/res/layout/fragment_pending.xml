@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:id="@+id/myorderLayout"
                 android:gravity="center"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_height="match_parent">
 
 
@@ -51,7 +51,7 @@
                     android:layout_height="128dp"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    />
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/textView2"
@@ -60,9 +60,10 @@
                     android:textColor="@color/black"
                     android:padding="10dp"
                     android:textStyle="italic"
+                    android:visibility="gone"
                     android:layout_below="@+id/imageView6"
                     android:layout_centerHorizontal="true"
-                    android:text="No Orders" />
+                    android:text="No Orders found" />
             </RelativeLayout>
             <ProgressBar
                 android:visibility="gone"

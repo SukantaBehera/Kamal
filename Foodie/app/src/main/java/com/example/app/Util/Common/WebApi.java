@@ -129,8 +129,13 @@ public interface WebApi {
     @GET(AppConstants.ORDER_REPORT_DELIVERED)
     Call<PendingReportResponse> getDeliveredReport(@Query("access_token") String access_token);
 
+
+    @GET(AppConstants.ORDER_REPORT_DATEWISE)
+    Call<PendingReportResponse> getDatewiseReport(@Query("access_token") String access_token,@Query("startdate") String startdate,@Query("enddate") String enddate);
+
     @GET(AppConstants.EMPID)
     Call<EmployeeIdResponse> getEmpID(@Query("access_token") String access_token);
+
 
     @GET(AppConstants.ORDERITEMS_VIEWS)
     Call<OrderViewResponse> getOrderViews(@Path("orderid") int orderid, @Query("access_token") String access_token);

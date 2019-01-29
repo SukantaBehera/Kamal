@@ -118,10 +118,12 @@ public class PendingFragment extends Fragment {
     }
 
     private void getAllItemList(){
+        progressBarDil.setVisibility(View.VISIBLE);
         Call<PendingReportResponse> call=webApi.getPendingReport(acess_token);
         call.enqueue(new Callback<PendingReportResponse>() {
             @Override
             public void onResponse(Call<PendingReportResponse> call, Response<PendingReportResponse> response) {
+                progressBarDil.setVisibility(View.GONE);
                 String status=response.body().getStatus();
                 if(status.equals("SUCCESS")){
                     resultPendingArrayList=response.body().getResult();
@@ -134,12 +136,19 @@ public class PendingFragment extends Fragment {
                         itemlistRecyclerview.setAdapter(pendingAdapter);
                         pendingAdapter.notifyDataSetChanged();
                     }
+                    else{
+                        itemlistRecyclerview.setVisibility(View.GONE);
+                        textView2.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<PendingReportResponse> call, Throwable t) {
+                progressBarDil.setVisibility(View.GONE);
                 Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
+                itemlistRecyclerview.setVisibility(View.GONE);
+                textView2.setVisibility(View.VISIBLE);
             }
         });
     }
