@@ -1,6 +1,9 @@
 package com.example.app.MyOrders.AllItem.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -18,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app.MyOrders.AllItem.adapter.CartAdapter;
-import com.example.app.MyOrders.AllItem.adapter.CustomAdapter;
 import com.example.app.MyOrders.AllItem.adapter.ViewListAdapter;
 import com.example.app.MyOrders.AllItem.datamodels.OrderPlacedResponse;
 import com.example.app.MyOrders.AllItem.mvp.ItemsPresenterImpl;
@@ -26,15 +29,27 @@ import com.example.app.MyOrders.AllItem.datamodels.OrderDetails;
 import com.example.app.MyOrders.AllItem.datamodels.OrderItem;
 import com.example.app.MyOrders.AllItem.datamodels.PaymentDetails;
 import com.example.app.MyOrders.AllItem.mvp.ItemsView;
+import com.example.app.MyOrders.OrderListById.Adapter.CustomAdapter;
 import com.example.app.Request.CashfreeMerchantRequest;
+import com.example.app.Request.OrderdetailsRequest;
+import com.example.app.Request.OrderitemmapRequest;
+import com.example.app.Request.PaymentRequest;
+import com.example.app.Request.PaymentdetailsRequest;
 import com.example.app.Response.CashfreePaymantResponse;
+import com.example.app.Response.EmployeeIDResultResponse;
+import com.example.app.Response.EmployeeIdResponse;
+import com.example.app.Response.PaymentResponse;
+import com.example.app.Response.TokenResponse;
 import com.example.app.Response.ViewResultCart;
+import com.example.app.Util.Common.ApiClient;
 import com.example.app.Util.Common.ApiClientCashFree;
 import com.example.app.Util.Common.BaseActivity;
 import com.example.app.Util.Common.WebApi;
 import com.example.app.Util.RegPrefManager;
 import com.example.app.Util.SessionManager;
 import com.example.app.foodie.DrawerActivity;
+import com.example.app.foodie.LoginActivity;
+import com.example.app.foodie.SharedPreferenceClass;
 import com.example.sukanta.foodie.PaymentActivity;
 import com.example.sukanta.foodie.R;
 import com.gocashfree.cashfreesdk.CFClientInterface;
@@ -49,6 +64,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.example.app.Util.Common.Constants.RESPONSE_ERROR;
+import static com.example.app.Util.Common.Constants.RESPONSE_OK;
 import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_APP_ID;
 import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_CUSTOMER_EMAIL;
 import static com.gocashfree.cashfreesdk.CFPaymentService.PARAM_CUSTOMER_NAME;
@@ -62,7 +79,7 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
 
     TextView subTotal;
 
-
+   // SharedPreferenceClass sharedPreferenceClass;
     private CartAdapter cartlistlistAdapter;
     RecyclerView recycleview;
     SessionManager session;
@@ -75,21 +92,33 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
     Retrofit retrofit;
     String tokengenerate;
     private Button placeBtn;
+    private Spinner spinner1;
+    private String acess_token;
+    private ArrayList<EmployeeIDResultResponse> emplist;
+    private CustomAdapter adapter;
+    private String distSelectID=null;
+    String role;
+    ProgressBar progressBarDil;
+    ArrayList<OrderitemmapRequest> orderitemmapRequestArrayList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+     //   sharedPreferenceClass = new SharedPreferenceClass(CartItem.this);
+    //    role=  SharedPreferenceClass.readString(CartItem.this, "ROLEID","");
         subTotal = findViewById(R.id.totalPrice);
         submit = findViewById(R.id.next);
         recycleview = findViewById(R.id.recycler_view);
         placeBtn=findViewById(R.id.placeBtn);
         placeBtn.setOnClickListener(this);
-        retrofit = ApiClientCashFree.getRetrofit();
-
+        retrofit = ApiClient.getRetrofit();
+        emplist=new ArrayList<>();
         webApi = retrofit.create(WebApi.class);
         session = new SessionManager(CartItem.this);
-
-
+        spinner1=findViewById(R.id.spinner1);
+        progressBarDil=findViewById(R.id.progressBarDil);
+        orderitemmapRequestArrayList=new ArrayList<>();
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +129,9 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
 
             }
         });
+
+         role= RegPrefManager.getInstance(CartItem.this).getLoginRoleId();
+
         enableActionBar(true);
 
        // filterResultsArray1=new ArrayList<>();
@@ -119,8 +151,25 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
 
         getSelected();
 
+        if(isNetworkAvailable()) {
+                 fetchAcessToken();
+        }else {
+            Toast.makeText(CartItem.this, "Please Check Network Connection", Toast.LENGTH_LONG).show();
+        }
 
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int value=emplist.get(position).getUserID();
+                distSelectID=String.valueOf(value);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                int value=emplist.get(0).getUserID();
+                distSelectID=String.valueOf(value);
+            }
+        });
 
     }
 
@@ -142,7 +191,66 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
 
     }
 
+    private void fetchAcessToken() {
+        //getting the progressbar
 
+
+        Call<TokenResponse> call = webApi.accessToken("password", "fbApp", "fbApp", "admin", "123");
+
+        call.enqueue(new Callback<TokenResponse>() {
+            @Override
+            public void onResponse(Call<TokenResponse> call, retrofit2.Response<TokenResponse> response) {
+                //  pprogressBar.setVisibility(View.INVISIBLE);
+                acess_token = response.body().getValue();
+                Log.d("Tag", "token===>" + acess_token);
+                getEmpList();
+            }
+
+            @Override
+            public void onFailure(Call<TokenResponse> call, Throwable t) {
+                //     pprogressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(CartItem.this, "Invalid Token", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+
+    private void getEmpList(){
+        Call<EmployeeIdResponse> call=webApi.getEmpID(acess_token);
+        call.enqueue(new Callback<EmployeeIdResponse>() {
+            @Override
+            public void onResponse(Call<EmployeeIdResponse> call, Response<EmployeeIdResponse> response) {
+                String status=response.body().getStatus();
+                if(status.equals("SUCCESS")){
+                    emplist=response.body().getResult();
+
+
+
+                    if (emplist.size()>0){
+// Create custom adapter object ( see below CustomAdapter.java )
+                        adapter = new CustomAdapter(CartItem.this, R.layout.customspinnerlayout, emplist);
+
+                        // Set adapter to spinner
+                        spinner1.setAdapter(adapter);
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<EmployeeIdResponse> call, Throwable t) {
+
+            }
+        });
+    }
     //payment Gateway
     private void tokenGenerate(){
       //  final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.progressBarDil);
@@ -199,7 +307,7 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
         String stage = "TEST";
 
         /*
-         * appId will be available to you at CashFree Dashboard. This is a unique
+         * appId will be available to you at CashFree DashboardActivity. This is a unique
          * identifier for your app. Please replace this appId with your appId.
          * Also, as explained below you will need to change your appId to prod
          * credentials before publishing your app.*/
@@ -270,8 +378,84 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.placeBtn:
-              tokenGenerate();
+             // tokenGenerate();
+                if (role.equals("ROLE_ADMIN")) {
+                    distSelectID=null;
+                    parchaseCart();
+                } else if (role.equals("ROLE_KML_EMP")){
+                    distSelectID=null;
+                    parchaseCart();
+                }else if(role.equals("ROLE_FRANCH")){
+                    if(distSelectID!=null){
+
+                    parchaseCart();
+                    }else {
+                        Toast.makeText(CartItem.this,"Please Select Distributor",Toast.LENGTH_LONG).show();
+                    }
+
+                }else if(role.equals("ROLE_DIST")){
+                    distSelectID=null;
+                    parchaseCart();
+                }
+
                 break;
         }
+    }
+    private void parchaseCart(){
+        PaymentdetailsRequest paymentdetails=new PaymentdetailsRequest();
+        paymentdetails.setAmount(totalPrice);
+        paymentdetails.setPay_mode_id(1);
+        paymentdetails.setPay_date("2018-1-30");
+        paymentdetails.setStatus("SUCCESS");
+        paymentdetails.setTransaction_id(77);
+
+        OrderdetailsRequest orderdetailsRequest=new OrderdetailsRequest();
+        orderdetailsRequest.setCust_id(46);
+        orderdetailsRequest.setStatus("EXECUTED");
+        orderdetailsRequest.setDate("2018-09-01");
+        orderdetailsRequest.setDistributor_id(distSelectID);
+
+        OrderitemmapRequest orderitemmapRequest=new OrderitemmapRequest();
+        orderitemmapRequest.setItem_id(10);
+        orderitemmapRequest.setItem_count(2);
+        orderitemmapRequest.setTotal_price(totalPrice);
+        orderitemmapRequest.setOrder_date("2018-1-30");
+        orderitemmapRequest.setOrder_status("Active");
+
+        orderitemmapRequestArrayList.add(orderitemmapRequest);
+
+        PaymentRequest paymentRequest=new PaymentRequest(paymentdetails,orderdetailsRequest,orderitemmapRequestArrayList);
+
+
+        progressBarDil.setVisibility(View.VISIBLE);
+        Call<PaymentResponse> call=webApi.getPaymentResponse(acess_token,paymentRequest);
+
+        call.enqueue(new Callback<PaymentResponse>() {
+            @Override
+            public void onResponse(Call<PaymentResponse> call, Response<PaymentResponse> response) {
+                progressBarDil.setVisibility(View.GONE);
+                int code=response.code();
+                switch (code){
+                    case RESPONSE_ERROR:
+                        Toast.makeText(CartItem.this,"Failed",Toast.LENGTH_LONG).show();
+                        break;
+                    case RESPONSE_OK:
+                        String status=response.body().getStatus();
+                        if(status.equals("SUCCESS")){
+                         //  startActivity(new Intent(CartItem.this,));
+                            finish();
+                        }
+
+
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PaymentResponse> call, Throwable t) {
+                progressBarDil.setVisibility(View.GONE);
+                Toast.makeText(CartItem.this,"Failed",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

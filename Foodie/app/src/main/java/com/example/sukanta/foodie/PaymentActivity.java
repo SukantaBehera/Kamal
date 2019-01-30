@@ -97,7 +97,7 @@ public class PaymentActivity extends AppCompatActivity implements CFClientInterf
         String stage = "TEST";
 
         /*
-         * appId will be available to you at CashFree Dashboard. This is a unique
+         * appId will be available to you at CashFree DashboardActivity. This is a unique
          * identifier for your app. Please replace this appId with your appId.
          * Also, as explained below you will need to change your appId to prod
          * credentials before publishing your app.*/
