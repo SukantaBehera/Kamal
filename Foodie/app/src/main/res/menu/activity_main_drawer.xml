@@ -82,6 +82,7 @@
                         android:id="@+id/orderstatus"
                         android:icon="@drawable/track_order"
                         android:title="@string/order_status"
+                        android:visible="false"
                         app:theme ="@style/Navigation"
                         />
                     <item
