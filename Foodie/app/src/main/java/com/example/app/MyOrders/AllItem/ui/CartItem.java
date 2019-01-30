@@ -156,7 +156,12 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
         }else {
             Toast.makeText(CartItem.this, "Please Check Network Connection", Toast.LENGTH_LONG).show();
         }
-
+        if(role.equals("ROLE_DIST")){
+            spinner1.setVisibility(View.GONE);
+        }
+        else if(role.equals("ROLE_FRANCH")){
+            spinner1.setVisibility(View.VISIBLE);
+        }
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -166,8 +171,9 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                int value=emplist.get(0).getUserID();
-                distSelectID=String.valueOf(value);
+                /*int value=emplist.get(0).getUserID();
+                distSelectID=String.valueOf(value);*/
+                distSelectID=null;
             }
         });
 
@@ -223,7 +229,7 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
 
 
     private void getEmpList(){
-        Call<EmployeeIdResponse> call=webApi.getEmpID(acess_token);
+        Call<EmployeeIdResponse> call=webApi.getDistID(acess_token);
         call.enqueue(new Callback<EmployeeIdResponse>() {
             @Override
             public void onResponse(Call<EmployeeIdResponse> call, Response<EmployeeIdResponse> response) {
@@ -379,19 +385,19 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
         switch (v.getId()){
             case R.id.placeBtn:
              // tokenGenerate();
-                if (role.equals("ROLE_ADMIN")) {
+               /* if (role.equals("ROLE_ADMIN")) {
                     distSelectID=null;
                     parchaseCart();
                 } else if (role.equals("ROLE_KML_EMP")){
                     distSelectID=null;
                     parchaseCart();
-                }else if(role.equals("ROLE_FRANCH")){
-                    if(distSelectID!=null){
+                }else*/ if(role.equals("ROLE_FRANCH")){
+                    //if(distSelectID!=null){
 
                     parchaseCart();
-                    }else {
+                   /* }else {
                         Toast.makeText(CartItem.this,"Please Select Distributor",Toast.LENGTH_LONG).show();
-                    }
+                    }*/
 
                 }else if(role.equals("ROLE_DIST")){
                     distSelectID=null;
@@ -410,19 +416,24 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
         paymentdetails.setTransaction_id(77);
 
         OrderdetailsRequest orderdetailsRequest=new OrderdetailsRequest();
-        orderdetailsRequest.setCust_id(46);
+        orderdetailsRequest.setCust_id(Integer.valueOf(RegPrefManager.getInstance(this).getLoginUserID()));
         orderdetailsRequest.setStatus("EXECUTED");
         orderdetailsRequest.setDate("2018-09-01");
         orderdetailsRequest.setDistributor_id(distSelectID);
+        for(int i=0;i<filterResultsArray1.size();i++){
+            ViewResultCart viewResultCart=filterResultsArray1.get(i);
 
-        OrderitemmapRequest orderitemmapRequest=new OrderitemmapRequest();
-        orderitemmapRequest.setItem_id(10);
-        orderitemmapRequest.setItem_count(2);
-        orderitemmapRequest.setTotal_price(totalPrice);
-        orderitemmapRequest.setOrder_date("2018-1-30");
-        orderitemmapRequest.setOrder_status("Active");
+            int itemid=viewResultCart.getItem_id();
+            OrderitemmapRequest orderitemmapRequest=new OrderitemmapRequest();
+            orderitemmapRequest.setItem_id(itemid);
+            orderitemmapRequest.setItem_count(filterResultsArray1.size());
+            orderitemmapRequest.setTotal_price(totalPrice);
+            orderitemmapRequest.setOrder_date("2018-1-30");
+            orderitemmapRequest.setOrder_status("Active");
 
-        orderitemmapRequestArrayList.add(orderitemmapRequest);
+            orderitemmapRequestArrayList.add(orderitemmapRequest);
+        }
+
 
         PaymentRequest paymentRequest=new PaymentRequest(paymentdetails,orderdetailsRequest,orderitemmapRequestArrayList);
 
@@ -443,7 +454,10 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
                         String status=response.body().getStatus();
                         if(status.equals("SUCCESS")){
                          //  startActivity(new Intent(CartItem.this,));
-                            finish();
+                            //if (role.equals("ROLE_ADMIN")) {
+                               startActivity(new Intent(CartItem.this,DrawerActivity.class));
+                               finish();
+
                         }
 
 

@@ -48,6 +48,7 @@ public class MyOrdersFragment extends Fragment {
     TextView textView2;
     private FransAdapterNew adapterNew;
     private ArrayList<ViewOrderResult> viewOrderResultsArray;
+    private ArrayList<ViewOrderResult> viewOrderResultsArray1;
     private String acess_token;
     String userId;
     SharedPreferenceClass sharedPreferenceClass;
@@ -84,7 +85,7 @@ public class MyOrdersFragment extends Fragment {
         textView2=(TextView)v.findViewById(R.id.textView2);
         progressBarDil=(ProgressBar)v.findViewById(R.id.progressBarDil);
         viewOrderResultsArray=new ArrayList<>();
-
+        viewOrderResultsArray1=new ArrayList<>();
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -178,12 +179,56 @@ public class MyOrdersFragment extends Fragment {
                             Log.d("Tag","Size===>"+viewOrderResultsArray.size());
                             if(viewOrderResultsArray.size()>0){
 
-                                adapterNew = new FransAdapterNew(getContext(),viewOrderResultsArray);
-                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                                recycleview.setLayoutManager(mLayoutManager);
-                                recycleview.setItemAnimator(new DefaultItemAnimator());
-                                recycleview.setAdapter(adapterNew);
-                                adapterNew.notifyDataSetChanged();
+
+
+                                for(int i=0;i<viewOrderResultsArray.size();i++){
+                                    ViewOrderResult viewOrderResult=viewOrderResultsArray.get(i);
+                                    String value=viewOrderResult.getOrder_deliv_status();
+                                    if(value==null) {
+                                        Log.d("Tag","jddj");
+                                    }
+                                    else {
+
+                                        if(value.equals("PENDING")){
+                                            ViewOrderResult viewOrderResult1=new ViewOrderResult();
+                                            viewOrderResult1.setDelivered_by_empId(viewOrderResult.getDelivered_by_empId());
+                                            viewOrderResult1.setDispatched_by_empName(viewOrderResult.getDelivered_by_empName());
+                                            viewOrderResult1.setDelivery_date(viewOrderResult.getDelivery_date());
+                                            viewOrderResult1.setDispatched_by_empName(viewOrderResult.getDispatched_by_empName());
+                                            viewOrderResult1.setDispatched_by_empId(viewOrderResult.getDispatched_by_empId());
+                                            viewOrderResult1.setDispatch_date(viewOrderResult.getDispatch_date());
+                                            viewOrderResult1.setOrderby_custId(viewOrderResult.getOrderby_custId());
+                                            viewOrderResult1.setOrderDate(viewOrderResult.getOrderDate());
+                                            viewOrderResult1.setOrder_deliv_status(viewOrderResult.getOrder_deliv_status());
+                                            viewOrderResult1.setOrder_id(viewOrderResult.getOrder_id());
+                                            viewOrderResult1.setTotal_price(viewOrderResult.getTotal_price());
+                                            viewOrderResult1.setUserName(viewOrderResult.getUserName());
+                                            viewOrderResult1.setUserRoleCode(viewOrderResult.getUserRoleCode());
+                                            viewOrderResult1.setUser_active_status(viewOrderResult.getUser_active_status());
+                                            viewOrderResult1.setItemQOmEmbed(viewOrderResult.getItemQOmEmbed());
+                                            viewOrderResultsArray1.add(viewOrderResult1);
+                                        }
+                                        adapterNew = new FransAdapterNew(getContext(),viewOrderResultsArray1);
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                        recycleview.setLayoutManager(mLayoutManager);
+                                        recycleview.setItemAnimator(new DefaultItemAnimator());
+                                        recycleview.setAdapter(adapterNew);
+                                        adapterNew.notifyDataSetChanged();
+
+                                    }
+
+
+                                }
+
+
+
+
+
+
+
+
+
+
                             }
                             else {
                                 textView2.setVisibility(View.VISIBLE);

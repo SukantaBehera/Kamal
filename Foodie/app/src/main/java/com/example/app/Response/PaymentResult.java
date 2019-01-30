@@ -5,10 +5,6 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class PaymentResult {
-    @SerializedName("paymentdetails")
-    private PaymentdetailsResponse paymentdetails;
-    private OrderdetailsResponse orderdetails;
-
     public PaymentdetailsResponse getPaymentdetails() {
         return paymentdetails;
     }
@@ -33,26 +29,32 @@ public class PaymentResult {
         this.orderitemmap = orderitemmap;
     }
 
+    @SerializedName("paymentdetails")
+    private PaymentdetailsResponse paymentdetails;
+    @SerializedName("orderdetails")
+    private OrderdetailsResponse orderdetails;
+
+    @SerializedName("orderitemmap")
     private ArrayList<OrderitemmapResponse> orderitemmap;
 
     public class OrderitemmapResponse{
-        @SerializedName("amount")
-        private int amount;
+        @SerializedName("order_id")
+        private String  order_id;
         @SerializedName("id")
         private String  id;
-        @SerializedName("pay_date")
-        private int pay_date;
-        @SerializedName("pay_mode_id")
-        private int pay_mode_id;
-        @SerializedName("transaction_id")
-        private int transaction_id;
+        @SerializedName("item_id")
+        private int item_id;
+        @SerializedName("item_count")
+        private int item_count;
+        @SerializedName("total_price")
+        private int total_price;
 
-        public int getAmount() {
-            return amount;
+        public String getOrder_id() {
+            return order_id;
         }
 
-        public void setAmount(int amount) {
-            this.amount = amount;
+        public void setOrder_id(String order_id) {
+            this.order_id = order_id;
         }
 
         public String getId() {
@@ -63,40 +65,51 @@ public class PaymentResult {
             this.id = id;
         }
 
-        public int getPay_date() {
-            return pay_date;
+        public int getItem_id() {
+            return item_id;
         }
 
-        public void setPay_date(int pay_date) {
-            this.pay_date = pay_date;
+        public void setItem_id(int item_id) {
+            this.item_id = item_id;
         }
 
-        public int getPay_mode_id() {
-            return pay_mode_id;
+        public int getItem_count() {
+            return item_count;
         }
 
-        public void setPay_mode_id(int pay_mode_id) {
-            this.pay_mode_id = pay_mode_id;
+        public void setItem_count(int item_count) {
+            this.item_count = item_count;
         }
 
-        public int getTransaction_id() {
-            return transaction_id;
+        public int getTotal_price() {
+            return total_price;
         }
 
-        public void setTransaction_id(int transaction_id) {
-            this.transaction_id = transaction_id;
+        public void setTotal_price(int total_price) {
+            this.total_price = total_price;
         }
 
-        public String getStatus() {
-            return status;
+        public String getOrder_status() {
+            return order_status;
         }
 
-        public void setStatus(String status) {
-            this.status = status;
+        public void setOrder_status(String order_status) {
+            this.order_status = order_status;
         }
 
-        @SerializedName("status")
-        private String status;
+        public long getOrder_date() {
+            return order_date;
+        }
+
+        public void setOrder_date(long order_date) {
+            this.order_date = order_date;
+        }
+
+        @SerializedName("order_status")
+        private String  order_status;
+
+        @SerializedName("order_date")
+        private long order_date;
 
     }
     public class OrderdetailsResponse{
@@ -104,12 +117,12 @@ public class PaymentResult {
         private String  id;
         @SerializedName("cust_id")
         private int cust_id;
-        @SerializedName("date")
-        private int date;
-        @SerializedName("distributor_id")
-        private int distributor_id;
         @SerializedName("payment_id")
         private int payment_id;
+        @SerializedName("date")
+        private long date;
+        @SerializedName("distributor_id")
+        private int distributor_id;
 
         public String getId() {
             return id;
@@ -127,11 +140,19 @@ public class PaymentResult {
             this.cust_id = cust_id;
         }
 
-        public int getDate() {
+        public int getPayment_id() {
+            return payment_id;
+        }
+
+        public void setPayment_id(int payment_id) {
+            this.payment_id = payment_id;
+        }
+
+        public long getDate() {
             return date;
         }
 
-        public void setDate(int date) {
+        public void setDate(long date) {
             this.date = date;
         }
 
@@ -141,14 +162,6 @@ public class PaymentResult {
 
         public void setDistributor_id(int distributor_id) {
             this.distributor_id = distributor_id;
-        }
-
-        public int getPayment_id() {
-            return payment_id;
-        }
-
-        public void setPayment_id(int payment_id) {
-            this.payment_id = payment_id;
         }
 
         public String getPurchase_stat() {
@@ -166,8 +179,14 @@ public class PaymentResult {
     public class PaymentdetailsResponse{
         @SerializedName("id")
         private String  id;
-        @SerializedName("item_count")
-        private int item_count;
+        @SerializedName("pay_mode_id")
+        private int pay_mode_id;
+
+
+        @SerializedName("amount")
+        private int amount;
+        @SerializedName("status")
+        private String  status;
 
         public String getId() {
             return id;
@@ -177,63 +196,50 @@ public class PaymentResult {
             this.id = id;
         }
 
-        public int getItem_count() {
-            return item_count;
+        public int getPay_mode_id() {
+            return pay_mode_id;
         }
 
-        public void setItem_count(int item_count) {
-            this.item_count = item_count;
+        public void setPay_mode_id(int pay_mode_id) {
+            this.pay_mode_id = pay_mode_id;
         }
 
-        public int getItem_id() {
-            return item_id;
+        public int getAmount() {
+            return amount;
         }
 
-        public void setItem_id(int item_id) {
-            this.item_id = item_id;
+        public void setAmount(int amount) {
+            this.amount = amount;
         }
 
-        public int getOrder_date() {
-            return order_date;
+        public String  getStatus() {
+            return status;
         }
 
-        public void setOrder_date(int order_date) {
-            this.order_date = order_date;
+        public void setStatus(String  status) {
+            this.status = status;
         }
 
-        public String getOrder_id() {
-            return order_id;
+        public String getTransaction_id() {
+            return transaction_id;
         }
 
-        public void setOrder_id(String order_id) {
-            this.order_id = order_id;
+        public void setTransaction_id(String transaction_id) {
+            this.transaction_id = transaction_id;
         }
 
-        public String getOrder_status() {
-            return order_status;
+        public long getPay_date() {
+            return pay_date;
         }
 
-        public void setOrder_status(String order_status) {
-            this.order_status = order_status;
+        public void setPay_date(long pay_date) {
+            this.pay_date = pay_date;
         }
 
-        public int getTotal_price() {
-            return total_price;
-        }
+        @SerializedName("transaction_id")
+        private String transaction_id;
+        @SerializedName("pay_date")
+        private long  pay_date;
 
-        public void setTotal_price(int total_price) {
-            this.total_price = total_price;
-        }
-
-        @SerializedName("item_id")
-        private int item_id;
-        @SerializedName("order_date")
-        private int order_date;
-        @SerializedName("order_id")
-        private String order_id;
-        @SerializedName("order_status")
-        private String  order_status;
-        @SerializedName("total_price")
-        private int  total_price;
     }
 }
