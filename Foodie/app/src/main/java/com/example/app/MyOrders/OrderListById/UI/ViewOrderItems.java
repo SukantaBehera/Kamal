@@ -295,7 +295,7 @@ public class ViewOrderItems extends DilogueFRagment {
             call.enqueue(new Callback<OrderResponse>() {
                 @Override
                 public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
-             //       pprogressBar.setVisibility(View.GONE);
+                    pprogressBar.setVisibility(View.GONE);
                     String status=response.body().getStatus();
                     if(status.equals("SUCCESS")){
                         viewOrderResultsArray=response.body().getResult();

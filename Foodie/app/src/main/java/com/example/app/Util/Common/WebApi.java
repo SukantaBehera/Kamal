@@ -21,6 +21,7 @@ import com.example.app.Response.CountResponse;
 import com.example.app.Response.DashboardResponse;
 import com.example.app.Response.DeleteUserResponse;
 import com.example.app.Response.EmployeeIdResponse;
+import com.example.app.Response.GetAllItemResponse;
 import com.example.app.Response.GetAllQomReponse;
 import com.example.app.Response.LoginResponse;
 import com.example.app.Response.MyOrderUpdateResponse;
@@ -110,6 +111,10 @@ public interface WebApi {
     @POST(AppConstants.DELETEEMPLOYEE_BYID)
     Call<DeleteUserResponse> deleteemployee(@Query("access_token") String access_token, @Query("userId") String userId);
 
+    @POST(AppConstants.DELETEITEM_BYID)
+    Call<DeleteUserResponse> deleteItem(@Query("access_token") String access_token, @Query("itemID") String itemID);
+
+
 
     @Headers("Content-Type: application/json")
     @POST(AppConstants.STATUS_UPDATE)
@@ -139,11 +144,24 @@ public interface WebApi {
 
     @GET(AppConstants.EMPID)
     Call<EmployeeIdResponse> getEmpID(@Query("access_token") String access_token);
+
     @GET(AppConstants.DISTID)
     Call<EmployeeIdResponse> getDistID(@Query("access_token") String access_token);
 
+
+
     @GET(AppConstants.ORDERITEMS_VIEWS)
     Call<OrderViewResponse> getOrderViews(@Path("orderid") int orderid, @Query("access_token") String access_token);
+
+
+    @GET(AppConstants.DISTBUTORID)
+    Call<EmployeeIdResponse> getDistID(@Path("orderid") int orderid, @Query("access_token") String access_token);
+
+    @GET(AppConstants.DISTBUTORREPORT)
+    Call<PendingReportResponse> getDistReport(@Path("partyid") int partyid, @Query("access_token") String access_token);
+
+    @GET(AppConstants.GETALLITEMS)
+    Call<GetAllItemResponse> getAllItemList(@Query("access_token") String access_token);
 
     @GET(AppConstants.DASHBOARDTABLE)
     Call<DashboardResponse> getDashBoardTable(@Query("access_token") String access_token);
@@ -154,5 +172,6 @@ public interface WebApi {
     @Headers("Content-Type: application/json")
     @POST(AppConstants.PURCHASECART)
     Call<PaymentResponse> getPaymentResponse(@Query("access_token") String access_token, @Body PaymentRequest jsonObject);
+
 
 }

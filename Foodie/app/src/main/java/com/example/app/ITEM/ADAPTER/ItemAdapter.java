@@ -14,9 +14,7 @@ import android.widget.Toast;
 import com.example.app.ITEM.MODEL.ItemDetail;
 import com.example.app.ITEM.UI.ViewItems;
 import com.example.app.Response.DeleteUserResponse;
-import com.example.app.Response.GetAllItemResponse;
 import com.example.app.Response.TokenResponse;
-import com.example.app.USERLIST.MODEL.Employeedetail;
 import com.example.app.Util.Common.ApiClient;
 import com.example.app.Util.Common.WebApi;
 import com.example.sukanta.foodie.R;
@@ -28,7 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     /* public final Activity context;
      public final String[] promotername;
      *//*public final Integer[] imgid;*//*
@@ -41,7 +39,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
     ViewItems items;
     private ArrayList<ItemDetail> listItemDetail;
 
-    public ItemListAdapter(ArrayList<ItemDetail> listItemDetail, Context context, ViewItems item ) {
+
+    public ItemAdapter(ArrayList<ItemDetail> listItemDetail, Context context, ViewItems item ) {
         this.context = context;
         this.listItemDetail = listItemDetail;
         items =item;
@@ -50,9 +49,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
     }
 
 
-    public ItemListAdapter(ArrayList<ItemDetail> listUsers) {
-        this.listItemDetail = listUsers;
-    }
+
+
     public void updateList(ArrayList<ItemDetail> list){
         listItemDetail = list;
         notifyDataSetChanged();
@@ -72,25 +70,25 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
         viewHolder.ItemName.setText(listItemDetail.get(position).getName());
         viewHolder.itemPrice.setText(listItemDetail.get(position).getPrice());
         viewHolder.itemDescription.setText(listItemDetail.get(position).getDescription());
-        /*viewHolder.deleteitem.setOnClickListener(new View.OnClickListener() {
+        viewHolder.deleteitem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fetchAcessToken(position);
             }
-        });*/
+        });
     }
-   /* private void fetchAcessToken(final int position) {
+    private void fetchAcessToken(final int position) {
         //getting the progressbar
 
         Call<TokenResponse> call = webApi.accessToken("password", "fbApp", "fbApp", "admin", "123");
 
         call.enqueue(new Callback<TokenResponse>() {
             @Override
-            public void onResponse(Call<TokenResponse> call, retrofit2.Response<TokenResponse> response) {
+            public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                 //  pprogressBar.setVisibility(View.INVISIBLE);
                 acess_token = response.body().getValue();
                 Log.d("Tag", "token===>" + acess_token);
-               // deleteItem(position);
+                deleteItem(position);
             }
 
             @Override
@@ -100,7 +98,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
             }
         });
 
-    }*/
+    }
 
     private  void deleteItem(final int position){
         ItemDetail itemDetail = listItemDetail.get(position);
@@ -128,7 +126,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHo
     }
     @Override
     public int getItemCount() {
-        Log.v(ItemListAdapter.class.getSimpleName(),""+listItemDetail.size());
+        Log.v(ItemAdapter.class.getSimpleName(),""+listItemDetail.size());
         return listItemDetail.size();
     }
 

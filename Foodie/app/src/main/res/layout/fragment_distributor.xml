@@ -4,17 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.app.foodie.DailyFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:orientation="horizontal"
-        android:weightSum="2"
+        android:layout_height="51dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
-        >
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-       <!-- <LinearLayout
+        <!-- <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal"
@@ -22,20 +22,21 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp">-->
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.9"
-                android:text="Choose Distributor :"
-                android:textColor="@color/black"
-                android:textSize="15sp"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.9"
+            android:text="Choose Distributor :"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.1"></Spinner>
-       <!-- </LinearLayout>-->
+        <!-- </LinearLayout>-->
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

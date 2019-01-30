@@ -57,7 +57,7 @@ public class AllFragment extends Fragment {
         Reports.Adapter adapter = new Reports.Adapter(getChildFragmentManager());
         adapter.addFragment(new PendingFragment(), "Pending");
         adapter.addFragment(new DispatchedFragment(), "Dispatched");
-        adapter.addFragment(new DeliveryFragment(), "Delivery");
+        adapter.addFragment(new DeliveryFragment(), "Delivered");
 
         viewPager.setAdapter(adapter);
 

@@ -265,7 +265,7 @@ public class AddItems extends DilogueFRagment {
         requestQueue.add(stringRequest);
     }
 
-    private void getAllItemList(View view) {
+  /*  private void getAllItemList(View view) {
         //getting the progressbar
 
 
@@ -291,16 +291,16 @@ public class AddItems extends DilogueFRagment {
                                 for(int i = 0; i <jsonArray.length();i++){
                                     JSONObject jsonObject  = jsonArray.getJSONObject(i);
 
-
                                     String itemId = jsonObject.getString("item_id");
                                     String name= jsonObject.getString("name");
                                     String description= jsonObject.getString("description");
                                     String price= jsonObject.getString("price");
                                     String status= jsonObject.getString("status");
+                                    String franchisorflag =jsonObject.getString("Y");
                                     String unit_id= jsonObject.getString("unit_id");
                                     String entered_by= jsonObject.getString("entered_by");
                                     String id= jsonObject.getString("id");
-                                    itemList.add(new ItemDetail(itemId,name,description,price,status,unit_id,entered_by,id,"NO"));
+                                    itemList.add(new ItemDetail(itemId,name,description,price,status,franchisorflag,unit_id,entered_by,id,"NO"));
 
 
 
@@ -342,7 +342,7 @@ public class AddItems extends DilogueFRagment {
         //adding the string request to request queue
         requestQueue.add(stringRequest);
     }
-
+*/
 
 
 
