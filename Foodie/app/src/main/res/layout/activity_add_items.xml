@@ -28,69 +28,49 @@
         android:orientation="vertical">
 
 
-
-
         <LinearLayout
-        android:layout_width="345dp"
-        android:layout_height="240dp"
-        android:background="@drawable/custom_border"
-        android:orientation="vertical">
+            android:layout_width="345dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_border"
+            android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_add_items"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_add_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <EditText
                     android:id="@+id/additems"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter ItemName"
-                    android:textColor="#000"
                     android:inputType="textCapSentences"
-                    android:textSize="15sp"
-                   />
+                    android:textColor="#000"
+                    android:textSize="15sp" />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_add-desc"
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <EditText
                     android:id="@+id/desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Description"
-                    android:textColor="#000"
                     android:inputType="textCapSentences"
-                    android:textSize="15sp"
-                    />
+                    android:textColor="#000"
+                    android:textSize="15sp" />
 
             </android.support.design.widget.TextInputLayout>
-<!--<LinearLayout
-    android:layout_width="350dp"
-    android:layout_height="60dp">
-        <EditText
-            android:id="@+id/additems"
-            style="@style/spinner_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="20dp"
-            android:padding="2dp"
-            android:prompt="@string/spinner_title"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/buttoncolor" />
 
-    </LinearLayout>-->
             <LinearLayout
                 android:layout_width="350dp"
-                android:layout_height="180dp"
-
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
@@ -99,7 +79,7 @@
                     android:layout_height="55dp"
                     android:layout_marginTop="15dp">
 
-                 <!--  <TextView
+                    <!--  <TextView
                         android:id="@+id/unit_type"
                         android:layout_width="fill_parent"
                         android:layout_height="40dp"
@@ -113,8 +93,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:spinnerMode="dialog"
                         android:autofillHints="Unit Type"
+                        android:spinnerMode="dialog"
                         android:textColor="@color/logintextColor" />
 
                     <android.widget.TextView
@@ -130,7 +110,6 @@
                         android:paddingRight="50dp" />
 
                 </android.support.design.widget.TextInputLayout>
-
 
 
                 <android.support.design.widget.TextInputLayout
@@ -153,33 +132,19 @@
                 </android.support.design.widget.TextInputLayout>
 
 
-                <!-- <LinearLayout
-                android:layout_width="150dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="90dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/item_price"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="15dp"
-                    android:padding="2dp"
-                    android:drawableLeft="@drawable/rupeeindian"
-                    android:inputType="number"
-                    android:text="104"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/blackTextColor"/>
-                />
-            </LinearLayout>-->
-
 
             </LinearLayout>
 
-
-
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+                <CheckBox android:id="@+id/franchisorflag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="For Distributor"
+                    android:onClick="onCheckboxClicked"/>
+            </LinearLayout>
+        </LinearLayout>
 
 
     </LinearLayout>

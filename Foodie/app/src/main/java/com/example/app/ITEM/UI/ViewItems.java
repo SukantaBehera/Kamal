@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,9 +26,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.app.ITEM.ADAPTER.ItemAdapter;
 import com.example.app.ITEM.ADAPTER.ItemListAdapter;
 import com.example.app.ITEM.MODEL.ItemDetail;
 import com.example.app.ITEM.UTIL.DilogueFRagment;
+import com.example.app.USERLIST.ADAPTER.EmployeeListAdapter;
+import com.example.app.USERLIST.UI.ViewEmployee;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;
 import com.example.sukanta.foodie.R;
@@ -44,14 +48,14 @@ public class ViewItems extends DilogueFRagment {
     String acess_token = "";
 
     ArrayList<ItemDetail> itemList = new ArrayList<ItemDetail>();
-    private ItemListAdapter itemlistAdapter;
+    private ItemAdapter itemlistAdapter;
 
 
     RecyclerView recycleview;
     FloatingActionButton fab;
     SwipeRefreshLayout pullToRefresh;
     View rootView = null;
-
+    TextView empty_notes_view;
     EditText search;
 
 
@@ -65,6 +69,7 @@ public class ViewItems extends DilogueFRagment {
         recycleview = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         pullToRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.pullToRefresh);
         search = (EditText) rootView.findViewById(R.id.searchlist);
+        empty_notes_view = rootView.findViewById(R.id.empty_notes_view);
         fab = (FloatingActionButton) rootView.findViewById(R.id.fabadditem);
         fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add_white_24dp));
         fab.setOnClickListener(new View.OnClickListener() {
@@ -191,27 +196,33 @@ public class ViewItems extends DilogueFRagment {
                                 Toast.makeText(getActivity(), "Total Items present = " + jsonArray.length(), Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-
                                     String itemId = jsonObject.getString("item_id");
                                     String name = jsonObject.getString("name");
                                     String description = jsonObject.getString("description");
                                     String price = jsonObject.getString("price");
-                                    String status = jsonObject.getString("status");
+                                    String status = jsonObject.getString("is_active");
                                     String unit_id = jsonObject.getString("unit_id");
+                                    String franchisorflag = jsonObject.getString("franch_view_flag");
                                     String entered_by = jsonObject.getString("entered_by");
                                     String id = jsonObject.getString("id");
-                                    itemList.add(new ItemDetail(itemId, name, description, price, status, unit_id, entered_by, id,"NO"));
+                                    itemList.add(new ItemDetail(itemId, name, description, price, status,franchisorflag, unit_id, entered_by, id,"NO"));
                                 }
                                 // cartList = response.getDetail();
-                                itemlistAdapter = new ItemListAdapter(itemList);
+                                if(itemList.size()>0){
+
+
+                                itemlistAdapter = new ItemAdapter(itemList,getContext(),ViewItems.this);
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                 recycleview.setLayoutManager(mLayoutManager);
                                 recycleview.setItemAnimator(new DefaultItemAnimator());
                                 recycleview.setAdapter(itemlistAdapter);
                                 itemlistAdapter.notifyDataSetChanged();
-
+                                }else{
+                                    empty_notes_view.setVisibility(View.VISIBLE);
+                                    recycleview.setVisibility(View.GONE);
+                                }
                             } else {
+
 
                             }
 
@@ -235,6 +246,22 @@ public class ViewItems extends DilogueFRagment {
         //adding the string request to request queue
         requestQueue.add(stringRequest);
     }
+    public void deleteItems(int pos){
+        itemList.remove(pos);
+        Log.d("Tag",""+itemList.size());
+       if( itemList.size()>0){
 
+        itemlistAdapter = new ItemAdapter(itemList,getContext(), ViewItems.this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        recycleview.setLayoutManager(mLayoutManager);
+        recycleview.setItemAnimator(new DefaultItemAnimator());
+        recycleview.setAdapter(itemlistAdapter);
+        itemlistAdapter.notifyDataSetChanged();
+    }
+    else{
+           empty_notes_view.setVisibility(View.VISIBLE);
+           recycleview.setVisibility(View.GONE);
+       }
+    }
 
 }

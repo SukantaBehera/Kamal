@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -46,12 +47,14 @@ import java.util.List;
 
 public class AddItemsActivity extends BaseActivity implements AdapterView.OnItemSelectedListener {
     EditText additem, description, quantityavailable ,itemprice;
+    CheckBox franchisorflag;
     Button add;
     ProgressDialog progressDialog;
     SharedPreferenceClass sharedPreferenceClass;
     Spinner unit_mearurement;
     int i;
     String acess_token="";
+    String  franch_view_flag;
     String Qom;
     TextView tverror;
      ArrayList<ItemDetail> itemList = new ArrayList<ItemDetail>();
@@ -75,6 +78,7 @@ public class AddItemsActivity extends BaseActivity implements AdapterView.OnItem
         //quantityavailable = findViewById(R.id.quanityno);
         itemprice = findViewById(R.id.item_price);
         unit_mearurement = findViewById(R.id.uomeasurement);
+
         add = findViewById(R.id.add);
         sharedPreferenceClass = new SharedPreferenceClass(getApplicationContext());
         progressDialog = new ProgressDialog(getApplicationContext());
@@ -91,7 +95,14 @@ public class AddItemsActivity extends BaseActivity implements AdapterView.OnItem
             int spinnerposition = dataAdapter.getPosition(test);
             unit_mearurement.setSelection(spinnerposition);
         }
-boolean check = true;
+        addListenerOnChkIos();
+     /*  boolean check = franchisorflag.*/
+     /*  if(check){
+           franch_view_flag = "N";
+       }else{
+           franch_view_flag = "Y";
+       }*/
+
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,10 +146,25 @@ boolean check = true;
 
     }
 
+    public void addListenerOnChkIos() {
+        franchisorflag = (CheckBox)findViewById(R.id.franchisorflag);
+        franchisorflag.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()) {
+                    franch_view_flag = "N";
+                }else{
+                    franch_view_flag = "Y";
+                }
+            }
+        });
+
+    }
 
 
 
-    private void fetchAcessToken() {
+        private void fetchAcessToken() {
         //getting the progressbar
 
 
@@ -307,7 +333,8 @@ boolean check = true;
         jsonObject.accumulate("name",  additem.getText().toString().trim());
         jsonObject.accumulate("description",  description.getText().toString().trim());
         jsonObject.accumulate("price",  itemprice.getText().toString().trim());
-        jsonObject.accumulate("status",  "Y");
+        jsonObject.accumulate("is_active",  "Y");
+        jsonObject.accumulate("franch_view_flag",franch_view_flag);
         if(Qom =="Packet"){
            int i = 1;
             jsonObject.accumulate("unit_id",  i);

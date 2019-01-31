@@ -9,17 +9,19 @@ public class ItemDetail {
     String description;
     String price;
     String status;
+    String franchisorflag;
     String unit_id;
     String entered_by;
     String id;
     String buyStatus;
 
-    public ItemDetail(String itemId, String name, String description, String price, String status, String unit_id, String entered_by, String id,String byStatus) {
+    public ItemDetail(String itemId, String name, String description, String price, String status, String franchisorflag,String unit_id, String entered_by, String id,String byStatus) {
         this.itemId = itemId;
         this.name = name;
         this.description = description;
         this.price = price;
         this.status = status;
+        this.franchisorflag =franchisorflag;
         this.unit_id = unit_id;
         this.entered_by = entered_by;
         this.id = id;

@@ -43,7 +43,6 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
         this.empployeelist = empployeelist;
         this.context = context;
         retrofit = ApiClient.getRetrofit();
-
         webApi = retrofit.create(WebApi.class);
         frag=frga;
     }
