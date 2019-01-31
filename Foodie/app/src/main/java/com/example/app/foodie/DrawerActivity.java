@@ -120,10 +120,23 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
         toolbar.setNavigationIcon(R.drawable.nv);
 
+        if(rolename.equals("ROLE_DIST")){
             mFragmentManager = getSupportFragmentManager();
             mFragmentTransaction = mFragmentManager.beginTransaction();
-            mFragmentTransaction.replace(R.id.containerView,new Dashboard()).commit();
-
+            mFragmentTransaction.replace(R.id.containerView, new DistributorDashboardFragment()).commit();
+        }else if(rolename.equals("ROLE_FRANCH")){
+            mFragmentManager = getSupportFragmentManager();
+            mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.replace(R.id.containerView, new FransDashboardFragment()).commit();
+        }else if(rolename.equals("ROLE_KML_EMP")){
+            mFragmentManager = getSupportFragmentManager();
+            mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.replace(R.id.containerView, new DashboardActivity()).commit();
+        }else {
+            mFragmentManager = getSupportFragmentManager();
+            mFragmentTransaction = mFragmentManager.beginTransaction();
+            mFragmentTransaction.replace(R.id.containerView, new DashboardActivity()).commit();
+        }
         viewIsAtHome = true;
 
 
@@ -155,7 +168,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             if (id == R.id.dashboard) {
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.containerView, new Dashboard()).commit();
+                mFragmentTransaction.replace(R.id.containerView, new DashboardActivity()).commit();
                 setTextColorForMenuItem(item, R.color.logintextColor);
                 toolbar.setTitle(getResources().getString(R.string.app_display_name));
                 toolbar.setSubtitle(getResources().getString(R.string.dashboard));
@@ -435,15 +448,39 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 viewIsAtHome = true;
             }
             if (id == R.id.dashboard) {
-                mFragmentManager = getSupportFragmentManager();
-                mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.containerView, new Dashboard()).commit();
-                setTextColorForMenuItem(item, R.color.logintextColor);
-                toolbar.setTitle(getResources().getString(R.string.app_display_name));
-                toolbar.setSubtitle(getResources().getString(R.string.dashboard));
-                toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-                toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
-                viewIsAtHome = true;
+                if(rolename.equals("ROLE_FRANCH")){
+                    mFragmentManager = getSupportFragmentManager();
+                    mFragmentTransaction = mFragmentManager.beginTransaction();
+                    mFragmentTransaction.replace(R.id.containerView, new FransDashboardFragment()).commit();
+                    setTextColorForMenuItem(item, R.color.logintextColor);
+                    toolbar.setTitle(getResources().getString(R.string.app_display_name));
+                    toolbar.setSubtitle(getResources().getString(R.string.dashboard));
+                    toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+                    toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
+                    viewIsAtHome = true;
+                }else if(rolename.equals("ROLE_DIST")) {
+                    mFragmentManager = getSupportFragmentManager();
+                    mFragmentTransaction = mFragmentManager.beginTransaction();
+                    mFragmentTransaction.replace(R.id.containerView, new DistributorDashboardFragment()).commit();
+                    setTextColorForMenuItem(item, R.color.logintextColor);
+                    toolbar.setTitle(getResources().getString(R.string.app_display_name));
+                    toolbar.setSubtitle(getResources().getString(R.string.dashboard));
+                    toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+                    toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
+                    viewIsAtHome = true;
+                }
+                else {
+                    mFragmentManager = getSupportFragmentManager();
+                    mFragmentTransaction = mFragmentManager.beginTransaction();
+                    mFragmentTransaction.replace(R.id.containerView, new DashboardActivity()).commit();
+                    setTextColorForMenuItem(item, R.color.logintextColor);
+                    toolbar.setTitle(getResources().getString(R.string.app_display_name));
+                    toolbar.setSubtitle(getResources().getString(R.string.dashboard));
+                    toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+                    toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
+                    viewIsAtHome = true;
+                }
+
             }
 
             else if (id == R.id.feedback) {

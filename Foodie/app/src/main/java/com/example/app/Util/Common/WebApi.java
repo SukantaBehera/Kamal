@@ -10,12 +10,15 @@ import com.example.app.Request.DeleteUserRequest;
 import com.example.app.Request.LoginRequest;
 import com.example.app.Request.MyOrderUpdateDeliveryRequest;
 import com.example.app.Request.MyOrderUpdateRequest;
+import com.example.app.Request.PaymentRequest;
 import com.example.app.Request.UpdateDistributorRequest;
 import com.example.app.Request.UpdateEmployeeRequest;
 import com.example.app.Request.UpdateFranchisorRequest;
 import com.example.app.Request.UpdateQomRequest;
 import com.example.app.Response.CashfreePaymantResponse;
 import com.example.app.Response.ChangePasswordResponse;
+import com.example.app.Response.CountResponse;
+import com.example.app.Response.DashboardResponse;
 import com.example.app.Response.DeleteUserResponse;
 import com.example.app.Response.EmployeeIdResponse;
 import com.example.app.Response.GetAllItemResponse;
@@ -24,6 +27,7 @@ import com.example.app.Response.LoginResponse;
 import com.example.app.Response.MyOrderUpdateResponse;
 import com.example.app.Response.OrderResponse;
 import com.example.app.Response.OrderViewResponse;
+import com.example.app.Response.PaymentResponse;
 import com.example.app.Response.PendingReportResponse;
 import com.example.app.Response.TokenResponse;
 import com.example.app.Response.UpdateQomResponse;
@@ -144,6 +148,7 @@ public interface WebApi {
     @GET(AppConstants.ORDERITEMS_VIEWS)
     Call<OrderViewResponse> getOrderViews(@Path("orderid") int orderid, @Query("access_token") String access_token);
 
+
     @GET(AppConstants.DISTBUTORID)
     Call<EmployeeIdResponse> getDistID(@Path("orderid") int orderid, @Query("access_token") String access_token);
 
@@ -152,4 +157,16 @@ public interface WebApi {
 
     @GET(AppConstants.GETALLITEMS)
     Call<GetAllItemResponse> getAllItemList(@Query("access_token") String access_token);
+
+    @GET(AppConstants.DASHBOARDTABLE)
+    Call<DashboardResponse> getDashBoardTable(@Query("access_token") String access_token);
+
+    @GET(AppConstants.USERCOUNT)
+    Call<CountResponse> getCount(@Query("access_token") String access_token);
+
+    @Headers("Content-Type: application/json")
+    @POST(AppConstants.PURCHASECART)
+    Call<PaymentResponse> getPaymentResponse(@Query("access_token") String access_token, @Body PaymentRequest jsonObject);
+
+
 }

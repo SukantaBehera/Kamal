@@ -36,8 +36,15 @@ public class AppConstants {
     public static final String DELETEITEM_BYID = "api/itemsvc/delete-item-by-id";
     public static final String EMPID = "api/get-alluser-by-type/1";
     public static final String ORDERITEMS_VIEWS = "api/orderitem/get-itemdetails-by-order/{orderid}";
+
     public static final String DISTBUTORID = "api/get-alluser-by-type/{orderid}";
     public static final String DISTBUTORREPORT= "api/orderitem/get-partywise-report/{partyid} ";
+
+    public static final String DASHBOARDTABLE = "api/itemsvc/get-item-count-all-pendingorder";
+    public static final String USERCOUNT = "api/get-user-count";
+    public static final String PURCHASECART = "api/orderitem/execute-update-purchase";
+
+
     public static  final String CASHFREE="cftoken/order";
     public static final String GETALLITEMS ="itemsvc/getallitem";
 

@@ -3,8 +3,8 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/cardCornerRadius"
-   >
+    android:layout_margin="@dimen/cardCornerRadius"
+    android:background="@drawable/custom_border">
 
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
@@ -258,6 +258,7 @@
 
             </LinearLayout>
             <RelativeLayout
+                android:id="@+id/relative"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
