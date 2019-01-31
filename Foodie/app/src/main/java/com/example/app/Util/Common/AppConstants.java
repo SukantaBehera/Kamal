@@ -35,6 +35,7 @@ public class AppConstants {
     public static final String DELETEEMPLOYEE_BYID = "api/delete-employee-by-id";
     public static final String DELETEITEM_BYID = "api/itemsvc/delete-item-by-id";
     public static final String EMPID = "api/get-alluser-by-type/1";
+    public static final String DISTID = "api/get-alluser-by-type/2";
     public static final String ORDERITEMS_VIEWS = "api/orderitem/get-itemdetails-by-order/{orderid}";
 
     public static final String DISTBUTORID = "api/get-alluser-by-type/{orderid}";

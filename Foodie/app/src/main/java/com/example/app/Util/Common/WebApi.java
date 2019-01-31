@@ -145,6 +145,11 @@ public interface WebApi {
     @GET(AppConstants.EMPID)
     Call<EmployeeIdResponse> getEmpID(@Query("access_token") String access_token);
 
+    @GET(AppConstants.DISTID)
+    Call<EmployeeIdResponse> getDistID(@Query("access_token") String access_token);
+
+
+
     @GET(AppConstants.ORDERITEMS_VIEWS)
     Call<OrderViewResponse> getOrderViews(@Path("orderid") int orderid, @Query("access_token") String access_token);
 
