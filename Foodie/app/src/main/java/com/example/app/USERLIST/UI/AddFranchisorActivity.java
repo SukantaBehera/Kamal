@@ -156,11 +156,7 @@ public class AddFranchisorActivity extends BaseActivity {
                         userid.setError("Enter User Id");
 
                     }
-                    else if(!pwd.matches(())==0){
-                        input_password.requestFocus();
-                        input_password.setError("Enter Password");
 
-                    }
                     else if(rwd.length()==0){
                         input_reEnterPassword.requestFocus();
                         input_reEnterPassword.setError("Confirm Password");
