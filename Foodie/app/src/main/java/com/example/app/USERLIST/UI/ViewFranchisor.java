@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -48,6 +49,7 @@ public class ViewFranchisor extends DilogueFRagment {
     private FranchisorListAdapter franchisorListAdapter;
     FloatingActionButton fab;
     EditText search;
+    TextView empty_notes_view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class ViewFranchisor extends DilogueFRagment {
         progressDialog = new ProgressDialog(getContext());
         recycleview = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        empty_notes_view = rootView.findViewById(R.id.empty_notes_view);
         fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add_white_24dp));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +138,7 @@ public class ViewFranchisor extends DilogueFRagment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //displaying the error in toast if occurrs
+                        pprogressBar.setVisibility(View.GONE);
                         Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -207,19 +211,26 @@ public class ViewFranchisor extends DilogueFRagment {
 
 
                                 // cartList = response.getDetail();
+                                if(franchisorlist.size()>0){
                                 franchisorListAdapter = new FranchisorListAdapter(franchisorlist,getContext(),ViewFranchisor.this);
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                 recycleview.setLayoutManager(mLayoutManager);
                                 recycleview.setItemAnimator(new DefaultItemAnimator());
                                 recycleview.setAdapter(franchisorListAdapter);
                                 franchisorListAdapter.notifyDataSetChanged();
-
+                                }
+                                else{
+                                    recycleview.setVisibility(View.GONE);
+                                    empty_notes_view.setVisibility(View.VISIBLE);
+                                }
                             } else {
 
                             }
 
 
                         } catch (Exception e) {
+                            pprogressBar.setVisibility(View.INVISIBLE);
+
                             e.printStackTrace();
                         }
                     }
@@ -228,6 +239,9 @@ public class ViewFranchisor extends DilogueFRagment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //displaying the error in toast if occurrs
+                        pprogressBar.setVisibility(View.INVISIBLE);
+                        recycleview.setVisibility(View.GONE);
+                        empty_notes_view.setVisibility(View.VISIBLE);
                         Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

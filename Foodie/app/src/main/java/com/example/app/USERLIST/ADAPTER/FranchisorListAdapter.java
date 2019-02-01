@@ -114,7 +114,7 @@ public class FranchisorListAdapter extends RecyclerView.Adapter<FranchisorListAd
             public void onResponse(Call<DeleteUserResponse> call, Response<DeleteUserResponse> response) {
                 String status = response.body().getStatus();
                 if(status.equals("SUCCESS")){
-                    Toast.makeText(context, "Distributor Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Franchisee Deleted", Toast.LENGTH_SHORT).show();
                     frag.deleteItem(position);
                 }
             }

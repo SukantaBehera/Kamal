@@ -56,6 +56,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/margin_top_no_notes"
         android:visibility="gone"
+        android:text="No Data Found"
         android:textSize="@dimen/msg_no_notes" />
 
 </RelativeLayout>
