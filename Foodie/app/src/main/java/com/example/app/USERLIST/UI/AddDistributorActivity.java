@@ -344,7 +344,11 @@ public class AddDistributorActivity extends BaseActivity {
         distributor.accumulate("permanent_address",  distributoraddress.getText().toString().trim());
         distributor.accumulate("phone_no",  input_mobile.getText().toString().trim());
         distributor.accumulate("email_id",  emailid.getText().toString().trim());
+<<<<<<< HEAD
+        distributor.accumulate("isActive",  "Y");
+=======
         distributor.accumulate("is_active",  "Y");
+>>>>>>> b6d4a5cd57920648dc6c9594124f2b2ef91b44f6
 
 
         JSONObject user = new JSONObject();

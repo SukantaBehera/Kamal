@@ -53,6 +53,7 @@ public class ViewEmployee extends DilogueFRagment {
     private TextView empty_notes_view;
     Context context;
     EditText search;
+    TextView empty_notes_view;
 
 
 
@@ -64,6 +65,7 @@ public class ViewEmployee extends DilogueFRagment {
         sharedPreferenceClass = new SharedPreferenceClass(getContext());
         progressDialog = new ProgressDialog(getContext());
         recycleview = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        empty_notes_view = rootView.findViewById(R.id.empty_notes_view);
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         empty_notes_view=rootView.findViewById(R.id.empty_notes_view);
         fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add_white_24dp));
@@ -143,6 +145,7 @@ public class ViewEmployee extends DilogueFRagment {
 
 
                         } catch (Exception e) {
+                            pprogressBar.setVisibility(View.INVISIBLE);
                             e.printStackTrace();
                         }
                     }
@@ -151,6 +154,7 @@ public class ViewEmployee extends DilogueFRagment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //displaying the error in toast if occurrs
+                        pprogressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -245,6 +249,21 @@ public class ViewEmployee extends DilogueFRagment {
                                 }
                                 // cartList = response.getDetail();
 
+<<<<<<< HEAD
+                                if(employeelist.size()>0){
+                                employeeListAdapter = new EmployeeListAdapter(employeelist,context,ViewEmployee.this);
+                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                recycleview.setLayoutManager(mLayoutManager);
+                                recycleview.setItemAnimator(new DefaultItemAnimator());
+                                recycleview.setAdapter(employeeListAdapter);
+                                employeeListAdapter.notifyDataSetChanged();
+                                }
+                                else{
+                                    empty_notes_view.setVisibility(View.VISIBLE);
+                                    recycleview.setVisibility(View.GONE);
+                                }
+=======
+>>>>>>> b6d4a5cd57920648dc6c9594124f2b2ef91b44f6
 
                             } else {
 
@@ -260,6 +279,9 @@ public class ViewEmployee extends DilogueFRagment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         //displaying the error in toast if occurrs
+                        pprogressBar.setVisibility(View.INVISIBLE);
+                        recycleview.setVisibility(View.GONE);
+                        empty_notes_view.setVisibility(View.VISIBLE);
                         Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
