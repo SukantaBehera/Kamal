@@ -1,7 +1,7 @@
 package com.example.app.Request;
 
 public class UpdateEmployeeRequest {
-    private Long emp_id;
+    private String emp_id;
     private String first_name;
     private String last_name;
     private String designation;
@@ -10,11 +10,11 @@ public class UpdateEmployeeRequest {
     private String email_id;
     private String status;
 
-    public Long getEmp_id() {
+    public String getEmp_id() {
         return emp_id;
     }
 
-    public void setEmp_id(Long emp_id) {
+    public void setEmp_id(String emp_id) {
         this.emp_id = emp_id;
     }
 

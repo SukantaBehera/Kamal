@@ -85,9 +85,13 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
         viewHolder.viewmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Employeedetail details=empployeelist.get(position);
                 Intent intent = new Intent(context,ViewEmployeeDetails.class);
                 intent.putExtra("emp_id",viewHolder.emp_id.getText().toString());
                 intent.putExtra("employee_name",viewHolder.name.getText().toString());
+                intent.putExtra("firstname",details.getFitstname());
+                intent.putExtra("lastname",details.getLastname());
+
                 intent.putExtra("designation",viewHolder.designation.getText().toString());
                 intent.putExtra("phone_no",viewHolder.phone_no.getText().toString());
                 intent.putExtra("address",viewHolder.address.getText().toString());

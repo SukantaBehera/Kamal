@@ -51,11 +51,13 @@
 
     <TextView
         android:id="@+id/empty_notes_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_top_no_notes"
         android:visibility="gone"
-        android:textSize="@dimen/msg_no_notes" />
+        android:layout_marginTop="240dp"
+        android:gravity="center"
+        android:text="No Employee Found"
+        android:textSize="16sp" />
 
 </RelativeLayout>

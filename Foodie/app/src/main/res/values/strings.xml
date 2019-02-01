@@ -25,7 +25,7 @@
     <string name="orders">Order History</string>
     <string name="order">Place New Order</string>
 
-    <string name="promoterlist">Franchisor</string>
+    <string name="promoterlist">Franchisee</string>
     <string name="employeelist">Employee</string>
     <string name="distributorlist">Distributor</string>
     <string name="viewdetails">View More</string>

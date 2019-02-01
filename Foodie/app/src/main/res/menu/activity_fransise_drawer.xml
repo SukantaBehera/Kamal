@@ -36,12 +36,7 @@
 
 
 
-        <item
-            android:id="@+id/reports"
-            android:icon="@drawable/orderdetails"
-            android:title="@string/reports"
-            app:theme ="@style/Navigation"
-            />
+
         <item
             android:id="@+id/orderstatus"
             android:icon="@drawable/track_order"
@@ -65,6 +60,18 @@
             android:id="@+id/feedback"
             android:icon="@drawable/orderdetails"
             android:title="@string/feedbackstr"
+            app:theme ="@style/Navigation"
+            />
+        <item
+            android:id="@+id/reports"
+            android:icon="@drawable/orderdetails"
+            android:title="@string/reports"
+            app:theme ="@style/Navigation"
+            />
+        <item
+            android:id="@+id/changepassword"
+            android:icon="@drawable/orderdetails"
+            android:title="@string/changepassword"
             app:theme ="@style/Navigation"
             />
         <item

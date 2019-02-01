@@ -116,10 +116,7 @@ public class AddItemsActivity extends BaseActivity implements AdapterView.OnItem
                     additem.requestFocus();
                     additem.setError("Enter ItemName");
                 }
-               else if(!InputValidation.isEdittextName(additem)){
-                    additem.requestFocus();
-                    additem.setError("Enter Valid ItemName");
-                }
+
                 else if(! InputValidation.isEdittextName(description)){
                     description.requestFocus();
                     description.setError("Enter Description");

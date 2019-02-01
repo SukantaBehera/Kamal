@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -29,6 +30,7 @@ import com.example.app.ITEM.UTIL.DilogueFRagment;
 import com.example.app.USERLIST.ADAPTER.DistributorListAdapter;
 import com.example.app.USERLIST.ADAPTER.EmployeeListAdapter;
 import com.example.app.USERLIST.MODEL.Employeedetail;
+import com.example.app.Util.RegPrefManager;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;
 import com.example.sukanta.foodie.R;
@@ -46,7 +48,9 @@ public class ViewEmployee extends DilogueFRagment {
     RecyclerView recycleview;
     FloatingActionButton fab;
     ArrayList<Employeedetail> employeelist = new ArrayList<Employeedetail>();
+    ArrayList<Employeedetail> employeelist1= new ArrayList<Employeedetail>();
     private EmployeeListAdapter employeeListAdapter;
+    private TextView empty_notes_view;
     Context context;
     EditText search;
 
@@ -61,6 +65,7 @@ public class ViewEmployee extends DilogueFRagment {
         progressDialog = new ProgressDialog(getContext());
         recycleview = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        empty_notes_view=rootView.findViewById(R.id.empty_notes_view);
         fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add_white_24dp));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,33 +184,67 @@ public class ViewEmployee extends DilogueFRagment {
                             if (obj.getString("status").equals("SUCCESS")) {
 
                                 JSONArray jsonArray = obj.getJSONArray("result");
-                                Toast.makeText(getActivity(), "Total Employee's present = " + jsonArray.length(), Toast.LENGTH_SHORT).show();
+                                String emp_id="",first_name="",last_name="",name="",designation="",address="",
+                                        adhharcardno="",phone_no="",email_id="",status="",id="";
+                              //  Toast.makeText(getActivity(), "Total Employee's present = " + jsonArray.length(), Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    String emp_id = jsonObject.getString("emp_id");
-                                    String first_name = jsonObject.getString("first_name");
-                                    String last_name = jsonObject.getString("last_name");
-                                    String name = first_name +" "+last_name ;
-                                    String designation = jsonObject.getString("designation");
-                                    String address = jsonObject.getString("address");
-                                    String adhharcardno = jsonObject.getString("aadhar_card_no");
-                                    String phone_no = jsonObject.getString("phone_no");
-                                    String email_id = jsonObject.getString("email_id");
-                                    String status = jsonObject.getString("is_active");
-                                    String id = jsonObject.getString("user_id");
-                                    employeelist.add(new Employeedetail(emp_id,name,designation,address,adhharcardno,phone_no, email_id,status, id));
+                                     emp_id = jsonObject.getString("emp_id");
+                                     first_name = jsonObject.getString("first_name");
+                                     last_name = jsonObject.getString("last_name");
+                                     name = first_name +" "+last_name ;
+                                     designation = jsonObject.getString("designation");
+                                     address = jsonObject.getString("address");
+                                     adhharcardno = jsonObject.getString("aadhar_card_no");
+                                     phone_no = jsonObject.getString("phone_no");
+                                     email_id = jsonObject.getString("email_id");
+                                     status = jsonObject.getString("is_active");
+                                     id = jsonObject.getString("user_id");
+                                    employeelist.add(new Employeedetail(emp_id,first_name,last_name,name,designation,address,adhharcardno,phone_no, email_id,status, id));
 
 
                                 }
 
+                                if(employeelist.size()>0) {
+                                    for (int i = 0; i < employeelist.size(); i++) {
+                                        String status1= employeelist.get(i).getStatus();
+                                        String id1=employeelist.get(i).getEmp_id();
+                                        String loginid= RegPrefManager.getInstance(getContext()).getLoginUserID();
+                                        Employeedetail employeedetail1;
+                                        if (status1.equals("N")) {
+                                            Log.d("Tag","Go");
+                                        } else {
 
+
+                                                if(id1.equals("1")) {
+                                                    /*empty_notes_view.setVisibility(View.VISIBLE);
+                                                    recycleview.setVisibility(View.GONE);*/
+                                                }
+                                                else{
+                                                    employeedetail1 = new Employeedetail(employeelist.get(i).getEmp_id(),employeelist.get(i).getFitstname(),employeelist.get(i).getLastname(), employeelist.get(i).getName(), employeelist.get(i).getDesignation(),
+                                                            employeelist.get(i).getAddress(), employeelist.get(i).getAdhharcardno(), employeelist.get(i).getPhone_no(), employeelist.get(i).getEmail_id(),
+                                                            employeelist.get(i).getStatus(), employeelist.get(i).getUser_id());
+                                                            employeelist1.add(employeedetail1);
+                                                             // employeelist.clear();
+                                                }
+
+
+
+                                        }
+                                    }
+                               //     employeelist.clear();
+                                 //   employeelist.add(employeedetail1);
+                                    employeeListAdapter = new EmployeeListAdapter(employeelist1, context, ViewEmployee.this);
+                                    employeelist.clear();
+                                    employeelist=employeelist1;
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                    recycleview.setLayoutManager(mLayoutManager);
+                                    recycleview.setItemAnimator(new DefaultItemAnimator());
+                                    recycleview.setAdapter(employeeListAdapter);
+                                    employeeListAdapter.notifyDataSetChanged();
+                                }
                                 // cartList = response.getDetail();
-                                employeeListAdapter = new EmployeeListAdapter(employeelist,context,ViewEmployee.this);
-                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                                recycleview.setLayoutManager(mLayoutManager);
-                                recycleview.setItemAnimator(new DefaultItemAnimator());
-                                recycleview.setAdapter(employeeListAdapter);
-                                employeeListAdapter.notifyDataSetChanged();
+
 
                             } else {
 

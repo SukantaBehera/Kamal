@@ -80,7 +80,7 @@
                     android:layout_height="50dp"
                     android:orientation="horizontal"
                     android:padding="3dp"
-
+                    android:visibility="gone"
                     >
                     <TextView
                         android:layout_width="wrap_content"
@@ -125,6 +125,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:hint="Jayadev Vihar"
+                        android:textColorHint="@color/black"
                         android:visibility="visible"
                         android:enabled="false"/>
                 </LinearLayout>
@@ -152,6 +153,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="0dp"
                         android:hint="Jayadev Vihar"
+                        android:textColorHint="@color/black"
                         android:enabled="false"
                         android:visibility="visible"/>
                 </LinearLayout>
@@ -179,6 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="57dp"
                         android:hint="9040019803"
+                        android:textColorHint="@color/black"
                         android:enabled="false"/>
                 </LinearLayout>
 
@@ -194,6 +197,7 @@
                         android:text="Email:"
                         android:layout_weight="0.6"
                         android:textStyle="bold|normal"
+
                         android:textColor="@color/blackTextColor"
                         android:textAlignment="textStart"
                         />
@@ -203,6 +207,7 @@
                         android:layout_weight="1.4"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
+                        android:textColorHint="@color/black"
                         android:inputType="textEmailAddress"
                         android:hint="abc@com"
                         android:enabled="false"/>

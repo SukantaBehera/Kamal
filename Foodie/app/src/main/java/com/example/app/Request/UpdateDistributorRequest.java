@@ -10,6 +10,19 @@ public class UpdateDistributorRequest {
     private String email_id;
     private String status;
 
+    public UpdateDistributorRequest(String dist_id, String company_name,
+                                    String unit_holder_name, String unit_address,
+                                    String permanent_address, String phone_no, String email_id, String status) {
+        this.dist_id = dist_id;
+        this.company_name = company_name;
+        this.unit_holder_name = unit_holder_name;
+        this.unit_address = unit_address;
+        this.permanent_address = permanent_address;
+        this.phone_no = phone_no;
+        this.email_id = email_id;
+        this.status = status;
+    }
+
     public String getDist_id() {
         return dist_id;
     }

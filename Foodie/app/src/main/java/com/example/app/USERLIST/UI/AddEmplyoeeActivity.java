@@ -1,6 +1,10 @@
 package com.example.app.USERLIST.UI;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -81,10 +85,20 @@ public class AddEmplyoeeActivity extends BaseActivity implements AdapterView.OnI
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_registration);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setTitle(" Add Employee ");
         setSupportActionBar(toolbar);
-        enableActionBar(true);
+        enableActionBar(true);*/
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            //    startActivity(new Intent(AddEmplyoeeActivity.this, ViewEmployee.class));
+                finish();
+            }
+        });
 
         sharedPreferenceClass = new SharedPreferenceClass(getApplicationContext());
         progressDialog = new ProgressDialog(getApplicationContext());
@@ -121,6 +135,8 @@ public class AddEmplyoeeActivity extends BaseActivity implements AdapterView.OnI
             @Override
             public void onClick(View view) {
 
+
+                if(isNetworkAvailable()) {
                     final String fname = first_name.getText().toString().trim();
                     final String lname  = last_name.getText().toString().trim();
                     final String desgn  =   desn.toString();
@@ -131,49 +147,49 @@ public class AddEmplyoeeActivity extends BaseActivity implements AdapterView.OnI
                     final String pwd  = input_password.getText().toString().trim();
                     final String rwd  = input_reEnterPassword.getText().toString().trim();
 
-                String MobilePattern = "[0-9]{10}";
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                    String MobilePattern = "[0-9]{10}";
+                    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
-                if(fname.length()==0) {
-                    first_name.requestFocus();
-                    first_name.setError("Enter UserName");
-                }
-                else if(!InputValidation.isEdittextName(first_name)){
-                    first_name.requestFocus();
-                    first_name.setError("Enter Valid ItemName");
-                }
-                else if(! InputValidation.isEdittextName(last_name)){
-                    last_name.requestFocus();
-                    last_name.setError("Enter Last Name");
-                }
-                else if(!InputValidation.isSpinnerSelected(desn)){
-                    tverror.requestFocus();
-                    tverror.setError("Select Designation");
-                } else if(!InputValidation.isEdittextMobile(input_mobile)){
-                    input_mobile.requestFocus();
-                    input_mobile.setError("Enter Valid Phone Number");
-                }
+                    if(fname.length()==0) {
+                        first_name.requestFocus();
+                        first_name.setError("Enter UserName");
+                    }
+                    else if(!InputValidation.isEdittextName(first_name)){
+                        first_name.requestFocus();
+                        first_name.setError("Enter Valid ItemName");
+                    }
+                    else if(! InputValidation.isEdittextName(last_name)){
+                        last_name.requestFocus();
+                        last_name.setError("Enter Last Name");
+                    }
+                    else if(!InputValidation.isSpinnerSelected(desn)){
+                        tverror.requestFocus();
+                        tverror.setError("Select Designation");
+                    } else if(!InputValidation.isEdittextMobile(input_mobile)){
+                        input_mobile.requestFocus();
+                        input_mobile.setError("Enter Valid Phone Number");
+                    }
 
-                else if(employeeraddress.length()==0){
-                    employeeraddress.requestFocus();
-                    employeeraddress.setError("Enter Unit Address");
+                    else if(employeeraddress.length()==0){
+                        employeeraddress.requestFocus();
+                        employeeraddress.setError("Enter Unit Address");
 
-                }
+                    }
 
                /* else if(!isEdittextName(employeeraddress)){
                     employeeraddress.requestFocus();
                     employeeraddress.setError("Enter Employee Address");
                 }
 */
-                else if(!InputValidation.isEditTextContainEmail(emailid)){
-                    emailid.requestFocus();
-                    emailid.setError("Enter Valid EmailId");
-                }
+                    else if(!InputValidation.isEditTextContainEmail(emailid)){
+                        emailid.requestFocus();
+                        emailid.setError("Enter Valid EmailId");
+                    }
 
-                else if(uid.length()==0){
-                    userid.requestFocus();
-                    userid.setError("Enter User Id");
+                    else if(uid.length()==0){
+                        userid.requestFocus();
+                        userid.setError("Enter User Id");
 
                     }
                     else if(pwd.length()==0){
@@ -181,18 +197,24 @@ public class AddEmplyoeeActivity extends BaseActivity implements AdapterView.OnI
                         input_password.setError("Enter Password");
 
                     }
-                else if(!InputValidation.isPasswordMatches(input_password,input_reEnterPassword)){
-                    input_reEnterPassword.requestFocus();
-                    input_reEnterPassword.setError("Confirm Password doesn's  match");
-                }
+                    else if(!InputValidation.isPasswordMatches(input_password,input_reEnterPassword)){
+                        input_reEnterPassword.requestFocus();
+                        input_reEnterPassword.setError("Confirm Password doesn's  match");
+                    }
                     else if(rwd.length()==0){
                         input_reEnterPassword.requestFocus();
                         input_reEnterPassword.setError("Confirm Password");
                     }
-                else{
+                    else{
                         new HTTPAsyncTaskGetDetail().execute(ServerLinks.ADD_EMPLYOEE + acess_token);
 
                     }
+
+
+                }else {
+                    Toast.makeText(AddEmplyoeeActivity.this, "Please Check Network Connection", Toast.LENGTH_LONG).show();
+                }
+
 
 
 
@@ -303,6 +325,7 @@ public class AddEmplyoeeActivity extends BaseActivity implements AdapterView.OnI
                 if(jsonObject.getString("status").equals("SUCCESS")){
 
                     Toast.makeText(getApplicationContext(), "Emplyoee Added Sucessfully...", Toast.LENGTH_SHORT).show();
+                  //  startActivity(new Intent(AddEmplyoeeActivity.this,ViewEmployee.class));
                         finish();
 
                 }else{
@@ -374,13 +397,13 @@ public class AddEmplyoeeActivity extends BaseActivity implements AdapterView.OnI
         emplyoee.accumulate("address",employeeraddress.getText().toString().trim() );
         emplyoee.accumulate("email_id",emailid.getText().toString().trim());
         emplyoee.accumulate("aadhar_card_no",  "AQWER6576787");
-        emplyoee.accumulate("status",  "Y");
+        emplyoee.accumulate("is_active",  "Y");
 
 
         JSONObject user = new JSONObject();
 
         user.accumulate("user_id",userid.getText().toString().trim());
-        user.accumulate("isActive","Y");
+        user.accumulate("is_active","Y");
         user.accumulate("password",input_password.getText().toString().trim());
 
         JSONArray roleArray = new JSONArray();
@@ -444,5 +467,12 @@ public class AddEmplyoeeActivity extends BaseActivity implements AdapterView.OnI
 
 
     }*/
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 }
 

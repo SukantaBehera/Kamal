@@ -1,6 +1,10 @@
 package com.example.app.USERLIST.UI;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -74,11 +78,21 @@ public class AddDistributorActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_distributor_registration);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+     /*   Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setTitle(" Add Distributor ");
         setSupportActionBar(toolbar);
         enableActionBar(true);
-
+*/
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // startActivity(new Intent(AddDistributorActivity.this, ViewDistributor.class));
+                finish();
+            }
+        });
 
         sharedPreferenceClass = new SharedPreferenceClass(getApplicationContext());
         progressDialog = new ProgressDialog(getApplicationContext());
@@ -98,74 +112,81 @@ public class AddDistributorActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-                final String cname = company_name.getText().toString().trim();
-                final String unitname  = unitholder_name.getText().toString().trim();
-                final String unitadress  = unitaddress.getText().toString().trim();
-                final String distaddress = distributoraddress.getText().toString().trim();
-                final String mob  = input_mobile.getText().toString().trim();
-                final String eid  = emailid.getText().toString().trim();
-                final String uid  = userid.getText().toString().trim();
-                final String pwd  = input_password.getText().toString().trim();
-                final String rwd  = input_reEnterPassword.getText().toString().trim();
+                if(isNetworkAvailable()) {
+                    final String cname = company_name.getText().toString().trim();
+                    final String unitname  = unitholder_name.getText().toString().trim();
+                    final String unitadress  = unitaddress.getText().toString().trim();
+                    final String distaddress = distributoraddress.getText().toString().trim();
+                    final String mob  = input_mobile.getText().toString().trim();
+                    final String eid  = emailid.getText().toString().trim();
+                    final String uid  = userid.getText().toString().trim();
+                    final String pwd  = input_password.getText().toString().trim();
+                    final String rwd  = input_reEnterPassword.getText().toString().trim();
 
-                String MobilePattern = "[0-9]{10}";
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-                if(cname.length()==0){
-                    company_name.requestFocus();
-                    company_name.setError("Enter Company Name");
+                    String MobilePattern = "[0-9]{10}";
+                    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                    if(cname.length()==0){
+                        company_name.requestFocus();
+                        company_name.setError("Enter Company Name");
 
-                }else if(unitname.length()==0){
-                    unitholder_name.requestFocus();
-                    unitholder_name.setError("Enter Unit Name");
+                    }else if(unitname.length()==0){
+                        unitholder_name.requestFocus();
+                        unitholder_name.setError("Enter Unit Name");
 
-                } else if(unitadress.length()==0){
-                    unitaddress.requestFocus();
-                    unitaddress.setError("Enter Unit Address");
+                    } else if(unitadress.length()==0){
+                        unitaddress.requestFocus();
+                        unitaddress.setError("Enter Unit Address");
 
+                    }
+                    else if(distaddress.length()==0){
+                        distributoraddress.requestFocus();
+                        distributoraddress.setError("Enter Distributor Address");
+                    }
+
+                    else if(!mob.matches(MobilePattern)){
+                        input_mobile.requestFocus();
+                        input_mobile.setError("Enter Valid Phone Number");
+
+                    }
+
+                    else if(eid.length()==0){
+                        emailid.requestFocus();
+                        emailid.setError("Enter EmailId");
+
+                    } else if(!eid.matches(emailPattern)){
+                        emailid.requestFocus();
+                        emailid.setError("Enter Valid EmailId");
+
+                    }
+                    else if(uid.length()==0){
+                        userid.requestFocus();
+                        userid.setError("Enter User Id");
+
+                    }
+                    else if(pwd.length()==0){
+                        input_password.requestFocus();
+                        input_password.setError("Enter Password");
+
+                    }
+                    else if(rwd.length()==0){
+                        input_reEnterPassword.requestFocus();
+                        input_reEnterPassword.setError("Confirm Password");
+
+                    }
+                    else if(!rwd.equals(pwd)){
+                        input_reEnterPassword.requestFocus();
+                        input_reEnterPassword.setError("Confirm Password Doesn't Match");
+
+                    }
+                    else {
+                        new HTTPAsyncTaskGetDetail().execute(ServerLinks.ADD_DISTRIBUTOR + acess_token);
+                    }
+
+                }else {
+                    Toast.makeText(AddDistributorActivity.this, "Please Check Network Connection", Toast.LENGTH_LONG).show();
                 }
-                else if(distaddress.length()==0){
-                    distributoraddress.requestFocus();
-                    distributoraddress.setError("Enter Distributor Address");
-                }
 
-                else if(!mob.matches(MobilePattern)){
-                input_mobile.requestFocus();
-                input_mobile.setError("Enter Valid Phone Number");
 
-                }
-
-                else if(eid.length()==0){
-                    emailid.requestFocus();
-                    emailid.setError("Enter EmailId");
-
-                } else if(!eid.matches(emailPattern)){
-                    emailid.requestFocus();
-                    emailid.setError("Enter Valid EmailId");
-
-                }
-                else if(uid.length()==0){
-                    userid.requestFocus();
-                    userid.setError("Enter User Id");
-
-                }
-                else if(pwd.length()==0){
-                    input_password.requestFocus();
-                    input_password.setError("Enter Password");
-
-                }
-                else if(rwd.length()==0){
-                    input_reEnterPassword.requestFocus();
-                    input_reEnterPassword.setError("Confirm Password");
-
-                }
-                else if(!rwd.equals(pwd)){
-                    input_reEnterPassword.requestFocus();
-                    input_reEnterPassword.setError("Confirm Password Doesn't Match");
-
-                }
-                else {
-                    new HTTPAsyncTaskGetDetail().execute(ServerLinks.ADD_DISTRIBUTOR + acess_token);
-                }
             }
             });
             fetchAcessToken();
@@ -252,6 +273,7 @@ public class AddDistributorActivity extends BaseActivity {
                 jsonObject = new JSONObject(result);
                 if(jsonObject.getString("status").equals("SUCCESS")){
                     Toast.makeText(getApplicationContext(), "Distributor Added Sucessfully...", Toast.LENGTH_SHORT).show();
+                //    startActivity(new Intent(AddDistributorActivity.this,ViewDistributor.class));
                     finish();
 
                 }else{
@@ -322,13 +344,13 @@ public class AddDistributorActivity extends BaseActivity {
         distributor.accumulate("permanent_address",  distributoraddress.getText().toString().trim());
         distributor.accumulate("phone_no",  input_mobile.getText().toString().trim());
         distributor.accumulate("email_id",  emailid.getText().toString().trim());
-        distributor.accumulate("status",  "Y");
+        distributor.accumulate("is_active",  "Y");
 
 
         JSONObject user = new JSONObject();
 
         user.accumulate("user_id",userid.getText().toString().trim());
-        user.accumulate("isActive","Y");
+        user.accumulate("is_active","Y");
         user.accumulate("password",input_password.getText().toString());
         JSONObject roles = new JSONObject();
         roles.accumulate("id",distributorrole);
@@ -363,6 +385,14 @@ public class AddDistributorActivity extends BaseActivity {
         writer.close();
         os.close();
     }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
 
 }
 
