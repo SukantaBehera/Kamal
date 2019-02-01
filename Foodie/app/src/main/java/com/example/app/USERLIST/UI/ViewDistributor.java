@@ -29,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.app.ITEM.UTIL.DilogueFRagment;
 import com.example.app.USERLIST.ADAPTER.DistributorListAdapter;
 import com.example.app.USERLIST.MODEL.Distributordetail;
+import com.example.app.Util.RegPrefManager;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;
 import com.example.sukanta.foodie.R;
@@ -47,6 +48,7 @@ public class ViewDistributor extends DilogueFRagment {
     RecyclerView recycleview;
     FloatingActionButton fab;
     ArrayList<Distributordetail> distributorlist = new ArrayList<Distributordetail>();
+    ArrayList<Distributordetail> distributorlist1 = new ArrayList<Distributordetail>();
     private DistributorListAdapter distributorListAdapter;
     Context context;
     EditText search;
@@ -195,9 +197,40 @@ public class ViewDistributor extends DilogueFRagment {
                                 }
 
 
+                                if(distributorlist.size()>0) {
+                                    for (int i = 0; i < distributorlist.size(); i++) {
+                                        String status1 = distributorlist.get(i).getStatus();
+                                        String id1 = distributorlist.get(i).getDist_id();
+                                        String loginid = RegPrefManager.getInstance(getContext()).getLoginUserID();
+                                        Distributordetail distributordetail1;
+                                        if (status1.equals("N")) {
+                                            Log.d("Tag", "Go");
+                                        } else {
+
+
+
+                                                distributordetail1 = new Distributordetail(distributorlist.get(i).getDist_id(), distributorlist.get(i).getCompany_name(), distributorlist.get(i).getUnit_holder_name(), distributorlist.get(i).getUnit_address(), distributorlist.get(i).getPermanent_address(),
+                                                        distributorlist.get(i).getPhone_no(), distributorlist.get(i).getEmail_id(), distributorlist.get(i).getStatus(), distributorlist.get(i).getUser_id());
+
+                                                distributorlist1.add(distributordetail1);
+                                                // employeelist.clear();
+
+
+
+                                        }
+                                    }
+                                }
+
+
                                 // cartList = response.getDetail();
+<<<<<<< HEAD
                                 if(distributorlist.size()>0){
                                 distributorListAdapter = new DistributorListAdapter(context,distributorlist,ViewDistributor.this);
+=======
+                                distributorListAdapter = new DistributorListAdapter(context,distributorlist1,ViewDistributor.this);
+                                distributorlist.clear();
+                                distributorlist=distributorlist1;
+>>>>>>> b6d4a5cd57920648dc6c9594124f2b2ef91b44f6
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                 recycleview.setLayoutManager(mLayoutManager);
                                 recycleview.setItemAnimator(new DefaultItemAnimator());

@@ -28,7 +28,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.app.ITEM.UTIL.DilogueFRagment;
 import com.example.app.USERLIST.ADAPTER.DistributorListAdapter;
 import com.example.app.USERLIST.ADAPTER.FranchisorListAdapter;
+import com.example.app.USERLIST.MODEL.Distributordetail;
 import com.example.app.USERLIST.MODEL.Franchisordetail;
+import com.example.app.Util.RegPrefManager;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;
 import com.example.sukanta.foodie.R;
@@ -46,6 +48,7 @@ public class ViewFranchisor extends DilogueFRagment {
     String acess_token="";
     RecyclerView recycleview;
     ArrayList<Franchisordetail> franchisorlist = new ArrayList<Franchisordetail>();
+    ArrayList<Franchisordetail> franchisorlist1 = new ArrayList<Franchisordetail>();
     private FranchisorListAdapter franchisorListAdapter;
     FloatingActionButton fab;
     EditText search;
@@ -173,7 +176,7 @@ public class ViewFranchisor extends DilogueFRagment {
                             if (obj.getString("status").equals("SUCCESS")) {
 
                                 JSONArray jsonArray = obj.getJSONArray("result");
-                                Toast.makeText(getActivity(), "Total Franchisor's present = " + jsonArray.length(), Toast.LENGTH_SHORT).show();
+                              //  Toast.makeText(getActivity(), "Total Franchisor's present = " + jsonArray.length(), Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                                     String fran_id = jsonObject.getString("fran_id");
@@ -209,10 +212,37 @@ public class ViewFranchisor extends DilogueFRagment {
 
                                 }
 
+                                if(franchisorlist.size()>0) {
+                                    for (int i = 0; i < franchisorlist.size(); i++) {
+                                        String status1 = franchisorlist.get(i).getIs_active();
+                                       // String id1 = franchisorlist.get(i).getDist_id();
+                                     //   String loginid = RegPrefManager.getInstance(getContext()).getLoginUserID();
+                                        Distributordetail distributordetail1;
+                                        if (status1.equals("In Active")) {
+                                            Log.d("Tag", "Go");
+                                        } else {
+
+                                       Franchisordetail f=     new Franchisordetail(franchisorlist.get(i).getFran_id(),franchisorlist.get(i).getCompany_name(),franchisorlist.get(i).getPhone_no(),franchisorlist.get(i).getEmail_id(), franchisorlist.get(i).getUnit_address(),franchisorlist.get(i).getResident_address(),franchisorlist.get(i).getIs_active(), franchisorlist.get(i).getUser_id());
+                                            franchisorlist1.add( f  );
+
+
+                                            // employeelist.clear();
+
+
+
+                                        }
+                                    }
+                                }
 
                                 // cartList = response.getDetail();
+<<<<<<< HEAD
                                 if(franchisorlist.size()>0){
                                 franchisorListAdapter = new FranchisorListAdapter(franchisorlist,getContext(),ViewFranchisor.this);
+=======
+                                franchisorListAdapter = new FranchisorListAdapter(franchisorlist1,getContext(),ViewFranchisor.this);
+                                franchisorlist.clear();
+                                franchisorlist=franchisorlist1;
+>>>>>>> b6d4a5cd57920648dc6c9594124f2b2ef91b44f6
                                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                 recycleview.setLayoutManager(mLayoutManager);
                                 recycleview.setItemAnimator(new DefaultItemAnimator());

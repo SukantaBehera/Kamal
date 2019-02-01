@@ -40,11 +40,6 @@ public class ViewFranchisorDetails extends AppCompatActivity implements View.OnC
 
   private EditText CompanyName,holderEd,UnitAddress,residenceaddress,MobileNo,Emailid;
   private Button updateBtn;
-
-
-
-
-
     TextView status;
 
     private Toolbar toolbar;

@@ -13,7 +13,26 @@ public class Employeedetail {
     String status;
     String user_id;
 
-    public Employeedetail(String emp_id, String name, String designation, String address, String adhharcardno, String phone_no, String email_id, String status, String user_id) {
+    public String getFitstname() {
+        return fitstname;
+    }
+
+    public void setFitstname(String fitstname) {
+        this.fitstname = fitstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    String fitstname;
+    String lastname;
+
+    public Employeedetail(String emp_id, String fitstname,String lastname,String name, String designation, String address, String adhharcardno, String phone_no, String email_id, String status, String user_id) {
         this.emp_id = emp_id;
         this.name = name;
         this.designation = designation;
@@ -23,6 +42,8 @@ public class Employeedetail {
         this.email_id = email_id;
         this.status = status;
         this.user_id = user_id;
+        this.fitstname=fitstname;
+        this.lastname=lastname;
     }
 
     public String getEmp_id() {

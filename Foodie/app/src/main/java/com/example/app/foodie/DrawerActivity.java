@@ -483,7 +483,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
             }
 
-            else if (id == R.id.feedback) {
+
+             if (id == R.id.feedback) {
                 mFragmentManager = getSupportFragmentManager();
                 mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.containerView, new Feedback()).commit();
@@ -495,42 +496,50 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
                 viewIsAtHome = true;
             }
 
+             if(id == R.id.changepassword){
+                mFragmentManager = getSupportFragmentManager();
+                mFragmentTransaction = mFragmentManager.beginTransaction();
+                mFragmentTransaction.replace(R.id.containerView, new ChangePasswordFragment()).commit();
+                setTextColorForMenuItem(item, R.color.logintextColor);
+                toolbar.setTitle(getResources().getString(R.string.app_display_name));
+                toolbar.setSubtitle("Password");
+                toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+                toolbar.setSubtitleTextColor(getResources().getColor(R.color.white));
+                viewIsAtHome = true;
+            }
 
-            else if (id == R.id.logout) {
 
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(DrawerActivity.this);
+             if (id == R.id.logout) {
 
-                // set title
-                alertDialogBuilder.setTitle("Logout!!");
 
-                // set dialog message
-                alertDialogBuilder
-                        .setMessage("Do you want to logout?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // if this button is clicked, close
-                                // current activity
-                                RegPrefManager.getInstance(DrawerActivity.this).Clear();
-                                sessionManager.logoutUser();
-                                SharedPreferenceClass.clearData(DrawerActivity.this);
 
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // if this button is clicked, just close
-                                // the dialog box and do nothing
-                                dialog.cancel();
-                            }
-                        });
+                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                 dialog.setCancelable(false);
+                 dialog.setMessage("Do you want to logout?");
+                 dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialog, int id) {
+                         // sharedPreferenceClass.setValue_string("ROLEID", "");
 
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
+                         Intent intent1 = new Intent(DrawerActivity.this, LoginActivity.class);
+                         intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                // show it
-                alertDialog.show();
+                         startActivity(intent1);
+                         finish();
+
+                         dialog.dismiss();
+                     }
+                 })
+                         .setNegativeButton("No ", new DialogInterface.OnClickListener() {
+                             @Override
+                             public void onClick(DialogInterface dialog, int which) {
+                                 dialog.dismiss();
+                             }
+                         });
+
+                 final AlertDialog alert = dialog.create();
+                 alert.show();
 
 
 /*

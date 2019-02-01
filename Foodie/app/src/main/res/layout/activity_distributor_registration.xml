@@ -138,6 +138,7 @@
                 android:drawableLeft="@drawable/mobile_number"
                 android:inputType="phone"
                 android:hint="@string/mobile_number"
+                android:maxLength="10"
                 android:textColorHint="@color/logintextColor"/>
         </android.support.design.widget.TextInputLayout>
 

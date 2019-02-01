@@ -1,6 +1,10 @@
 package com.example.app.USERLIST.UI;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -74,10 +78,21 @@ public class AddFranchisorActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_franchisor_registration);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+      /*  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setTitle(" Add Franchisor ");
         setSupportActionBar(toolbar);
-        enableActionBar(true);
+        enableActionBar(true);*/
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+           //     startActivity(new Intent(AddFranchisorActivity.this, ViewFranchisor.class));
+                finish();
+            }
+        });
 
         sharedPreferenceClass = new SharedPreferenceClass(getApplicationContext());
         progressDialog = new ProgressDialog(getApplicationContext());
@@ -94,69 +109,78 @@ public class AddFranchisorActivity extends BaseActivity {
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String cname = company_name.getText().toString().trim();
-                final String unitadress  = unitaddress.getText().toString().trim();
-                final String raddress = residenceaddress.getText().toString().trim();
-                final String mob  = input_mobile.getText().toString().trim();
-                final String eid  = emailid.getText().toString().trim();
-                final String uid  = userid.getText().toString().trim();
-                final String pwd  = input_password.getText().toString().trim();
-                final String rwd  = input_reEnterPassword.getText().toString().trim();
-                String MobilePattern = "[0-9]{10}";
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-                if(cname.length()==0){
-                    company_name.requestFocus();
-                    company_name.setError("Enter Company Name");
 
-                }else if(unitadress.length()==0){
-                    unitaddress.requestFocus();
-                    unitaddress.setError("Enter Unit Name");
 
-                } else if(raddress.length()==0){
-                    residenceaddress.requestFocus();
-                    residenceaddress.setError("Enter Unit Address");
+                if(isNetworkAvailable()) {
+                    final String cname = company_name.getText().toString().trim();
+                    final String unitadress  = unitaddress.getText().toString().trim();
+                    final String raddress = residenceaddress.getText().toString().trim();
+                    final String mob  = input_mobile.getText().toString().trim();
+                    final String eid  = emailid.getText().toString().trim();
+                    final String uid  = userid.getText().toString().trim();
+                    final String pwd  = input_password.getText().toString().trim();
+                    final String rwd  = input_reEnterPassword.getText().toString().trim();
+                    String MobilePattern = "[0-9]{10}";
+                    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                    if(cname.length()==0){
+                        company_name.requestFocus();
+                        company_name.setError("Enter Company Name");
 
-                }
+                    }else if(unitadress.length()==0){
+                        unitaddress.requestFocus();
+                        unitaddress.setError("Enter Unit Name");
 
-                else if(!mob.matches(MobilePattern)){
-                    input_mobile.requestFocus();
-                    input_mobile.setError("Enter Valid Phone Number");
+                    } else if(raddress.length()==0){
+                        residenceaddress.requestFocus();
+                        residenceaddress.setError("Enter Unit Address");
 
-                }
+                    }
 
-                else if(eid.length()==0){
-                    emailid.requestFocus();
-                    emailid.setError("Enter EmailId");
+                    else if(!mob.matches(MobilePattern)){
+                        input_mobile.requestFocus();
+                        input_mobile.setError("Enter Valid Phone Number");
 
-                } else if(!eid.matches(emailPattern)){
-                    emailid.requestFocus();
-                    emailid.setError("Enter Valid EmailId");
+                    }
 
-                }
-                else if(uid.length()==0){
-                    userid.requestFocus();
-                    userid.setError("Enter User Id");
+                    else if(eid.length()==0){
+                        emailid.requestFocus();
+                        emailid.setError("Enter EmailId");
 
-                }
-                else if(pwd.length()==0){
-                    input_password.requestFocus();
-                    input_password.setError("Enter Password");
+                    } else if(!eid.matches(emailPattern)){
+                        emailid.requestFocus();
+                        emailid.setError("Enter Valid EmailId");
 
-                }
-                else if(rwd.length()==0){
-                    input_reEnterPassword.requestFocus();
-                    input_reEnterPassword.setError("Confirm Password");
+                    }
+                    else if(uid.length()==0){
+                        userid.requestFocus();
+                        userid.setError("Enter User Id");
 
-                }
-                else if(!rwd.equals(pwd)){
-                    input_reEnterPassword.requestFocus();
-                    input_reEnterPassword.setError("Confirm Password Doesn't Match");
+                    }
+                    else if(!pwd.matches(())==0){
+                        input_password.requestFocus();
+                        input_password.setError("Enter Password");
 
-                }
-                else
+                    }
+                    else if(rwd.length()==0){
+                        input_reEnterPassword.requestFocus();
+                        input_reEnterPassword.setError("Confirm Password");
+
+                    }
+                    else if(!rwd.equals(pwd)){
+                        input_reEnterPassword.requestFocus();
+                        input_reEnterPassword.setError("Confirm Password Doesn't Match");
+
+                    }
+                    else
                     {
                         new HTTPAsyncTaskGetDetail().execute(ServerLinks.ADD_FRANCHISOR + acess_token);
                     }
+
+                }else {
+                    Toast.makeText(AddFranchisorActivity.this, "Please Check Network Connection", Toast.LENGTH_LONG).show();
+                }
+
+
         }
     });
         fetchAcessToken();
@@ -244,6 +268,7 @@ public class AddFranchisorActivity extends BaseActivity {
                 jsonObject = new JSONObject(result);
                 if(jsonObject.getString("status").equals("SUCCESS")){
                     Toast.makeText(getApplicationContext(), "Franchisor Added Sucessfully...", Toast.LENGTH_SHORT).show();
+                   // startActivity(new Intent(AddFranchisorActivity.this,ViewFranchisor.class));
                     finish();
 
                 }else{
@@ -312,12 +337,12 @@ public class AddFranchisorActivity extends BaseActivity {
         franchisor.accumulate("resident_address", residenceaddress.getText().toString().trim());
         franchisor.accumulate("phone_no",  input_mobile.getText().toString().trim());
         franchisor.accumulate("email_id",  emailid.getText().toString().trim());
-        franchisor.accumulate("status",  "Y");
+        franchisor.accumulate("is_active",  "Y");
 
         JSONObject user = new JSONObject();
 
         user.accumulate("user_id",userid.getText().toString().trim());
-        user.accumulate("isActive","Y");
+        user.accumulate("is_active","Y");
         user.accumulate("password",input_password.getText().toString());
        // user.accumulate("roles",franchisorrole);
         JsonArray jsonArray = new JsonArray();
@@ -346,6 +371,11 @@ public class AddFranchisorActivity extends BaseActivity {
         writer.close();
         os.close();
     }
-
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 }
 
