@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -51,6 +52,7 @@ public class ViewDistributor extends DilogueFRagment {
     private DistributorListAdapter distributorListAdapter;
     Context context;
     EditText search;
+    TextView empty_notes_view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class ViewDistributor extends DilogueFRagment {
         progressDialog = new ProgressDialog(getContext());
         recycleview = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        empty_notes_view=rootView.findViewById(R.id.empty_notes_view);
         fab.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_add_white_24dp));
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,14 +223,19 @@ public class ViewDistributor extends DilogueFRagment {
 
 
                                 // cartList = response.getDetail();
-                                distributorListAdapter = new DistributorListAdapter(context,distributorlist1, ViewDistributor.this);
-                                distributorlist.clear();
-                                distributorlist=distributorlist1;
-                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                                recycleview.setLayoutManager(mLayoutManager);
-                                recycleview.setItemAnimator(new DefaultItemAnimator());
-                                recycleview.setAdapter(distributorListAdapter);
-                                distributorListAdapter.notifyDataSetChanged();
+                                if(distributorlist1.size()>0) {
+                                    distributorListAdapter = new DistributorListAdapter(context, distributorlist1, ViewDistributor.this);
+                                    distributorlist.clear();
+                                    distributorlist = distributorlist1;
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                    recycleview.setLayoutManager(mLayoutManager);
+                                    recycleview.setItemAnimator(new DefaultItemAnimator());
+                                    recycleview.setAdapter(distributorListAdapter);
+                                    distributorListAdapter.notifyDataSetChanged();
+                                }else {
+                                    empty_notes_view.setVisibility(View.VISIBLE);
+                                    recycleview.setVisibility(View.GONE);
+                                }
 
                             } else {
 

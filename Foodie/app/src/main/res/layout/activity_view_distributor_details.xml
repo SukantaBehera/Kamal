@@ -129,6 +129,10 @@
                         android:textColor="@color/black"
                         android:visibility="visible"
                         android:enabled="false"
+
+                        android:lines="1"
+                        android:textSize="14sp"
+                        android:ellipsize="end"
                         android:textColorHint="@color/black"/>
                 </LinearLayout>
                 <LinearLayout
@@ -157,6 +161,9 @@
                         android:textColor="@color/black"
                         android:visibility="visible"
                         android:enabled="false"
+                        android:lines="1"
+                        android:textSize="14sp"
+                        android:ellipsize="end"
                         android:textColorHint="@color/black"/>
                 </LinearLayout>
                 <LinearLayout
@@ -186,35 +193,42 @@
                         android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:enabled="false"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textSize="14sp"
                         android:visibility="visible"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="3dp"
                     android:weightSum="2">
+
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_10"
-                        android:text="Mobile:"
                         android:layout_weight="0.5"
-                        android:textStyle="bold|normal"
-                        android:textColor="@color/blackTextColor"
+                        android:text="Mobile:"
                         android:textAlignment="textStart"
-                        />
+                        android:textColor="@color/blackTextColor"
+                        android:textStyle="bold|normal" />
+
                     <EditText
                         android:id="@+id/MobileNo"
                         android:layout_width="0dp"
-                        android:layout_weight="1.7"
-                        android:textColorHint="@color/black"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="57dp"
+                        android:layout_weight="1.7"
+                        android:ellipsize="end"
+                        android:enabled="false"
                         android:hint="9040019803"
+                        android:lines="1"
                         android:textColor="@color/black"
-                        android:enabled="false"/>
+                        android:textColorHint="@color/black"
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -242,6 +256,7 @@
                         android:inputType="textEmailAddress"
                         android:hint="abc@com"
                         android:textColor="@color/black"
+                        android:textSize="14sp"
                         android:enabled="false"/>
                 </LinearLayout>
 
@@ -271,7 +286,10 @@
                         android:text="Active"
                         android:textColor="@color/colorAccent"
                         android:visibility="visible"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:lines="1"
+                        android:textSize="14sp"
+                        android:ellipsize="end"/>
                 </LinearLayout>
 
 

@@ -50,22 +50,11 @@ public class ViewEmployeeDetails extends AppCompatActivity implements View.OnCli
 
 
         toolbar = findViewById(R.id.toolbar);
-
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ViewEmployeeDetails.this, DrawerActivity.class));
-                finish();
-            }
-        });
-
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ViewEmployeeDetails.this, DrawerActivity.class));
+                /*startActivity(new Intent(ViewEmployeeDetails.this, DrawerActivity.class));*/
                 finish();
             }
         });

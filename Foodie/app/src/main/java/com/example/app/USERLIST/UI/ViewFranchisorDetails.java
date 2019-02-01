@@ -56,7 +56,7 @@ public class ViewFranchisorDetails extends AppCompatActivity implements View.OnC
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ViewFranchisorDetails.this, DrawerActivity.class));
+             /*   startActivity(new Intent(ViewFranchisorDetails.this, DrawerActivity.class));*/
                 finish();
             }
         });

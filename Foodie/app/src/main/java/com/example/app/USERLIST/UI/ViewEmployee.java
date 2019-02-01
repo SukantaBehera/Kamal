@@ -233,14 +233,19 @@ public class ViewEmployee extends DilogueFRagment {
                                     }
                                //     employeelist.clear();
                                  //   employeelist.add(employeedetail1);
-                                    employeeListAdapter = new EmployeeListAdapter(employeelist1, context, ViewEmployee.this);
-                                    employeelist.clear();
-                                    employeelist=employeelist1;
-                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                                    recycleview.setLayoutManager(mLayoutManager);
-                                    recycleview.setItemAnimator(new DefaultItemAnimator());
-                                    recycleview.setAdapter(employeeListAdapter);
-                                    employeeListAdapter.notifyDataSetChanged();
+                                    if(employeelist1.size()>0) {
+                                        employeeListAdapter = new EmployeeListAdapter(employeelist1, context, ViewEmployee.this);
+                                        employeelist.clear();
+                                        employeelist = employeelist1;
+                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                        recycleview.setLayoutManager(mLayoutManager);
+                                        recycleview.setItemAnimator(new DefaultItemAnimator());
+                                        recycleview.setAdapter(employeeListAdapter);
+                                        employeeListAdapter.notifyDataSetChanged();
+                                    }else {
+                                        empty_notes_view.setVisibility(View.VISIBLE);
+                                        recycleview.setVisibility(View.GONE);
+                                    }
                                 }
                                 // cartList = response.getDetail();
 

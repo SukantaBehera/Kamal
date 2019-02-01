@@ -21,6 +21,7 @@ import com.example.app.Util.Common.WebApi;
 import com.example.app.Response.TokenResponse;
 import com.example.app.Util.RegPrefManager;
 import com.example.app.foodie.DrawerActivity;
+import com.example.app.foodie.InputValidation;
 import com.example.sukanta.foodie.R;
 
 import retrofit2.Call;
@@ -37,7 +38,7 @@ public class ChangePasswordFragment extends Fragment {
     private WebApi webApi;
     Retrofit retrofit;
     String acess_token = "";
-    private EditText oldPassTv,newPassTv;
+    private EditText oldPassTv,newPassTv,confPassTv;
     private Button enterBtn;
     String userId;
     ProgressBar simpleProgressBar;
@@ -69,6 +70,7 @@ public class ChangePasswordFragment extends Fragment {
         newPassTv=v.findViewById(R.id.newPassTv);
         oldPassTv=v.findViewById(R.id.oldPassTv);
         enterBtn=v.findViewById(R.id.enterBtn);
+        confPassTv=v.findViewById(R.id.confPassTv);
         userId= RegPrefManager.getInstance(getContext()).getLoginUserID();
 
 
@@ -76,12 +78,43 @@ public class ChangePasswordFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(!newPassTv.getText().toString().isEmpty()&&!oldPassTv.getText().toString().isEmpty()){
+                if(!newPassTv.getText().toString().isEmpty()&&!confPassTv.getText().toString().isEmpty()){
                     if(isNetworkAvailable()) {
                         fetchAcessToken();
-                    }else {
+                    }
+                    else {
                         Toast.makeText(getContext(), "Please Check Network Connection", Toast.LENGTH_LONG).show();
                     }
+                }else if(oldPassTv.length()==0){
+                    oldPassTv.requestFocus();
+                    oldPassTv.setError("Enter Old Password");
+
+                }
+                else if(newPassTv.length()==0){
+                    newPassTv.requestFocus();
+                    newPassTv.setError("Enter Password");
+
+                }
+
+                else if(!InputValidation.isPasswordLengthCheck(newPassTv)){
+                    newPassTv.requestFocus();
+                    newPassTv.setError("Password length must be 6");
+
+                }
+                else if(confPassTv.length()==0){
+                    confPassTv.requestFocus();
+                    confPassTv.setError("Enter Confirm Password");
+
+                }
+
+                else if(!InputValidation.isPasswordLengthCheck(newPassTv)){
+                    confPassTv.requestFocus();
+                    confPassTv.setError("Confirm Password length must be 6");
+
+                }
+                else if(!InputValidation.isPasswordMatches(newPassTv,confPassTv)){
+                    confPassTv.requestFocus();
+                    confPassTv.setError("Confirm Password doesn't  match");
                 }
                 else {
                     Toast.makeText(getContext(), "Please Enter New and Old Password", Toast.LENGTH_LONG).show();
@@ -101,7 +134,7 @@ public class ChangePasswordFragment extends Fragment {
 
     private void changePassword(){
        // simpleProgressBar .setVisibility(View.VISIBLE);
-        Call<ChangePasswordResponse> call=webApi.changePassword(acess_token,userId,oldPassTv.getText().toString().trim(),newPassTv.getText().toString().trim());
+        Call<ChangePasswordResponse> call=webApi.changePassword(acess_token,userId,oldPassTv.getText().toString().trim(),confPassTv.getText().toString().trim());
         call.enqueue(new Callback<ChangePasswordResponse>() {
             @Override
             public void onResponse(Call<ChangePasswordResponse> call, Response<ChangePasswordResponse> response) {

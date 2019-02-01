@@ -55,8 +55,11 @@ import com.example.sukanta.foodie.R;
 import com.gocashfree.cashfreesdk.CFClientInterface;
 import com.gocashfree.cashfreesdk.CFPaymentService;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -408,17 +411,20 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
         }
     }
     private void parchaseCart(){
+        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        Log.d("Tag",date);
+
         PaymentdetailsRequest paymentdetails=new PaymentdetailsRequest();
         paymentdetails.setAmount(totalPrice);
         paymentdetails.setPay_mode_id(1);
-        paymentdetails.setPay_date("2018-1-30");
+        paymentdetails.setPay_date(date);
         paymentdetails.setStatus("SUCCESS");
         paymentdetails.setTransaction_id(77);
 
         OrderdetailsRequest orderdetailsRequest=new OrderdetailsRequest();
         orderdetailsRequest.setCust_id(Integer.valueOf(RegPrefManager.getInstance(this).getLoginUserID()));
         orderdetailsRequest.setStatus("EXECUTED");
-        orderdetailsRequest.setDate("2018-09-01");
+        orderdetailsRequest.setDate(date);
         orderdetailsRequest.setDistributor_id(distSelectID);
         for(int i=0;i<filterResultsArray1.size();i++){
             ViewResultCart viewResultCart=filterResultsArray1.get(i);
@@ -426,9 +432,9 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
             int itemid=viewResultCart.getItem_id();
             OrderitemmapRequest orderitemmapRequest=new OrderitemmapRequest();
             orderitemmapRequest.setItem_id(itemid);
-            orderitemmapRequest.setItem_count(filterResultsArray1.size());
+            orderitemmapRequest.setItem_count(viewResultCart.getTotalQuantity());
             orderitemmapRequest.setTotal_price(totalPrice);
-            orderitemmapRequest.setOrder_date("2018-1-30");
+            orderitemmapRequest.setOrder_date(date);
             orderitemmapRequest.setOrder_status("Active");
 
             orderitemmapRequestArrayList.add(orderitemmapRequest);

@@ -26,6 +26,7 @@ import com.example.app.Response.ResultPending;
 import com.example.app.Response.TokenResponse;
 import com.example.app.Util.Common.ApiClient;
 import com.example.app.Util.Common.WebApi;
+import com.example.app.Util.DatePickerFragmentFrom;
 import com.example.app.foodie.adapter.PendingAdapter;
 import com.example.sukanta.foodie.R;
 
@@ -36,6 +37,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+
+import static com.example.app.Util.Common.Constants.RESPONSE_ERROR;
+import static com.example.app.Util.Common.Constants.RESPONSE_NOT_FOUND;
+import static com.example.app.Util.Common.Constants.RESPONSE_OK;
 
 
 public class DailyFragment extends Fragment {
@@ -50,7 +55,8 @@ public class DailyFragment extends Fragment {
     private String acess_token;
     private PendingAdapter pendingAdapter;
     private ArrayList<ResultPending> resultDatewiseArrayList;
-    String startDate;
+    String startDate,datemain_from="",datemain_end="";
+    int flag;
     String endDate;
      Button btn_getData;
 
@@ -95,7 +101,8 @@ public class DailyFragment extends Fragment {
         startEd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
+
+              /*  final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -113,7 +120,15 @@ public class DailyFragment extends Fragment {
 
                             }
                         }, mYear, mMonth, mDay);
-                datePickerDialog.show();
+                datePickerDialog.show();*/
+              flag=1;
+              showCurrentDate();
+              if(!datemain_from.isEmpty()){
+                  startEd.setText(datemain_from);
+              }else {
+                 // showCurrentDate();
+              }
+
             }
         });
 
@@ -121,7 +136,7 @@ public class DailyFragment extends Fragment {
         endEd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
+             /*   final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -138,7 +153,14 @@ public class DailyFragment extends Fragment {
                                 endDate = endEd.getText().toString();
                             }
                         }, mYear, mMonth, mDay);
-                datePickerDialog.show();
+                datePickerDialog.show();*/
+                flag=2;
+                showCurrentDate();
+                if(!datemain_end.isEmpty()){
+                    endEd.setText(datemain_end);
+                }else {
+                    // showCurrentDate();
+                }
             }
         });
 
@@ -157,6 +179,40 @@ public class DailyFragment extends Fragment {
 
         return v;
     }
+
+    public void showCurrentDate(){
+        DatePickerFragmentFrom date = new DatePickerFragmentFrom();
+        /**
+         * Set Up Current Date Into dialog
+         */
+        Calendar calender = Calendar.getInstance();
+        Bundle args = new Bundle();
+
+        args.putInt("year", calender.get(Calendar.YEAR));
+        args.putInt("month", calender.get(Calendar.MONTH));
+        args.putInt("day", calender.get(Calendar.DAY_OF_MONTH));
+        date.setArguments(args);
+        /**
+         * Set Call back to capture selected date
+         */
+        date.setCallBack(ondatefrom);
+        date.show(getActivity().getFragmentManager(), "Date Picker");
+    }
+    DatePickerDialog.OnDateSetListener ondatefrom = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            if(flag==1) {
+                datemain_from = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear + 1) + "/" + String.valueOf(year);
+            }else {
+                datemain_end = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear + 1) + "/" + String.valueOf(year);
+            }
+            //startEd.setText(datemain_from);
+
+        }
+    };
+
+
     private void fetchAcessToken() {
         //getting the progressbar
 
@@ -194,24 +250,36 @@ public class DailyFragment extends Fragment {
             @Override
             public void onResponse(Call<PendingReportResponse> call, Response<PendingReportResponse> response) {
                 progressBarDil.setVisibility(View.GONE);
-                String status=response.body().getStatus();
-                if(status.equals("SUCCESS")){
-                    resultDatewiseArrayList=response.body().getResult();
-                    Log.d("Tag","Size===>"+resultDatewiseArrayList.size());
-                    if(resultDatewiseArrayList.size()>0){
-                        pendingAdapter = new PendingAdapter(getContext(),resultDatewiseArrayList);
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                        itemlistRecyclerview.setLayoutManager(mLayoutManager);
-                        itemlistRecyclerview.setItemAnimator(new DefaultItemAnimator());
-                        itemlistRecyclerview.setAdapter(pendingAdapter);
-                        pendingAdapter.notifyDataSetChanged();
+                int code=response.code();
+                switch (code) {
+                    case RESPONSE_ERROR:
+                        Toast.makeText(getContext(), "Check Again", Toast.LENGTH_LONG).show();
+                        break;
+                    case RESPONSE_OK:
+                        String status=response.body().getStatus();
+                        if(status.equals("SUCCESS")){
+                            resultDatewiseArrayList=response.body().getResult();
+                            Log.d("Tag","Size===>"+resultDatewiseArrayList.size());
+                            if(resultDatewiseArrayList.size()>0){
+                                pendingAdapter = new PendingAdapter(getContext(),resultDatewiseArrayList);
+                                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                itemlistRecyclerview.setLayoutManager(mLayoutManager);
+                                itemlistRecyclerview.setItemAnimator(new DefaultItemAnimator());
+                                itemlistRecyclerview.setAdapter(pendingAdapter);
+                                pendingAdapter.notifyDataSetChanged();
 
 
-                    }
-                    else{
+                            }
+                            else{
+                                itemlistRecyclerview.setVisibility(View.GONE);
+                                textView2.setVisibility(View.VISIBLE);
+                            }
+                        }
+                        break;
+                    case RESPONSE_NOT_FOUND:
                         itemlistRecyclerview.setVisibility(View.GONE);
                         textView2.setVisibility(View.VISIBLE);
-                    }
+                        break;
                 }
             }
 

@@ -47,21 +47,11 @@ public class ViewDistributorDetails extends AppCompatActivity implements View.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_distributor_details);
         toolbar = findViewById(R.id.toolbar);
-
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ViewDistributorDetails.this, DrawerActivity.class));
-                finish();
-            }
-        });
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.back);
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ViewDistributorDetails.this, DrawerActivity.class));
+            /*    startActivity(new Intent(ViewDistributorDetails.this, DrawerActivity.class));*/
                 finish();
             }
         });

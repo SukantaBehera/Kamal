@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -44,6 +45,7 @@ import com.example.app.Util.Common.ApiClient;
 import com.example.app.Util.Common.RecyclerItemClickListener;
 import com.example.app.MyOrders.OrderListById.Model.OrderItemDetail;
 import com.example.app.Util.Common.WebApi;
+import com.example.app.foodie.LoginActivity;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;
 import com.example.app.MyOrders.AllItem.datamodels.OrderItem;
@@ -97,6 +99,7 @@ public class ViewOrderItems extends DilogueFRagment {
     EditText search;
     private WebApi webApi;
     Retrofit retrofit;
+    private TextView textView2;
 
     private ArrayList<EmployeeIDResultResponse> emplist;
 
@@ -113,6 +116,7 @@ public class ViewOrderItems extends DilogueFRagment {
         retrofit = ApiClient.getRetrofit();
         webApi = retrofit.create(WebApi.class);
         viewOrderResultsArray=new ArrayList<>();
+        textView2=rootView.findViewById(R.id.textView2);
         role=  SharedPreferenceClass.readString(getActivity(), "ROLEID","");
         fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         emplist=new ArrayList<>();
@@ -296,25 +300,39 @@ public class ViewOrderItems extends DilogueFRagment {
                 @Override
                 public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
                     pprogressBar.setVisibility(View.GONE);
-                    String status=response.body().getStatus();
-                    if(status.equals("SUCCESS")){
-                        viewOrderResultsArray=response.body().getResult();
-                        Log.d("Tag","Size===>"+viewOrderResultsArray.size());
-                        if(viewOrderResultsArray.size()>0){
-                            adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this,emplist);
-                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                            recycleview.setLayoutManager(mLayoutManager);
-                            recycleview.setItemAnimator(new DefaultItemAnimator());
-                            recycleview.setAdapter(adapterNew);
-                            adapterNew.notifyDataSetChanged();
-                        }
+                    int code=response.code();
+                    switch (code) {
+                        case RESPONSE_ERROR:
+                            Toast.makeText(getContext(), "Check Again", Toast.LENGTH_LONG).show();
+                            break;
+                        case RESPONSE_OK:
+                            String status=response.body().getStatus();
+                            if(status.equals("SUCCESS")){
+                                viewOrderResultsArray=response.body().getResult();
+                                Log.d("Tag","Size===>"+viewOrderResultsArray.size());
+                                if(viewOrderResultsArray.size()>0){
+                                    search.setVisibility(View.VISIBLE);
+                                    recycleview.setVisibility(View.VISIBLE);
+                                    adapterNew = new MyOrderAdapterNew(getContext(),viewOrderResultsArray,ViewOrderItems.this,emplist);
+                                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                                    recycleview.setLayoutManager(mLayoutManager);
+                                    recycleview.setItemAnimator(new DefaultItemAnimator());
+                                    recycleview.setAdapter(adapterNew);
+                                    adapterNew.notifyDataSetChanged();
+                                }else {
+                                    textView2.setVisibility(View.VISIBLE);
+                                    recycleview.setVisibility(View.GONE);
+                                    search.setVisibility(View.GONE);
+                                }
+                            }
+                            break;
                     }
                 }
 
                 @Override
                 public void onFailure(Call<OrderResponse> call, Throwable t) {
                     pprogressBar.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(), "Invalid Token", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
                 }
             });
 

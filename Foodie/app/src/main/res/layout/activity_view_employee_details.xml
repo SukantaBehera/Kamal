@@ -153,17 +153,21 @@
                         android:textColor="@color/blackTextColor"
                         android:textAlignment="textStart"
                         />
+
                     <EditText
                         android:id="@+id/designTv"
                         android:layout_width="0dp"
-                        android:layout_weight="1.3"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_weight="1.3"
+                        android:enabled="false"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textSize="14sp"
                         android:hint="Designation"
-                        android:textColorHint="@color/black"
                         android:textColor="@color/black"
-                        android:visibility="visible"
-                        android:enabled="false"/>
+                        android:textColorHint="@color/black"
+                        android:visibility="visible" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -191,6 +195,9 @@
                         android:hint="Jayadev Vihar"
                         android:textColorHint="@color/black"
                         android:enabled="false"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textSize="14sp"
                         android:textColor="@color/black"
                         android:visibility="visible"/>
                 </LinearLayout>
@@ -220,7 +227,10 @@
                         android:layout_marginLeft="57dp"
                         android:hint="9040019803"
                         android:textColor="@color/black"
-                        android:enabled="false"/>
+                        android:enabled="false"
+                        android:lines="1"
+                        android:textSize="14sp"
+                        android:ellipsize="end"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -247,6 +257,9 @@
                         android:layout_marginLeft="40dp"
                         android:inputType="textEmailAddress"
                         android:hint="abc@com"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textSize="14sp"
                         android:textColor="@color/black"
                         android:enabled="false"/>
                 </LinearLayout>
@@ -275,8 +288,11 @@
                         android:layout_weight="1.3"
                         android:layout_marginLeft="10dp"
                         android:text="Active"
+                        android:lines="1"
+                        android:ellipsize="end"
                         android:textColor="@color/colorAccent"
                         android:visibility="visible"
+                        android:textSize="14sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
 
