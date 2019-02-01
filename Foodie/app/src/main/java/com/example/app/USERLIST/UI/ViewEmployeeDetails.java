@@ -213,7 +213,7 @@ public class ViewEmployeeDetails extends AppCompatActivity implements View.OnCli
                 if(status.equals("SUCCESS")){
                     message = response.body().getMessage();
                     Toast.makeText(ViewEmployeeDetails.this, message, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(ViewEmployeeDetails.this,ViewEmployee.class));
+                //    startActivity(new Intent(ViewEmployeeDetails.this,ViewEmployee.class));
                     finish();
                 }
             }

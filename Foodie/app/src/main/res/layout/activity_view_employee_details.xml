@@ -67,6 +67,7 @@
                             android:hint="FirstName"
                             android:layout_alignParentLeft="true"
                             android:textStyle="bold"
+
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="@color/logintextColor"
                             android:enabled="false"
@@ -83,6 +84,7 @@
                                 android:ellipsize="end"
                                 android:layout_weight="1"
                                 android:hint="LastName"
+
                                 android:layout_alignParentLeft="true"
                                 android:textStyle="bold"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -159,6 +161,7 @@
                         android:layout_marginLeft="10dp"
                         android:hint="Designation"
                         android:textColorHint="@color/black"
+                        android:textColor="@color/black"
                         android:visibility="visible"
                         android:enabled="false"/>
                 </LinearLayout>
@@ -188,6 +191,7 @@
                         android:hint="Jayadev Vihar"
                         android:textColorHint="@color/black"
                         android:enabled="false"
+                        android:textColor="@color/black"
                         android:visibility="visible"/>
                 </LinearLayout>
 
@@ -215,6 +219,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="57dp"
                         android:hint="9040019803"
+                        android:textColor="@color/black"
                         android:enabled="false"/>
                 </LinearLayout>
 
@@ -242,6 +247,7 @@
                         android:layout_marginLeft="40dp"
                         android:inputType="textEmailAddress"
                         android:hint="abc@com"
+                        android:textColor="@color/black"
                         android:enabled="false"/>
                 </LinearLayout>
 

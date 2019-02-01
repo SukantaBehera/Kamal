@@ -126,6 +126,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:hint="Jayadev Vihar"
+                        android:textColor="@color/black"
                         android:visibility="visible"
                         android:enabled="false"
                         android:textColorHint="@color/black"/>
@@ -153,6 +154,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:hint="Jayadev Vihar"
+                        android:textColor="@color/black"
                         android:visibility="visible"
                         android:enabled="false"
                         android:textColorHint="@color/black"/>
@@ -181,6 +183,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="0dp"
                         android:hint="Jayadev Vihar"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:enabled="false"
                         android:visibility="visible"/>
@@ -210,6 +213,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="57dp"
                         android:hint="9040019803"
+                        android:textColor="@color/black"
                         android:enabled="false"/>
                 </LinearLayout>
 
@@ -237,6 +241,7 @@
                         android:layout_marginLeft="40dp"
                         android:inputType="textEmailAddress"
                         android:hint="abc@com"
+                        android:textColor="@color/black"
                         android:enabled="false"/>
                 </LinearLayout>
 
