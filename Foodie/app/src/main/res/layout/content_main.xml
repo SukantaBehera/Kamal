@@ -57,7 +57,7 @@
         android:visibility="gone"
         android:layout_marginTop="240dp"
         android:gravity="center"
-        android:text="No Employee Found"
+        android:text="No Data Found"
         android:textSize="16sp" />
 
 

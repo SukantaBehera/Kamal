@@ -22,6 +22,7 @@ import com.example.app.Response.DashboardResponse;
 import com.example.app.Response.DeleteUserResponse;
 import com.example.app.Response.EmployeeIdResponse;
 import com.example.app.Response.GetAllItemResponse;
+import com.example.app.Response.GetAllItemsResponse;
 import com.example.app.Response.GetAllQomReponse;
 import com.example.app.Response.LoginResponse;
 import com.example.app.Response.MyOrderUpdateResponse;
@@ -161,7 +162,7 @@ public interface WebApi {
     Call<PendingReportResponse> getDistReport(@Path("partyid") int partyid, @Query("access_token") String access_token);
 
     @GET(AppConstants.GETALLITEMS)
-    Call<GetAllItemResponse> getAllItemList(@Query("access_token") String access_token);
+    Call<GetAllItemsResponse> getAllItemList(@Query("access_token") String access_token);
 
     @GET(AppConstants.DASHBOARDTABLE)
     Call<DashboardResponse> getDashBoardTable(@Query("access_token") String access_token);

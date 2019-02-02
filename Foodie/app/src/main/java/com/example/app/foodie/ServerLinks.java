@@ -33,7 +33,7 @@ public class ServerLinks {
    //LOGIN
    public static String USER_LOGIN = BASE_URL_NEW+"userauth-svc/userlogin ";
    //GET ALL ITEM
-   public static String getAllItems = BASE_URL_API+"itemsvc/getallitem?access_token=";
+   public static String getAllItems = BASE_URL_API+"itemsvc/getall_item_and_qom?access_token=";
    //ADD ITEM
    public static String ADDITEMS_NEW = BASE_URL_API+"itemsvc/additem_and_qom?access_token=";
 

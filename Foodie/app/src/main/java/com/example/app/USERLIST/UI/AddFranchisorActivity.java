@@ -282,9 +282,9 @@ public class AddFranchisorActivity extends BaseActivity {
                    // startActivity(new Intent(AddFranchisorActivity.this,ViewFranchisor.class));
                     finish();
 
-                }else{
-
-                }
+                }else if(jsonObject.getString("status").equals("ERROR")) {
+                Toast.makeText(getApplicationContext(), "Username already Exist...", Toast.LENGTH_SHORT).show();
+            }
 
 
             } catch (Exception e) {

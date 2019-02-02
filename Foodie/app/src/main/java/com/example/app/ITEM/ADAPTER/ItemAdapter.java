@@ -1,5 +1,6 @@
 package com.example.app.ITEM.ADAPTER;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.app.ITEM.MODEL.ItemDetail;
 import com.example.app.ITEM.UI.ViewItems;
+import com.example.app.Response.AllItemResult;
 import com.example.app.Response.DeleteUserResponse;
 import com.example.app.Response.TokenResponse;
 import com.example.app.Util.Common.ApiClient;
@@ -37,10 +39,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private WebApi webApi;
     Retrofit retrofit;
     ViewItems items;
-    private ArrayList<ItemDetail> listItemDetail;
+    private ArrayList<AllItemResult> listItemDetail;
 
 
-    public ItemAdapter(ArrayList<ItemDetail> listItemDetail, Context context, ViewItems item ) {
+    public ItemAdapter(ArrayList<AllItemResult> listItemDetail, Context context, ViewItems item ) {
         this.context = context;
         this.listItemDetail = listItemDetail;
         items =item;
@@ -51,7 +53,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
 
-    public void updateList(ArrayList<ItemDetail> list){
+    public void updateList(ArrayList<AllItemResult> list){
         listItemDetail = list;
         notifyDataSetChanged();
     }
@@ -65,11 +67,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         return new ViewHolder(listView);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
         viewHolder.ItemName.setText(listItemDetail.get(position).getName());
-        viewHolder.itemPrice.setText(listItemDetail.get(position).getPrice());
-        viewHolder.itemDescription.setText(listItemDetail.get(position).getDescription());
+        viewHolder.itemPrice.setText("Price: "+listItemDetail.get(position).getPrice());
+        AllItemResult itemResult=listItemDetail.get(position);
+        int quantity=itemResult.getQuantity();
+        if(quantity<0){
+            viewHolder.itemDescription.setText("Out of Stock");
+            viewHolder.itemDescription.setTextColor(R.color.colorAccent);
+        }else {
+            viewHolder.itemDescription.setText("Quantity: "+quantity);
+        }
+
         viewHolder.deleteitem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,11 +112,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     private  void deleteItem(final int position){
-        ItemDetail itemDetail = listItemDetail.get(position);
+        AllItemResult itemDetail = listItemDetail.get(position);
         //DeleteUserRequest deleteUserRequest = new DeleteUserRequest();
-        String itemID = itemDetail.getItemId();
+        int itemID = itemDetail.getId();
         // deleteUserRequest.setUser_id(UserId);
-        Call<DeleteUserResponse> call = webApi.deleteItem(acess_token,itemID);
+        Call<DeleteUserResponse> call = webApi.deleteItem(acess_token,String.valueOf(itemID));
         call.enqueue(new Callback<DeleteUserResponse>() {
             @Override
             public void onResponse(Call<DeleteUserResponse> call, Response<DeleteUserResponse> response) {

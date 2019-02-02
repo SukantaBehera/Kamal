@@ -9,6 +9,15 @@ public class ItemDetail {
     String description;
     String price;
     String status;
+
+    public String getFranchisorflag() {
+        return franchisorflag;
+    }
+
+    public void setFranchisorflag(String franchisorflag) {
+        this.franchisorflag = franchisorflag;
+    }
+
     String franchisorflag;
     String unit_id;
     String entered_by;

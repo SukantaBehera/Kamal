@@ -188,6 +188,7 @@ public class ViewItems extends DilogueFRagment  {
                             v.setName(viewResultsArray.get(i).getName());
                             v.setPrice(viewResultsArray.get(i).getPrice());
 
+
                             filterResultsArray.add(v);
 
                         }

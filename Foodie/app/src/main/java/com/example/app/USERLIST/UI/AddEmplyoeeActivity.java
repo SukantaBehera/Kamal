@@ -334,9 +334,9 @@ public class AddEmplyoeeActivity extends BaseActivity implements AdapterView.OnI
                   //  startActivity(new Intent(AddEmplyoeeActivity.this,ViewEmployee.class));
                         finish();
 
-                }else{
-
-                }
+                }else if(jsonObject.getString("status").equals("ERROR")) {
+                Toast.makeText(getApplicationContext(), "Username already Exist...", Toast.LENGTH_SHORT).show();
+            }
 
 
             } catch (Exception e) {

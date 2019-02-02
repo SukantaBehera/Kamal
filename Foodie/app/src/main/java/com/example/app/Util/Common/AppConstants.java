@@ -47,7 +47,7 @@ public class AppConstants {
 
 
     public static  final String CASHFREE="cftoken/order";
-    public static final String GETALLITEMS ="itemsvc/getallitem";
+    public static final String GETALLITEMS ="api/itemsvc/getall_item_and_qom";
 
 
 
