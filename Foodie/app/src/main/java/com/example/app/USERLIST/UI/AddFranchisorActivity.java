@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.app.Util.Common.BaseActivity;
+import com.example.app.foodie.InputValidation;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;
 import com.example.sukanta.foodie.R;
@@ -156,7 +157,21 @@ public class AddFranchisorActivity extends BaseActivity {
                         userid.setError("Enter User Id");
 
                     }
+                    else if(pwd.length()==0){
+                        input_password.requestFocus();
+                        input_password.setError("Enter Password");
 
+                    }
+
+                    else if(!InputValidation.isPasswordLengthCheck(input_password)){
+                        input_password.requestFocus();
+                        input_password.setError("Password length must be 6");
+
+                    }
+                    else if(!InputValidation.isPasswordMatches(input_password,input_reEnterPassword)){
+                        input_reEnterPassword.requestFocus();
+                        input_reEnterPassword.setError("Confirm Password doesn's  match");
+                    }
                     else if(rwd.length()==0){
                         input_reEnterPassword.requestFocus();
                         input_reEnterPassword.setError("Confirm Password");
@@ -229,7 +244,7 @@ public class AddFranchisorActivity extends BaseActivity {
         requestQueue.add(stringRequest);
     }
 
-    public class HTTPAsyncTaskGetDetail extends AsyncTask<String, String, String> {
+    public class    HTTPAsyncTaskGetDetail extends AsyncTask<String, String, String> {
         final ProgressBar simpleProgressBar = (ProgressBar)findViewById(R.id.progressBarDil);
         @Override
         protected void onPreExecute() {
@@ -333,12 +348,12 @@ public class AddFranchisorActivity extends BaseActivity {
         franchisor.accumulate("resident_address", residenceaddress.getText().toString().trim());
         franchisor.accumulate("phone_no",  input_mobile.getText().toString().trim());
         franchisor.accumulate("email_id",  emailid.getText().toString().trim());
-        franchisor.accumulate("is_active",  "Y");
+        franchisor.accumulate("is_active","Y");
 
         JSONObject user = new JSONObject();
 
         user.accumulate("user_id",userid.getText().toString().trim());
-        user.accumulate("is_active","Y");
+        user.accumulate("isActive","Y");
         user.accumulate("password",input_password.getText().toString());
        // user.accumulate("roles",franchisorrole);
         JsonArray jsonArray = new JsonArray();

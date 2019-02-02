@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.app.Util.Common.BaseActivity;
+import com.example.app.foodie.InputValidation;
 import com.example.app.foodie.ServerLinks;
 import com.example.app.foodie.SharedPreferenceClass;
 import com.example.sukanta.foodie.R;
@@ -167,6 +168,16 @@ public class AddDistributorActivity extends BaseActivity {
                         input_password.requestFocus();
                         input_password.setError("Enter Password");
 
+                    }
+
+                    else if(!InputValidation.isPasswordLengthCheck(input_password)){
+                        input_password.requestFocus();
+                        input_password.setError("Password length must be 6");
+
+                    }
+                    else if(!InputValidation.isPasswordMatches(input_password,input_reEnterPassword)){
+                        input_reEnterPassword.requestFocus();
+                        input_reEnterPassword.setError("Confirm Password doesn's  match");
                     }
                     else if(rwd.length()==0){
                         input_reEnterPassword.requestFocus();

@@ -123,7 +123,7 @@ public class QomList extends DilogueFRagment {
 
                          QomModel selectedObject = itemList.get(position);
                          id = selectedObject.getId();
-                        Toast.makeText(getActivity(), selectedObject.getId()+"----Name"+selectedObject.getName(), Toast.LENGTH_SHORT).show();
+                     /*   Toast.makeText(getActivity(), selectedObject.getId()+"----Name"+selectedObject.getName(), Toast.LENGTH_SHORT).show();*/
 
 
 
@@ -135,22 +135,32 @@ public class QomList extends DilogueFRagment {
 
                         dialogBuilder.setView(dialogView);
 
-                        final EditText quantityEdt = (EditText) dialogView.findViewById(R.id.quantity);
-                        final EditText priceedt = (EditText) dialogView.findViewById(R.id.price);
+
+
+
 
 
                         dialogBuilder.setTitle("Enter Quantity");
                         dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-
+                                EditText quantityEdt = (EditText) dialogView.findViewById(R.id.quantity);
+                                EditText priceedt = (EditText) dialogView.findViewById(R.id.price);
                                 if(quantityEdt.getText().toString().isEmpty()){
-                                    quantity = "0";
 
-                                }else{
+                                    quantityEdt.requestFocus();
+                                    quantityEdt.setError("Enter Quanity");
+
+
+                                }else if (priceedt.getText().toString().isEmpty()){
+                                    priceedt.requestFocus();
+                                    priceedt.setError("Enter the Updated Price");
+                                }
+
+                                else{
                                     //final QomModel selectedObject = itemList.get(position);
                                     quantity = quantityEdt.getText().toString();
                                     price = priceedt.getText().toString();
-                                    dialog.dismiss();
+                                 //   dialog.dismiss();
                                     updateQom();
                                  //   new  UpdateQomAsyncTask().execute(ServerLinks.BASE_URL_NEW+"update_item_and_qom/+"+selectedObject.getId()+"?"+acess_token);
 

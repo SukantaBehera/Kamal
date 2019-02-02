@@ -197,6 +197,12 @@ public class AddEmplyoeeActivity extends BaseActivity implements AdapterView.OnI
                         input_password.setError("Enter Password");
 
                     }
+
+                    else if(!InputValidation.isPasswordLengthCheck(input_password)){
+                        input_password.requestFocus();
+                        input_password.setError("Password length must be 6");
+
+                    }
                     else if(!InputValidation.isPasswordMatches(input_password,input_reEnterPassword)){
                         input_reEnterPassword.requestFocus();
                         input_reEnterPassword.setError("Confirm Password doesn's  match");
