@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@drawable/home_bg"
     tools:context="com.example.app.MyOrders.OrderListById.UI.ViewMoreActivity">
     <include
         android:id="@+id/layout"

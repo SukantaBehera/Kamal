@@ -104,7 +104,7 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="3dp"
                     android:weightSum="2">
@@ -125,6 +125,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:hint="Jayadev Vihar"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:inputType="textPostalAddress"
                         android:textColorHint="@color/black"
                         android:visibility="visible"
                         android:enabled="false"/>
@@ -153,8 +158,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="0dp"
                         android:hint="Jayadev Vihar"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/black"
                         android:enabled="false"
+                        android:lines="1"
+                        android:textSize="14sp"
+                        android:ellipsize="end"
                         android:visibility="visible"/>
                 </LinearLayout>
 
@@ -181,8 +190,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="57dp"
                         android:hint="9040019803"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/black"
-                        android:enabled="false"/>
+                        android:enabled="false"
+                        android:lines="1"
+                        android:textSize="14sp"
+                        android:ellipsize="end"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -210,6 +223,8 @@
                         android:textColorHint="@color/black"
                         android:inputType="textEmailAddress"
                         android:hint="abc@com"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
                         android:enabled="false"/>
                 </LinearLayout>
 
@@ -239,7 +254,10 @@
                         android:text="Active"
                         android:textColor="@color/colorAccent"
                         android:visibility="visible"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:lines="1"
+                        android:textSize="14sp"
+                        android:ellipsize="end"/>
                 </LinearLayout>
 
 

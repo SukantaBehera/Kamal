@@ -74,7 +74,7 @@ public class ViewAdapterNew extends RecyclerView.Adapter<ViewAdapterNew.ViewHold
     @Override
     public void onBindViewHolder(final ViewHolder holder,final int position) {
         final ResultOrderView viewResult=viewlist.get(position);
-        holder.nameTv.setText("Name: "+viewResult.getName());
+        holder.nameTv.setText(viewResult.getName());
         holder.descriptionTv.setText("Description: "+viewResult.getDescription());
         holder.priceTv.setText("Price: "+viewResult.getPrice()+"");
         holder.item_countTv.setText("Count: "+viewResult.getItem_count()+"");

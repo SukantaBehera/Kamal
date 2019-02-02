@@ -157,7 +157,7 @@ public class ViewDistributorDetails extends AppCompatActivity implements View.On
                 if(status.equals("SUCCESS")){
                     message = response.body().getMessage();
                     Toast.makeText(ViewDistributorDetails.this, message, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(ViewDistributorDetails.this,ViewDistributor.class));
+                  //  startActivity(new Intent(ViewDistributorDetails.this,ViewDistributor.class));
                     finish();
                 }
             }

@@ -187,7 +187,7 @@ public class ViewFranchisorDetails extends AppCompatActivity implements View.OnC
                 if(status.equals("SUCCESS")){
                     message = response.body().getMessage();
                     Toast.makeText(ViewFranchisorDetails.this, message, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(ViewFranchisorDetails.this,ViewFranchisor.class));
+                   // startActivity(new Intent(ViewFranchisorDetails.this,ViewFranchisor.class));
                     finish();
                 }
             }
