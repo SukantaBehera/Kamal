@@ -1,10 +1,13 @@
 package com.example.app.QOM.UI;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -23,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app.ITEM.UI.AddItemsActivity;
@@ -125,61 +129,42 @@ public class QomList extends DilogueFRagment {
                          id = selectedObject.getId();
                      /*   Toast.makeText(getActivity(), selectedObject.getId()+"----Name"+selectedObject.getName(), Toast.LENGTH_SHORT).show();*/
 
+                        final Dialog dialog = new Dialog(getActivity());
+                        dialog.setContentView(R.layout.qom_dialog);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+                        final EditText quantityED=dialog.findViewById(R.id.quantity);
+                        final EditText priceED=dialog.findViewById(R.id.price);
+                        TextView cancelTv=dialog.findViewById(R.id.cancelTv);
+                        TextView okTv=dialog.findViewById(R.id.okTv);
 
-                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-
-
-                        LayoutInflater inflater = getLayoutInflater();
-                        final View dialogView = inflater.inflate(R.layout.custom_dialog_qom, null);
-
-                        dialogBuilder.setView(dialogView);
-
-
-
-
-
-
-                        dialogBuilder.setTitle("Enter Quantity");
-                        dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                EditText quantityEdt = (EditText) dialogView.findViewById(R.id.quantity);
-                                EditText priceedt = (EditText) dialogView.findViewById(R.id.price);
-                                if(quantityEdt.getText().toString().isEmpty()){
-
-                                    quantityEdt.requestFocus();
-                                    quantityEdt.setError("Enter Quanity");
-
-
-                                }else if (priceedt.getText().toString().isEmpty()){
-                                    priceedt.requestFocus();
-                                    priceedt.setError("Enter the Updated Price");
+                        okTv.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(quantityED.getText().toString().isEmpty()){
+                                    quantityED.setError("Please enter Quantity");
                                 }
-
-                                else{
-                                    //final QomModel selectedObject = itemList.get(position);
-                                    quantity = quantityEdt.getText().toString();
-                                    price = priceedt.getText().toString();
-                                 //   dialog.dismiss();
+                                else if(priceED.getText().toString().isEmpty()){
+                                    priceED.setError("Please Enter Price");
+                                }else {
+                                    quantity = quantityED.getText().toString();
+                                    price = priceED.getText().toString();
+                                    //   dialog.dismiss();
                                     updateQom();
-                                 //   new  UpdateQomAsyncTask().execute(ServerLinks.BASE_URL_NEW+"update_item_and_qom/+"+selectedObject.getId()+"?"+acess_token);
-
-
+                                    //   new  UpdateQomAsyncTask().execute(ServerLinks.BASE_URL_NEW+"update_item_and_qom/+"+selectedObject.getId()+"?"+acess_token);
+                                    dialog.dismiss();
                                 }
-
-
-                                //cartList.remove(selectedObject);
                             }
                         });
-                        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dialog.dismiss();
-                                //pass
+                        cancelTv.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            dialog.dismiss();
                             }
                         });
-                        AlertDialog b = dialogBuilder.create();
-                        b.show();
 
+
+                        dialog.show();
 
 
                     }

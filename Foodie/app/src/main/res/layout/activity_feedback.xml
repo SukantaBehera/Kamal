@@ -5,13 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:background="@drawable/home_bg"
-   >
+   android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="485dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_margin"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_10"
-                android:text="Tell us what you like about tha app or what we could be doing better"
+                android:text="Tell us what you like about the app or what we could be doing better"
                 android:textColor="@color/blackTextColor"
                 android:textSize="14sp"
 
@@ -47,7 +48,9 @@
             android:gravity="fill_horizontal"
             android:background="@drawable/custom_border"
             android:hint="Item Name"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"

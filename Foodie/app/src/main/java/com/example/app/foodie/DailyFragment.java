@@ -38,6 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.example.app.Util.Common.Constants.RESPONSE_BAD;
 import static com.example.app.Util.Common.Constants.RESPONSE_ERROR;
 import static com.example.app.Util.Common.Constants.RESPONSE_NOT_FOUND;
 import static com.example.app.Util.Common.Constants.RESPONSE_OK;
@@ -49,7 +50,7 @@ public class DailyFragment extends Fragment {
     private RecyclerView itemlistRecyclerview;
     private TextView textView2;
     private ProgressBar progressBarDil;
-    private EditText searchlist;
+    private EditText searchlist,startEd,endEd;
     private WebApi webApi;
     Retrofit retrofit;
     private String acess_token;
@@ -84,14 +85,14 @@ public class DailyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_daily, container, false);
-        final EditText startEd=(EditText)v.findViewById(R.id.startEd);
-        final EditText endEd=(EditText)v.findViewById(R.id.endEd);
-        progressBarDil=v.findViewById(R.id.progressBarDil);
-        textView2=v.findViewById(R.id.textView2);
-        itemlistRecyclerview=v.findViewById(R.id.item_list);
-        searchlist=v.findViewById(R.id.searchlist);
-        btn_getData = v.findViewById(R.id.btn_getData);
+        View rootview= inflater.inflate(R.layout.fragment_daily, container, false);
+          startEd=(EditText)rootview.findViewById(R.id.startEd);
+          endEd=(EditText)rootview.findViewById(R.id.endEd);
+        progressBarDil=rootview.findViewById(R.id.progressBarDil);
+        textView2=rootview.findViewById(R.id.textView2);
+        itemlistRecyclerview=rootview.findViewById(R.id.item_list);
+        searchlist=rootview.findViewById(R.id.searchlist);
+        btn_getData = rootview.findViewById(R.id.btn_getData);
         resultDatewiseArrayList=new ArrayList<>();
         if(isNetworkAvailable()) {
             fetchAcessToken();
@@ -123,11 +124,11 @@ public class DailyFragment extends Fragment {
                 datePickerDialog.show();*/
               flag=1;
               showCurrentDate();
-              if(!datemain_from.isEmpty()){
+             /* if(!datemain_from.isEmpty()){
                   startEd.setText(datemain_from);
               }else {
                  // showCurrentDate();
-              }
+              }*/
 
             }
         });
@@ -156,11 +157,11 @@ public class DailyFragment extends Fragment {
                 datePickerDialog.show();*/
                 flag=2;
                 showCurrentDate();
-                if(!datemain_end.isEmpty()){
+                /*if(!datemain_end.isEmpty()){
                     endEd.setText(datemain_end);
                 }else {
                     // showCurrentDate();
-                }
+                }*/
             }
         });
 
@@ -177,7 +178,7 @@ public class DailyFragment extends Fragment {
         });
 
 
-        return v;
+        return rootview;
     }
 
     public void showCurrentDate(){
@@ -203,9 +204,11 @@ public class DailyFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             if(flag==1) {
-                datemain_from = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear + 1) + "/" + String.valueOf(year);
+                startDate =String.valueOf(year)+ "/" +  String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) ;
+                startEd.setText(startDate);
             }else {
-                datemain_end = String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear + 1) + "/" + String.valueOf(year);
+                endDate = String.valueOf(year)+ "/" +  String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth) ;
+                endEd.setText(endDate);
             }
             //startEd.setText(datemain_from);
 
@@ -275,6 +278,10 @@ public class DailyFragment extends Fragment {
                                 textView2.setVisibility(View.VISIBLE);
                             }
                         }
+                        break;
+                    case RESPONSE_BAD:
+                        itemlistRecyclerview.setVisibility(View.GONE);
+                        textView2.setVisibility(View.VISIBLE);
                         break;
                     case RESPONSE_NOT_FOUND:
                         itemlistRecyclerview.setVisibility(View.GONE);

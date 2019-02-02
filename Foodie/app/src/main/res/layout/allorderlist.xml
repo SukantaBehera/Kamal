@@ -151,10 +151,11 @@
                 </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/dispatchDateLin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <!--<TextView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/layout_inner_padding"
@@ -162,7 +163,7 @@
                     android:textSize="@dimen/text_order"
                     android:textStyle="bold|normal"
                     android:textColor="@color/blackTextColor"
-                    android:textAlignment="textStart"/>-->
+                    android:textAlignment="textStart"/>
                 <TextView
                     android:id="@+id/dispatchDateTv"
                     android:layout_width="110dp"
@@ -177,6 +178,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/deliveryDateLin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -204,6 +206,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/dispatchDateByLin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -231,6 +234,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/deliveryByLin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">

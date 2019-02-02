@@ -33,9 +33,9 @@ public class QomListAdapter extends RecyclerView.Adapter<QomListAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        viewHolder.ItemName.setText("Name:           "+listItemDetail.get(position).getName());
-        viewHolder.itemPrice.setText("Price:         "+listItemDetail.get(position).getPrice()+"");
-        viewHolder.itemDescription.setText("Description:     "+listItemDetail.get(position).getDescription());
+        viewHolder.ItemName.setText(listItemDetail.get(position).getName());
+        viewHolder.itemPrice.setText("Price: "+listItemDetail.get(position).getPrice()+"");
+        viewHolder.itemDescription.setText("Description: "+listItemDetail.get(position).getDescription());
         viewHolder.quantityavail.setText("Quantity Available: "+listItemDetail.get(position).getQuantity_avail()+"");
 
     }

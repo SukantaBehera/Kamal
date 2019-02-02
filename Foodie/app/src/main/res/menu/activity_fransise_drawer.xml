@@ -67,7 +67,7 @@
             android:icon="@drawable/orderdetails"
             android:title="@string/reports"
             app:theme ="@style/Navigation"
-            />
+            android:visible="false"/>
         <item
             android:id="@+id/changepassword"
             android:icon="@drawable/orderdetails"

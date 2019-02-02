@@ -73,6 +73,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         flag=false;
         CustomAdapter customAdapter=new CustomAdapter(context1,itemlist);
         viewHolder.spinner.setAdapter(customAdapter);
+
         viewHolder.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -97,16 +98,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                     spinnerpos=0;
 
                    // viewHolder.itemPrice.setText("Quantity: " + name);
-                }else if(qty.equals("more")){
+                }
+                if(qty.equals("more")){
                     Log.d("Tag","Name====>"+qty);
                     spinnerpos=2;
                     showDialog(context1,position1,viewHolder);
 
 
 
-                }else {
+                }
+                if(!qty.equals("more") && !qty.equals("1")){
                     Log.d("Tag",qty);
-                    spinnerpos=1;
+                   spinnerpos=1;
                     double price=orderItem.getPrice();
                     double totalprice=Integer.parseInt(qty)*price;
                     listItemDetail.get(position1).setTotalPrice(totalprice);
@@ -128,7 +131,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                qty=itemlist[0];
             }
         });
 

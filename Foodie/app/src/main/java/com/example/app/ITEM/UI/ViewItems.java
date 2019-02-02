@@ -193,7 +193,7 @@ public class ViewItems extends DilogueFRagment {
                             if (obj.getString("status").equals("SUCCESS")) {
 
                                 JSONArray jsonArray = obj.getJSONArray("result");
-                                Toast.makeText(getActivity(), "Total Items present = " + jsonArray.length(), Toast.LENGTH_SHORT).show();
+                           //     Toast.makeText(getActivity(), "Total Items present = " + jsonArray.length(), Toast.LENGTH_SHORT).show();
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                                     String itemId = jsonObject.getString("item_id");

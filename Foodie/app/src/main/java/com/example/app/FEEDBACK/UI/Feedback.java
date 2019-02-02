@@ -60,7 +60,14 @@ public class Feedback extends DilogueFRagment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new HTTPAsyncTaskSubmitFeedBAck().execute(ServerLinks.SEND_FEEDBACK+acess_token);
+                if(itemName.getText().toString().isEmpty()){
+                    itemName.setError("Please Enter Item Name");
+                }else if(writeFeedBack.getText().toString().isEmpty()){
+                    writeFeedBack.setError("Please Enter Feedback");
+                }else {
+
+                    new HTTPAsyncTaskSubmitFeedBAck().execute(ServerLinks.SEND_FEEDBACK + acess_token);
+                }
             }
         });
 
