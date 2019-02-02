@@ -287,8 +287,8 @@ public class AddDistributorActivity extends BaseActivity {
                 //    startActivity(new Intent(AddDistributorActivity.this,ViewDistributor.class));
                     finish();
 
-                }else{
-
+                }else if(jsonObject.getString("status").equals("ERROR")) {
+                    Toast.makeText(getApplicationContext(), "Username already Exist...", Toast.LENGTH_SHORT).show();
                 }
 
 
