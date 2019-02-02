@@ -85,7 +85,7 @@
               android:layout_marginBottom="2dp">
               <TextView
                   android:layout_width="0dp"
-                  android:layout_weight="1"
+                  android:layout_weight="0.7"
                   android:layout_height="wrap_content"
                   android:text="Qty "
                   android:gravity="right"
@@ -97,7 +97,7 @@
 
                   android:id="@+id/spinner"
                   android:layout_width="0dp"
-                  android:layout_weight="1"
+                  android:layout_weight="1.3"
                   android:gravity="right"
                   android:layout_centerHorizontal="true"
 

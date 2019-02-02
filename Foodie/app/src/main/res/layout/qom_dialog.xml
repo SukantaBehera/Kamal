@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+
+    android:background="@android:color/white">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/quantity"
+        android:hint= "Enter Quantity"
+        android:textSize="16dp"
+        android:layout_margin="5dp"
+        android:inputType="number"
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/price"
+        android:hint= "Enter Price"
+        android:textSize="16dp"
+        android:layout_margin="5dp"
+        android:inputType="numberDecimal"
+        />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="right"
+    android:gravity="right">
+    <TextView
+        android:id="@+id/cancelTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Cancel"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:textColor="@color/colorAccent"/>
+    <TextView
+        android:id="@+id/okTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Ok"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:textColor="@color/colorAccent"/>
+
+</LinearLayout>
+
+</LinearLayout>

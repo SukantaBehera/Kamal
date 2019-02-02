@@ -28,6 +28,7 @@ import com.example.app.Response.ViewOrderResult;
 import com.example.app.Util.Common.ApiClient;
 import com.example.app.Util.Common.WebApi;
 import com.example.app.foodie.adapter.FransAdapterNew;
+import com.example.app.foodie.adapter.FransAdapterNew1;
 import com.example.sukanta.foodie.R;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class FransDashboardFragment extends Fragment {
     EditText search;
     ProgressBar progressBarDil;
     TextView textView2;
-    private FransAdapterNew adapterNew;
+    private FransAdapterNew1 adapterNew;
     private ArrayList<ViewOrderResult> viewOrderResultsArray;
     private ArrayList<ViewOrderResult> viewOrderResultsArray1;
 
@@ -205,7 +206,7 @@ public class FransDashboardFragment extends Fragment {
                                             viewOrderResult1.setItemQOmEmbed(viewOrderResult.getItemQOmEmbed());
                                             viewOrderResultsArray1.add(viewOrderResult1);
                                         }
-                                        adapterNew = new FransAdapterNew(getContext(),viewOrderResultsArray1);
+                                        adapterNew = new FransAdapterNew1(getContext(),viewOrderResultsArray1);
                                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                                         recycleview.setLayoutManager(mLayoutManager);
                                         recycleview.setItemAnimator(new DefaultItemAnimator());
@@ -220,6 +221,7 @@ public class FransDashboardFragment extends Fragment {
                             else {
                                 recycleview.setVisibility(View.GONE);
                                 textView2.setVisibility(View.VISIBLE);
+                                search.setVisibility(View.GONE);
                             }
                         }
                         break;

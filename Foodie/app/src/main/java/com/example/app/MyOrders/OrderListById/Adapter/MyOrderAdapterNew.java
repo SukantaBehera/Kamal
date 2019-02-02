@@ -59,6 +59,8 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
     ViewOrderItems fragments;
     final Calendar myCalendar = Calendar.getInstance();
     private String[] statusArray={"Pending","Dispatched","Delivered"};
+    private String[] statusArrayEmp={"Dispatched","Delivered"};
+    private String[] statusArrayDist={"Delivered"};
     private int mYear, mMonth, mDay, mHour, mMinute,by_format_value;
     private String spinselect,by_format,date_format,date_format_value,orderid;
     private WebApi webApi;
@@ -89,6 +91,20 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
     public void onBindViewHolder(final ViewHolder holder,final int position) {
         final ViewOrderResult viewResult=viewlist.get(position);
         String status=viewResult.getOrder_deliv_status();
+        String role=RegPrefManager.getInstance(context).getLoginRoleId();
+        if(role.equals("ROLE_FRANCH")){
+            holder.changeStatusTv.setVisibility(View.INVISIBLE);
+            holder.dispatchDateLin.setVisibility(View.GONE);
+            holder.deliveryDateLin.setVisibility(View.GONE);
+            holder.dispatchDateByLin.setVisibility(View.GONE);
+            holder.deliveryByLin.setVisibility(View.GONE);
+        }else {
+            holder.changeStatusTv.setVisibility(View.VISIBLE);
+            holder.dispatchDateLin.setVisibility(View.VISIBLE);
+            holder.deliveryDateLin.setVisibility(View.VISIBLE);
+            holder.dispatchDateByLin.setVisibility(View.VISIBLE);
+            holder.deliveryByLin.setVisibility(View.VISIBLE);
+        }
 
         holder.orderId.setText(viewResult.getOrder_id()+"");
         holder.tprice.setText(viewResult.getTotal_price()+"");
@@ -103,10 +119,13 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
 
 
 
+
+
         holder.changeStatusTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final ViewOrderResult viewResult=viewlist.get(position);
+                String role=RegPrefManager.getInstance(context).getLoginRoleId();
                 //  Toast.makeText(context, viewResult1.getId()+"----Name"+viewResult1.getName(), Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -121,11 +140,27 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
               final   Spinner   dispatchEd=(Spinner)dialogView.findViewById(R.id.dispatchSpinner);
                final EditText deliveryDateEd=(EditText)dialogView.findViewById(R.id.deliveryDateEd);
              final   Spinner deliveryByEd=(Spinner)dialogView.findViewById(R.id.deliveryBySpinner);
+                ArrayAdapter aa;
+                if(role.equals("ROLE_DIST")){
+                    aa = new ArrayAdapter(context,android.R.layout.simple_spinner_item,statusArrayDist);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    //Setting the ArrayAdapter data on the Spinner
+                    spinner.setAdapter(aa);
+                }else if(role.equals("ROLE_KML_EMP")){
+                    aa = new ArrayAdapter(context,android.R.layout.simple_spinner_item,statusArrayEmp);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    //Setting the ArrayAdapter data on the Spinner
+                    spinner.setAdapter(aa);
+
+                }else {
+                    aa = new ArrayAdapter(context,android.R.layout.simple_spinner_item,statusArray);
+                    aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    //Setting the ArrayAdapter data on the Spinner
+                    spinner.setAdapter(aa);
+                }
                 //Creating the ArrayAdapter instance having the country list
-                ArrayAdapter aa = new ArrayAdapter(context,android.R.layout.simple_spinner_item,statusArray);
-                aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                //Setting the ArrayAdapter data on the Spinner
-                spinner.setAdapter(aa);
+
+
 
                 if (emplist.size()>0){
 // Create custom adapter object ( see below CustomAdapter.java )
@@ -300,7 +335,7 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
 
         TextView orderId,tprice,username,odate,statusallorder,dispatchDateTv,
                 deliveredDateTv,dispatchedByTv,deliveredByTv,changeStatusTv,viewmoreTv;
-        LinearLayout orderlayout;
+        LinearLayout deliveryByLin,dispatchDateByLin,deliveryDateLin,dispatchDateLin;
         ViewHolder(View itemView) {
             super(itemView);
 
@@ -315,6 +350,10 @@ public class MyOrderAdapterNew extends RecyclerView.Adapter<MyOrderAdapterNew.Vi
             deliveredByTv=itemView.findViewById(R.id.deliveredByTv);
             viewmoreTv=itemView.findViewById(R.id.viewmoreTv);
             changeStatusTv=itemView.findViewById(R.id.changeStatusTv);
+            dispatchDateLin=itemView.findViewById(R.id.dispatchDateLin);
+            deliveryDateLin=itemView.findViewById(R.id.deliveryDateLin);
+            dispatchDateByLin=itemView.findViewById(R.id.dispatchDateByLin);
+            deliveryByLin=itemView.findViewById(R.id.deliveryByLin);
 
         }
     }

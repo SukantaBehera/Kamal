@@ -97,7 +97,15 @@
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </RelativeLayout>
-
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/progressBarDil"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="200dp"/>
         <RelativeLayout
             android:id="@+id/price"
             android:layout_width="match_parent"
@@ -133,7 +141,7 @@
                 android:textStyle="bold" />
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/spinner"
+            android:id="@+id/spinnerRelative"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/next"
@@ -182,20 +190,12 @@
             android:layout_alignParentBottom="true"
             android:background="@color/colorAccent"
             android:layout_centerHorizontal="true"
-            android:text="PLACE ORDER"
+            android:text="PROCEED TO PAY"
             android:visibility="visible"
             android:textAllCaps="false"
             android:textColor="#FFF" />
 
-        <ProgressBar
-            android:visibility="gone"
-            android:id="@+id/progressBarDil"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="200dp"/>
+
     </LinearLayout>
 
 

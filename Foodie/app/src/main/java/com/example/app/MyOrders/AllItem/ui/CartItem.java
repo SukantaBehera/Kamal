@@ -1,12 +1,14 @@
 package com.example.app.MyOrders.AllItem.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,6 +100,7 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
     private Button placeBtn;
     private Spinner spinner1;
     private String acess_token;
+    private RelativeLayout spinnerRelative;
     private ArrayList<EmployeeIDResultResponse> emplist;
     private CustomAdapter adapter;
     private String distSelectID=null;
@@ -121,6 +125,7 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
         session = new SessionManager(CartItem.this);
         spinner1=findViewById(R.id.spinner1);
         progressBarDil=findViewById(R.id.progressBarDil);
+        spinnerRelative=findViewById(R.id.spinnerRelative);
         orderitemmapRequestArrayList=new ArrayList<>();
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
@@ -160,10 +165,10 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
             Toast.makeText(CartItem.this, "Please Check Network Connection", Toast.LENGTH_LONG).show();
         }
         if(role.equals("ROLE_DIST")){
-            spinner1.setVisibility(View.GONE);
+            spinnerRelative.setVisibility(View.GONE);
         }
         else if(role.equals("ROLE_FRANCH")){
-            spinner1.setVisibility(View.VISIBLE);
+            aleartDialog();
         }
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -396,8 +401,8 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
                     parchaseCart();
                 }else*/ if(role.equals("ROLE_FRANCH")){
                     //if(distSelectID!=null){
+                parchaseCart();
 
-                    parchaseCart();
                    /* }else {
                         Toast.makeText(CartItem.this,"Please Select Distributor",Toast.LENGTH_LONG).show();
                     }*/
@@ -421,11 +426,13 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
         paymentdetails.setStatus("SUCCESS");
         paymentdetails.setTransaction_id(77);
 
+
         OrderdetailsRequest orderdetailsRequest=new OrderdetailsRequest();
         orderdetailsRequest.setCust_id(Integer.valueOf(RegPrefManager.getInstance(this).getLoginUserID()));
         orderdetailsRequest.setStatus("EXECUTED");
         orderdetailsRequest.setDate(date);
         orderdetailsRequest.setDistributor_id(distSelectID);
+        orderitemmapRequestArrayList.clear();
         for(int i=0;i<filterResultsArray1.size();i++){
             ViewResultCart viewResultCart=filterResultsArray1.get(i);
 
@@ -477,5 +484,35 @@ public class CartItem extends BaseActivity implements CFClientInterface,View.OnC
                 Toast.makeText(CartItem.this,"Failed",Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+
+    private void aleartDialog(){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(CartItem.this);
+        builder1.setMessage("Do you Want to Purchase From Distributor");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                      spinnerRelative.setVisibility(View.VISIBLE);
+
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                       spinnerRelative.setVisibility(View.GONE);
+                        distSelectID=null;
+
+
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }

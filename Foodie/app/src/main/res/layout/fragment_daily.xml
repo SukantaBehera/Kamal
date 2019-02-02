@@ -80,15 +80,17 @@
         android:padding="10dp"
         android:textStyle="italic"
         android:gravity="center"
-        android:layout_below="@+id/imageView6"
+        android:layout_marginTop="200dp"
+
         android:layout_centerHorizontal="true"
-        android:text="No Orders" />
+        android:text="No Data Found" />
     <ProgressBar
         android:visibility="gone"
         android:id="@+id/progressBarDil"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 </LinearLayout>

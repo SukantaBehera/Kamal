@@ -1,34 +1,21 @@
 package com.example.app.foodie.adapter;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.app.MyOrders.OrderListById.Adapter.CustomAdapter;
-import com.example.app.MyOrders.OrderListById.UI.ViewMoreActivity;
 import com.example.app.MyOrders.OrderListById.UI.ViewOrderItems;
 import com.example.app.Response.EmployeeIDResultResponse;
 import com.example.app.Response.ViewOrderResult;
 import com.example.app.Util.Common.ApiClient;
 import com.example.app.Util.Common.WebApi;
-import com.example.app.Util.RegPrefManager;
 import com.example.sukanta.foodie.R;
 
 import java.util.ArrayList;
@@ -41,7 +28,7 @@ import retrofit2.Retrofit;
  * Created by RatnaDev008 on 10/29/2018.
  */
 
-public class FransAdapterNew extends RecyclerView.Adapter<FransAdapterNew.ViewHolder> {
+public class FransAdapterNew1 extends RecyclerView.Adapter<FransAdapterNew1.ViewHolder> {
     private Context context;
     private ArrayList<ViewOrderResult> viewlist;
     private ArrayList<ViewOrderResult> viewlistcart;
@@ -57,7 +44,7 @@ public class FransAdapterNew extends RecyclerView.Adapter<FransAdapterNew.ViewHo
     private ArrayList<EmployeeIDResultResponse> emplist;
     private CustomAdapter adapter;
 
-    public FransAdapterNew(Context context, ArrayList<ViewOrderResult> viewlist) {
+    public FransAdapterNew1(Context context, ArrayList<ViewOrderResult> viewlist) {
         this.viewlist = viewlist;
         this.context=context;
         viewlistcart=new ArrayList<>();
@@ -81,7 +68,7 @@ public class FransAdapterNew extends RecyclerView.Adapter<FransAdapterNew.ViewHo
       //  String status=viewResult.getOrder_deliv_status();
        // if(status.equals("PENDING")) {
 
-            holder.changeStatusTv.setVisibility(View.INVISIBLE);
+            holder.relative.setVisibility(View.GONE);
             holder.dispatchDateLin.setVisibility(View.GONE);
             holder.deliveryDateLin.setVisibility(View.GONE);
             holder.dispatchDateByLin.setVisibility(View.GONE);
